@@ -1,0 +1,1327 @@
+# ##### Path definition #####
+# path <- ("/home/luca/Dropbox/R/Apomixis_paper")
+# 
+# ### Setting working directory
+# setwd(path)
+# getwd()
+
+##### Load data ##### 
+DATA_red
+str(DATA_red)
+ToBeFactors <- c("ID_FloraAlpina", "ID", "Repr_mode_summ", "Chr.number", "PloidyEvenOdd", 
+                 "Endemic", "Indigenous", "Distribution", "CompleteName", 
+                 "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
+                 "Init.month", "Tot.months", "Phytosociology", "Habitat", 
+                 "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w", "Sect_Occ")
+DATA_red[ToBeFactors] <- lapply(DATA_red[ToBeFactors], factor)
+str(DATA_red)
+names(DATA_red)
+
+##### How many genera and species? ######
+unique(gsub('_.*', '', DATA_red$SpeciesName)) # list of unique genera
+length(unique(gsub('_.*', '', DATA_red$SpeciesName))) # number of unique genera
+
+unique(gsub('_subsp.*', '', DATA_red$SpeciesName)) # list of unique species (no subspecies)
+length(unique(gsub('_subsp.*', '', DATA_red$SpeciesName))) # number of unique species (no subspecies)
+
+DATA_red$SpeciesName
+length(unique(DATA_red$SpeciesName)) # number of unique taxa (also subspecies)
+
+table(DATA_red$Repr_mode_summ) # number of sexual and apomictic taxa
+
+max(DATA_red$Altitude, na.rm = T)
+min(DATA_red$Altitude, na.rm = T)
+boxplot(DATA_red$Altitude)
+
+DATA_red[((DATA_red[,"Altitude"]<1000) & (DATA_red[,"Repr_mode_summ"]=="Apomictic")), ] # taxa collected below 1000m and apomictic
+DATA_red[((DATA_red[,"Altitude"]<1000) & (DATA_red[,"Repr_mode_summ"]=="Mixed")), ] # taxa collected below 1000m and mixed
+
+# max(DATA_red$GS, na.rm = T)
+# min(DATA_red$GS, na.rm = T)
+# boxplot(DATA_red$GS)
+
+##### How many "unexpected" reproductive modes in the accessions? #####
+nrow(DATA[DATA$Ploidy == "2x", 1:3]) # 258 total diploids
+DATA[DATA$Ploidy == "2x" & DATA$Repr_mode_summ == "Apomictic", 1:3] # no diploids are apomictic
+DATA[DATA$Ploidy == "2x" & DATA$Repr_mode_summ == "Mixed", 1:3] # 3 species are diploids and apomictic
+
+nrow(DATA[DATA$Ploidy == "3x", 1:3]) # 31 total triploids
+DATA[DATA$Ploidy == "3x" & DATA$Repr_modesumm == "Sexual", 1:3] # no triploids are sexual
+
+nrow(DATA[DATA$Ploidy == "4x", 1:3]) # 114 total tetraploid
+DATA[DATA$Ploidy == "4x" & DATA$Repr_mode == "Apomictic", 1:3] # 6 tetraploid accessions are apomictic
+
+DATA[DATA$Repr_mode_summ == "Mixed", c(1:3,8)] # mixed reproductive mode is found in 1 tetraploid, 1 triploid and 4 diploid species
+
+##### Exploratory analysis #####
+TraitsNames <- colnames(DATA_red[,-c(1:3, 12)])
+
+boxplot(DATA_red[, "Altitude"])
+# boxplot(DATA_red[, "Phytosociology"])
+
+plot(GS ~ PloidyEvenOdd, DATA_red)
+plot(GS ~ Chr.number, data = DATA_red)
+plot(GS ~ Altitude, data = DATA_red)
+abline(lm(GS ~ Altitude, data = DATA_red), col = "red")
+plot(GS ~ Endemic, data = DATA_red)
+plot(GS ~ Distribution, data = DATA_red)
+plot(GS ~ Water, data = DATA_red)
+plot(GS ~ w, data = DATA_red)
+plot(GS ~ pH, data = DATA_red)
+plot(GS ~ N, data = DATA_red)
+plot(GS ~ Ca, data = DATA_red)
+plot(GS ~ Si, data = DATA_red)
+plot(GS ~ Ca.Si, data = DATA_red)
+
+par(mfrow=c(1,5))
+plot(GS ~ Collinaire, data = DATA_red)
+plot(GS ~ Montane, data = DATA_red)
+plot(GS ~ Subalpine, data = DATA_red)
+plot(GS ~ Alpine, data = DATA_red)
+plot(GS ~ Nival, data = DATA_red)
+par(mfrow=c(1,1))
+
+class(DATA_red)
+test1 <- as.vector(DATA_red[DATA_red$Repr_mode_summ == "Sexual" & !is.na(DATA_red$Init.month), "Init.month"])
+class(test1) <- "data.frame"
+test2 <- as.vector(DATA_red[DATA_red$Repr_mode_summ == "Apomictic" | DATA_red$Repr_mode_summ == "Mixed" & !is.na(DATA_red$Init.month), "Init.month"])
+class(test2) <- "data.frame"
+
+wilcox.test(as.numeric(test1$Init.month), as.numeric(test2$Init.month)) # not significantly different
+
+
+
+
+
+##### Phylogenetic tree #####
+### Load the tree
+library(ape)
+library(geiger)
+library(phytools)
+
+JanTree4
+str(JanTree4)
+plot(JanTree4, cex = .5, no.margin = T)
+is.ultrametric(JanTree4)
+is.binary(JanTree4)
+JanTree5 <- force.ultrametric(JanTree4)
+is.ultrametric(JanTree5)
+# dev.off()
+plot(JanTree5, cex = .5, no.margin = T)
+JanTree5 <- multi2di(JanTree5, random = TRUE)
+# JanTree5$edge.length <- NULL
+is.rooted(JanTree5)
+is.binary(JanTree5)
+is.ultrametric(JanTree5)
+plot(JanTree5, cex = .5, no.margin = T)
+plotTree(JanTree5, type = "fan", ftype="i", fsize = 0.25, lwd=1)
+# Checking correspondence between data and tree
+geiger::name.check(JanTree4, DATA_red)
+geiger::name.check(JanTree5, DATA_red)
+
+
+
+
+##### VISUALIZATION #####
+
+##### Mapping traits on tree ##### 
+### Preparing data 
+cex_original <- 1
+plot(JanTree5, cex = 0.25, no.margin = T, label.offset = 2, edge.width = 1.5) # can see more tree plotting options with: ?plot.phylo
+add.scale.bar(x=11, y=0.1, cex=0.7)
+cex <- cex_original
+par(mfrow=c(1,1))
+
+### GS
+GS <- DATA_red$GS
+names(GS) <- DATA_red$SpeciesName # makes a named vector
+phytools::plotTree.barplot(JanTree5, GS, type = "phylogram", args.plotTree = list(lwd = 1, fsize = .25))
+
+### Altitude
+Altitude <- as.numeric(DATA_red$Altitude)
+names(Altitude) <- DATA_red$SpeciesName # makes a named vector
+str(Altitude)
+str(JanTree5)
+JanTree6 <- compute.brlen(JanTree5)
+JanTree6$edge.length
+phytools::plotTree.barplot(JanTree5, Altitude, type = "phylogram", args.plotTree = list(lwd = 1, fsize = .25))
+par(mfrow=c(1,1))
+
+### Attempt at making a decent palette...
+library(RColorBrewer)
+display.brewer.all()
+colors.ploidy <- brewer.pal(6, "Dark2")[Ploidy]
+
+colors.altitude <- brewer.pal(6, "YlOrBr")[Altitude_cat]
+
+# make own palette
+BrownGreen <- colorRampPalette(rev(c("chocolate4", "chartreuse4")))
+BrownGreen(20)
+plot(rep(1,6),col=BrownGreen(6),pch=19,cex=3)
+
+colors.altitude2 <- BrownGreen(6)[Altitude_cat]
+
+#### Make a vector with colors, ordered by area:  area, area1, area2, etc
+colors <- c("black", "black")
+### Keep this the same (unsure why)
+colors.ploidy <- c("white","gray88","gray75", "gray60", "gray45", "black") 
+### 6 levels for ploidy
+colors.genome = c("white", "gray88", "gray75","gray60","gray45", "gray30", "black")
+### Do 7 levels (do a gradient)
+colors.altitude <- c("white", "gray88","gray60","gray45", "black")
+### Do levels (gradient)
+colors.rmode <- c("Red", "Black") # 2 levels only
+
+### Match the colour vector to area data
+Ploidy <- DATA_red$Ploidy
+colors2 <- colors.ploidy[Ploidy]
+
+Genome <- DATA_red$GS
+colors3 <- colors.genome[Genome]
+
+colors4 <- colors.altitude[DATA_red$Altitude]
+
+Rmode <- DATA_red$Repr_mode_summ
+colors5 <- colors.rmode[as.factor(DATA_red$Repr_mode_summ)]
+
+### Add coloured shapes to tree; ape functions
+par(mfrow = c(1,1))
+plot(JanTree5, cex = 0.25, no.margin = T, label.offset = 5, edge.width = 1.5)
+
+tiplabels(pch = 21, bg = colors.ploidy, col = "black", cex = .5, adj = 1.2)
+tiplabels(pch = 23, bg = colors.altitude, col = "black", cex = .5, adj = 2.2)
+
+tiplabels(pch = 21, bg = colors4, col=colors,cex=.5, adj=3.2)
+tiplabels(pch = 23, bg = colors5, col=colors,cex=.5, adj=4.2)
+
+### Categorize altitude
+Altitude_cat <- cut(DATA_red$Altitude, 
+                    breaks = c(-Inf, 600, 1300, 2000, 2500, Inf), 
+                    labels = c("collinaire", "montane", "subalpine", "alpine", "nival")
+                    )
+
+
+
+##### Phytools plotting #####
+library(phytools)
+plotTree(JanTree5, type = "fan", ftype="i", fsize = 0.25, lwd=1)
+
+ploidy_plot <- as.matrix(setNames(DATA_red$Ploidy, rownames(DATA_red)))
+ploidy_plot
+
+ploidy_cols <- setNames(RColorBrewer::brewer.pal(6, "Dark2"), levels(DATA_red$Ploidy))
+ploidy_cols
+
+dotTree(JanTree6, ploidy_plot, colors = ploidy_cols, data.type = "discrete", fsize = .25)
+
+dotTree(JanTree6, ploidy_plot, colors = ploidy_cols, data.type = "discrete", fsize = .25)
+
+# legend(0.0001,91, pch=c(21,21,21,21,21,21,22,22,22,22,22,22,22,23,23,23,23,23,24,24), col=c("black", "black", "black", "black"), pt.bg=c("white","gray88","gray75", "gray60", "gray45", "black", "white", "gray88", "gray75","gray60","gray45", "gray30", "black", "white", "gray88","gray60","gray45", "black", "White", "Black"), legend=c("2x","3x","4x","5x", "6x","8x", "0-5pg", "5.1-10pg", "10.1-15pg", "15.1-20pg", "21.1-25pg", "25.1-30pg", "30.1-35pg", "10-510m","511-1011m", "1012-1512m", "1513-2013m", "2014-2514m", "Sexual", "Apomitic"), cex=.7, bty="n", pt.cex=1.2 )
+legend(0.001,86, pch = c(21,21,21,21,21,23,23,22,22,22,22,22,22), 
+       col = c("black", "black", "black"), 
+       pt.bg = c("white", "gray88","gray60","gray45", "black", "White", "Black", "white", "gold", "yellowgreen", "red3", "steelblue1", "mediumorchid4"), 
+       legend = c("10-510m","511-1011m", "1012-1512m", "1513-2013m", "2014-2514m", "Sexual", "Apomitic", "2x","3x","4x","5x", "6x","8x"), 
+       cex = .7, bty = "n", pt.cex = 1.3)
+
+# Ploidy
+# 2x,3x,4x,5x,6x,8x
+# Genome size
+# 1=0-5, 2=5.1-10, 3=10.1-15, 4=15.1-20, 5=20.1-25, 6=25.1-30, 7=30.1-35
+# Altitude
+# 1=10-510,2=511-1011, 3=1012-1512, 4=1513-2013, 5=2014-2514
+
+# plot(Asteraceae_data$Ploidy ~ Asteraceae_data$Repr_mode_summ, cex = .1)
+
+# lm(DATA_red$Repr_mode_summ ~ DATA_red$Ploidy, data = DATA_red)
+
+DATA_red[which(DATA_red$Ploidy == "5x"),] # Calendula arvensis is the only 5x and is sexual... 
+
+### Plotting reproductive mode onto tree 
+library(phytools)
+plotTree(JanTree5, fsize = 0.25, lwd = 1, type = "fan")
+
+Repr_mode_factor <- gsub('Sexual', '0', DATA_red$Repr_mode_summ)
+Repr_mode_factor <- as.factor(gsub('Apomictic', '1', Repr_mode_factor))
+Repr_mode_factor <- as.factor(gsub('Mixed', '2', Repr_mode_factor))
+Repr_mode_factor <- setNames(Repr_mode_factor, rownames(DATA_red))
+Repr_mode_colours <- gsub('0', 'black', Repr_mode_factor)
+Repr_mode_colours <- gsub('1', 'red', Repr_mode_colours)
+Repr_mode_colours <- gsub('2', 'orange', Repr_mode_colours)
+Repr_mode_colours <- setNames(Repr_mode_colours, rownames(DATA_red))
+length(Repr_mode_colours) == length(JanTree5$tip.label)
+match <- match(JanTree5$tip.label, names(Repr_mode_colours)) # need to reorder vecotr to match tree's labels
+Repr_mode_colours <- Repr_mode_colours[match]
+
+### Regular plotting w/ character states at tips
+png(filename = "ApomixisTree_BlackBranches.png", width = 5000, height = 5000, units = "px", res = 600)
+plot(JanTree5, cex = .5, type = "fan", show.tip.label = F)
+tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1) 
+dev.off()
+
+# ### Plotting character state along branches as well as on tips
+# png(filename = "ApomixisTree_ColBranches.png", width = 5000, height = 5000, units = "px", res = 600)
+# plotBranchbyTrait(JanTree5, Repr_mode_factor, mode = "tips", legend = F, palette = colorRampPalette(c("black", "red")), 
+#                   cex = 0.3, edge.width = 1.5, show.tip.label = F, type = "fan") # use colorRampPalette(c("black", "#d10000")) for a darker red
+# tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1) 
+# dev.off()
+
+### Plotting ancestral character state reconstruction
+JanTree5.simMap <- make.simmap(JanTree5, Repr_mode_factor, model = "ER", nsim = 10)
+JanTree5.simMap_summ <- summary(JanTree5.simMap, plots = F)
+plot(JanTree5.simMap_summ, type = "fan", fsize = .35)
+
+plotSimmap(JanTree5.simMap, type = "fan", fsize = .25)
+
+
+
+##### ggtree plotting #####
+library(ape)
+library(ggplot2)
+library(ggtree)
+library(treeio)
+library(ggplotify)
+library(RColorBrewer)
+library(ggstance)
+
+# ggtree is in active development. Run this to install from author's GitHub
+# library(devtools)
+# install_github("GuangchuangYu/ggtree")
+
+# DATA_red$Repr_mode_summ <- as.factor(DATA_red$Repr_mode_summ)
+DATA_red$Altitude_cat <- as.factor(Altitude_cat)
+
+ape::Ntip(JanTree5) 
+
+DATA_red_ggtree <- DATA_CC_mean_red
+rownames(DATA_red_ggtree) <- NULL
+DATA_red_ggtree <- DATA_red_ggtree[, c(2,1,3:ncol(DATA_red_ggtree))]
+
+RColorBrewer::display.brewer.all()
+RColorBrewer::display.brewer.pal(9, "Set3")
+
+### IMPORTANT : attached data must have taxa name in first column! Order is irrelevant 
+# DATA_red_ggtree$SpeciesName <- as.character(DATA_red_ggtree$SpeciesName)
+# DATA_red_ggtree <- DATA_red_ggtree[match(JanTree5$tip.label, DATA_red_ggtree$SpeciesName), ]
+JanTree5$tip.label == as.character(DATA_red_ggtree$SpeciesName)
+
+### Weird Senecioneae tribe split is in the original tree as well... 
+
+ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
+  geom_tiplab(size = 1, offset = .05) + 
+  xlim(0 , 37.5) + # this is to give enough withespace to print longer taxa names 
+  geom_hilight(mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
+  # ### Tribe labels as clade labels
+  # geom_cladelabel(node = c(295), label = "Anthemidae", offset = 3.5, color = brewer.pal(10, "Set3")[1]) +
+  # geom_cladelabel(node = c(321), label = "Senecioneae", offset = 3.5, color = brewer.pal(10, "Set3")[2]) +
+  # geom_cladelabel(node = c(279), label = "Astereae", offset = 3.5, color = brewer.pal(10, "Set3")[3]) +
+  # geom_cladelabel(node = c(324), label = "Calenduleae", offset = 3.5, color = brewer.pal(10, "Set3")[4]) +
+  # geom_cladelabel(node = c(325), label = "Senecioneae", offset = 3.5, color = brewer.pal(10, "Set3")[2]) +
+  # geom_cladelabel(node = c(255), label = "Gnaphalieae", offset = 3.5, color = brewer.pal(10, "Set3")[5]) +
+  # geom_cladelabel(node = c(247), label = "Heliantheae", offset = 3.5, color = brewer.pal(10, "Set3")[6]) +
+  # geom_cladelabel(node = c(263), label = "Inuleae", offset = 3.5, color = brewer.pal(10, "Set3")[7]) +
+  # geom_cladelabel(node = c(351), label = "Cichorieae", offset = 3.5, color = brewer.pal(10, "Set3")[8]) +
+  # geom_cladelabel(node = c(424), label = "Cardueae", offset = 3.5, color = brewer.pal(10, "Set3")[9]) +
+  ### Tribe labels on MRCA node
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1.1, nudge_y = 2.5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 2.75, nudge_y = -2.5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_y = -5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1.1, nudge_y = 5) +
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + .1), size = .3, hjust = 0.025) +
+  scale_color_manual(values = c("red", "black", "orange")) +
+  # ### Adding points for discretized variables Altitude and Ploidy
+  # geom_tippoint(aes(color = Ploidy, x = x + .3), size = .3) +
+  # scale_color_manual(values = rev(brewer.pal(6, "Dark2"))) +
+  # geom_tippoint(aes(color = Altitude_cat, x = x + .6), size = .3, alpha = 1) +
+  # scale_color_manual(values = brewer.pal(11, "PuOr")) +
+  # ggplot2::xlim(0, 42.5) + 
+  # theme_tree2()
+  geom_treescale(x = 2.5, y = -.5, offset = 1.5, fontsize = 3) + 
+  theme(legend.position = c(0.15,.85)) + 
+  guides(colour = guide_legend(override.aes = list(size = 3)))
+
+ggJanTree5
+
+### ggplot2 doesn't support multiple colour scales for different columns;
+### one solution is to make an order list of colours based on the column's values and pass it directly as list of colours to geom_tippoint
+
+sum(is.na(DATA_red_ggtree$Altitude))
+DATA_red_ggtree[, c("SpeciesName", "GS")]
+DATA_red_ggtree[, c("SpeciesName", "Altitude")]
+
+ggplot(data = DATA_red_ggtree, 
+       aes(x = 0, xend = Altitude, 
+           y = 1:nrow(DATA_red_ggtree), yend = 1:nrow(DATA_red_ggtree)), 
+       fill = Altitude) + 
+  geom_segment()
+
+ggplot(data = DATA_red_ggtree, 
+       aes(x = Altitude, y = SpeciesName), 
+       fill = Altitude) + 
+  geom_barh(stat = "identity")
+
+### Simulated data
+TEST <- data.frame("SpeciesName" = JanTree5$tip.label, "trait" = rnorm(length(JanTree5$tip.label), mean = 1500, sd = 1000))
+str(TEST)
+
+facet_plot(p = ggJanTree5, panel = 'Trait', data = TEST,
+           geom = geom_barh,
+           mapping = aes(x = trait, y = y), 
+           stat = "identity", 
+           size = .5) + 
+  xlim_expand(c(0,2000), panel = "Trait") +
+  # xlim_tree(50) + 
+  theme_tree2()
+
+
+### Adding facetplot: one bargraph of continuous variable
+# ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree,
+#                                geom = geom_segment,
+#                                mapping = aes(x = 0, xend = Altitude, y = y, yend = y),
+#                                size = .5)
+# ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2()
+# 
+# ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Sect_Occ', data = DATA_red_ggtree,
+#                                geom = geom_barh, 
+#                                mapping = aes(x = Sect_Occ),
+#                                size = .5)
+# ggJanTree5_panel
+
+ggJanTree5_panel2 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree, 
+                                geom = geom_segment, aes(x = 0, xend = GS, y = y, yend = y), size = .5)
+ggJanTree5_panel2 + theme(legend.position = "bottom") + theme_tree2()
+
+ggJanTree5_panel_facet <- facet_widths(ggJanTree5_panel, 8) # this applies the multiplier to the first facet of the specified object
+ggJanTree5_panel_facet + theme(legend.position = "bottom")
+ggJanTree5_panel_facet2 <- facet_widths(ggJanTree5_panel2, 8) # this applies the multiplier to the first facet of the specified object
+ggJanTree5_panel_facet2 + theme(legend.position = "bottom")
+
+### Coloured by categories # geom_segm, unnecessarily convoluted
+library(ggstance) # for plotting axes flipped easily
+ggJanTree5_panel_colours <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree, 
+                                       geom = geom_barh, mapping = aes(x = GS, y = y, fill = Ploidy), 
+                                       stat = "identity", size = 1) + scale_fill_brewer(palette = "Dark2") + 
+  theme_tree2() + theme(legend.position = "bottom")
+ggJanTree5_panel_colours
+
+ggJanTree5_panel_colours2 <- facet_plot(ggJanTree5_panel_colours, panel = 'Altitude', data = DATA_red_ggtree, 
+                                        geom = geom_barh, mapping = aes(x = Altitude, y = y, fill = Altitude), 
+                                        stat = "identity", size = .5) + scale_color_continuous(low = "darkgreen", high = "saddlebrown") + 
+  theme_tree2() + theme(legend.position = "bottom")
+ggJanTree5_panel_colours2
+
+
+# 
+# #####
+# # add_colorbar(ggJanTree5_panel_colours2, color = colors.altitude2)
+# # 
+# # ggJanTree5_panel_colours2 + add_colorbar(ggJanTree5_panel_colours2, color = scale_color(DATA_red$Altitude)) 
+# 
+# ggJanTree5_panel_facet_ploidycolours <- facet_widths(ggJanTree5_panel_colours, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree5_panel_facet_ploidycolours + theme(legend.position = "bottom")
+# ggJanTree5_panel_facet_ploidycolours2 <- facet_widths(ggJanTree5_panel_colours2, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree5_panel_facet_ploidycolours2 + theme(legend.position = "bottom")
+# 
+# ggJanTree5_panel_colours3 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree, 
+#                                         geom = geom_barh, mapping = aes(x = GS, y = y, fill = Ploidy), 
+#                                         stat = "identity", size = .5) + scale_colour_brewer(palette = "Dark2") + 
+#   theme_tree2() + theme(legend.position = "bottom")
+# ggJanTree5_panel_colours3
+# ggJanTree5_panel_colours4 <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree, 
+#                                         geom = geom_barh, mapping = aes(x = Altitude, y = y , fill = Altitude), 
+#                                         stat = "identity", size = .5) + scale_fill_continuous(low = "darkgreen", high = "saddlebrown") + 
+#   theme_tree2() + theme(legend.position = "bottom")
+# ggJanTree5_panel_colours4
+# 
+# ### 
+# 
+# ggJanTree5_panel_facet_ploidycolours3 <- facet_widths(ggJanTree5_panel_colours3, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree5_panel_facet_ploidycolours3
+# ggJanTree5_panel_facet_ploidycolours4 <- facet_widths(ggJanTree5_panel_colours4, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree5_panel_facet_ploidycolours4
+# 
+# ### trying to get legend on geom_segm ###
+# Altitude_segm <- ggplot(DATA_red) +
+#   geom_segment(aes(x = SpeciesName, y = 0, xend = SpeciesName, yend = Altitude, color = Altitude)) +
+#   scale_color_continuous(low = "darkgreen", high = "saddlebrown") + 
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+# Altitude_segm
+# 
+# GS_segm <- ggplot(DATA_red) + 
+#   geom_segment(aes(x = SpeciesName, xend = SpeciesName, y = 0, yend = GS, color = Ploidy)) + 
+#   scale_colour_brewer(palette = "Dark2") + 
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+# GS_segm
+
+##### better to use geom_bar
+library(ggstance)
+Altitude_bar <- ggplot(DATA_red, aes(x = SpeciesName, y = Altitude, color = Altitude)) +
+  geom_bar(stat = "identity") +
+  scale_color_continuous(low = "darkgreen", high = "saddlebrown") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+Altitude_bar
+
+Altitude_barh <- ggplot(DATA_red, aes(x = SpeciesName, y = Altitude, color = Altitude)) +
+  geom_barh(stat = "identity") +
+  scale_color_continuous(low = "darkgreen", high = "saddlebrown") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+Altitude_barh
+
+GS_bar <- ggplot(DATA_red, aes(x = SpeciesName, y = GS, fill = Ploidy)) + 
+  geom_bar(stat = "identity") + scale_colour_brewer(palette = "Dark2") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+GS_bar
+
+GS_barh <- ggplot(DATA_red, aes(x = SpeciesName, y = GS, fill = Ploidy)) + 
+  geom_barh(stat = "identity") + scale_colour_brewer(palette = "Dark2") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+GS_barh
+
+
+##### ggTree circular #####
+DATA_red_ggtree$Repr_mode_summ <- factor(DATA_red_ggtree$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+
+library(ape)
+library(ggplot2)
+library(ggtree)
+# library(treeio)
+# library(ggplotify)
+library(RColorBrewer)
+
+ggJanTree5_circular <- ggtree(JanTree5, layout = "circular") %<+% DATA_red_ggtree + 
+  geom_tiplab2(size = 1.5, offset = 2) + 
+  geom_hilight(mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) + 
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + 1), size = .5) +
+  # scale_color_manual(values = c("red", "black", "orange")) + 
+  # scale_colour_brewer(palette = "Set1") + 
+  scale_colour_manual(values = c(brewer.pal(name = "Set1", 3)[2], 
+                               brewer.pal(name = "Set1", 3)[3], 
+                               brewer.pal(name = "Set1", 3)[1])) +
+  ### Tribe labels on MRCA nodes 
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -2.5, nudge_y = 10) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 0, nudge_y = 10) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = .5, nudge_x = -2.5, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -6, nudge_y = 20) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_x = 0, nudge_y = -5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -4, nudge_y = 9) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -2.5, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -1, nudge_y = 3) + 
+  # geom_treescale(x = 5, y = 0, offset = 1.5, fontsize = 3) +
+  theme(legend.position = c(-.2,0.1)) +
+  guides(colour = guide_legend(override.aes = list(size = 3)))
+  
+ggJanTree5_circular
+
+
+##### Other plots #####
+library(dplyr)
+
+DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+
+Asteraceae_barplot <- DATA_CC_mean_red %>% 
+  group_by(Ploidy, Repr_mode_summ) %>% 
+  count()
+str(Asteraceae_barplot)
+
+table(DATA_red$Ploidy)
+table(DATA_CC_mean_red$Ploidy)
+
+library(ggplot2)
+library(RColorBrewer)
+
+bargraph <- ggplot(Asteraceae_barplot, 
+                   aes(factor(Ploidy), 
+                       n, 
+                       fill = Repr_mode_summ)) + 
+  geom_bar(stat = "identity", position = "stack", width = 0.6) + 
+  # theme_bw(base_size = 14) + 
+  labs(x = "Ploidy level") + 
+  labs(y = "Number of species") + 
+  theme(axis.title = element_text(size = 16), 
+        axis.text = element_text(size = 14, colour = "gray50"), 
+        plot.title = element_text(size = 24, hjust = 0.5), 
+        legend.text = element_text(size = 14), 
+        legend.title = element_blank(), 
+        axis.title.x = element_blank()
+        ) + 
+  # theme(axis.title = element_text(size=18), 
+  #       axis.text = element_text(size=18, colour = "gray50"), 
+  #       plot.title = element_text(size = 24, hjust = 0.5), 
+  #       legend.text = element_text(size = 16), 
+  #       legend.title = element_blank()
+  #       ) + 
+  theme(aspect.ratio = 3/2) + 
+  # scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = 0) +
+  scale_fill_manual(values = c(brewer.pal(name = "Set1", 3)[2], 
+                               brewer.pal(name = "Set1", 3)[3], 
+                               brewer.pal(name = "Set1", 3)[1])) +
+  theme(legend.position = c(.7425,.80)) 
+  # ggtitle("Apomixis and ploidy") 
+bargraph
+ggsave(plot = bargraph, filename = "ApomixisVSPloidy_ggsave.pdf", dpi = 150, device = "pdf", scale = 1)
+
+
+
+c("January", "February", "March", "April", 
+  "May", "June", "July", "August", 
+  "September", "October", "November", "December")
+
+c("1" = "January", "2" = "February", "3" = "March", "4" = "April", 
+  "5" = "May", "6" = "June", "7" = "July", "8" = "August", 
+  "9" = "September", "10" = "October", "11" = "November", "12" = "December")
+
+table(DATA_red[, c("Repr_mode_summ", "Init.month")])
+DATA_red$Repr_mode_summ <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+
+table(DATA_red$Repr_mode_summ)
+nrow(DATA_red)
+nrow(DATA_red[DATA_red$Repr_mode_summ != "Mixed", ])
+
+nrow(DATA_red) - sum(table(DATA_red$Init.month)) # 28 species missing Init.month
+
+DATA_CC_mean_red$Repr_mode <- gsub('Mixed', 'Apomictic', DATA_CC_mean_red$Repr_mode_summ)
+DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
+DATA_CC_mean_red$Repr_mode
+
+### Boxplot
+boxplot <- ggplot(data = DATA_CC_mean_red, 
+                  aes(x = Repr_mode, 
+                      y = as.numeric(Init.month), 
+                      fill = Repr_mode)) + 
+  stat_boxplot(geom = "errorbar", width = 0.4, lwd = 0.5) + 
+  geom_boxplot(lwd = 0.1, fatten = 10, outlier.size = 1.5) + 
+  scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = -1) + 
+  # labs(x = "Reproduction mode") + 
+  labs(y = "Flowering initiation (month)") + 
+  scale_y_continuous(limits = c(1, 10), breaks = c(1, 3, 5, 7, 9)) +
+  # scale_y_discrete(name = "Flowering initiation (month)", 
+  #                    labels = c("January", "February", "March", "April", 
+  #                               "May", "June", "July", "August", 
+  #                               "September", "October", "November", "December"), 
+  #                  limits = c("Februrary", "November")) + # can't get it to work... 
+  # ggtitle("Apomixis and phenology") + 
+  theme(legend.position = "none") + 
+  theme(axis.title = element_text(size = 16), 
+        axis.text = element_text(size = 14, colour = "gray50"), 
+        plot.title = element_text(size = 24, hjust = 0.5), 
+        legend.text = element_text(size = 14), 
+        legend.title = element_blank(), 
+        axis.title.x = element_blank()
+  ) + 
+  theme(aspect.ratio = 3/2) + 
+  stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = .75, linetype = "dashed") + 
+  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -17.5) 
+  # geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") + 
+  # scale_colour_brewer(palette = "Set1", direction = -1)
+boxplot
+ggsave(plot = boxplot, filename= "ApomixisVSPhenology_ggsave.pdf", dpi = 150, device = "pdf", scale = 1)
+
+ggpubr::ggarrange(bargraph, boxplot, 
+                  ncol = 2, nrow = 1)
+
+# boxplot2 <- ggplot(data = Asteraceae_data, 
+#                   aes(x = Repr_mode, 
+#                       y = as.numeric(Flowering_initiation), 
+#                       fill = Repr_mode, 
+#                       colour = Repr_mode)) + 
+#   geom_boxplot(width=0.5, lwd=0.1, fatten=10, outlier.size = -1, color = c("#1f77b4", "#ff7f0e")) + 
+#   stat_boxplot(geom = "errorbar", width = 0.2, lwd = 0.5, color = c("#1f77b4", "#ff7f0e")) + 
+#   scale_fill_manual(values = alpha(c("#1f77b4", "#ff7f0e"), .7)) + 
+#   scale_alpha(0.9) + 
+#   labs(x = "Reproduction mode") + 
+#   labs(y = "Flowering initiation (month)") + 
+#   ggtitle("Apomixis and phenology") + 
+#   theme(legend.position = "none") + 
+#   theme(axis.title = element_text(size=24), 
+#         axis.text = element_text(size=24, colour = "gray50"), 
+#         plot.title = element_text(size = 36, hjust = 0.5), 
+#         legend.text = element_text(size = 18), 
+#         legend.title = element_blank()
+#   ) + 
+#   theme(aspect.ratio = 1/1) + 
+#   geom_jitter(width = 0.1, show.legend = F, aes(colour = Repr_mode), alpha = 0.5) + 
+#   scale_color_manual(values = c("#1f77b4", "#ff7f0e"))
+# 
+# boxplot2
+
+dev.off()
+par(mfrow=c(1,1))
+
+##### Plot STRICTLY Alps #####
+library(ggplot2)
+library(RColorBrewer)
+
+DATA_StrictlyAlps_mean_red$Repr_mode_summ <- factor(DATA_StrictlyAlps_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_StrictlyAlps_mean_red$Repr_mode <- factor(gsub('Mixed', 'Apomictic', DATA_StrictlyAlps_mean_red$Repr_mode_summ), levels = c("Sexual", "Apomictic"))
+
+boxplot_StrictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
+                               aes(x = Repr_mode,
+                                   y = as.numeric(Init.month),
+                                   fill = Repr_mode)) +
+  stat_boxplot(geom = "errorbar", width = 0.4, lwd = 0.5) +
+  geom_boxplot(lwd = 0.1, fatten = 10, outlier.size = 1.5) +
+  scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = -1) +
+  # labs(x = "Reproduction mode") +
+  labs(y = "Flowering initiation (month)") +
+  scale_y_continuous(limits = c(1, 10), breaks = c(1, 3, 5, 7, 9)) +
+  # scale_y_discrete(name = "Flowering initiation (month)",
+  #                    labels = c("January", "February", "March", "April",
+  #                               "May", "June", "July", "August",
+  #                               "September", "October", "November", "December"),
+  #                  limits = c("Februrary", "November")) + # can't get it to work...
+  # ggtitle("Apomixis and phenology") +
+  theme(legend.position = "none") +
+  theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "gray50"),
+        plot.title = element_text(size = 24, hjust = 0.5),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        axis.title.x = element_blank()
+  ) +
+  theme(aspect.ratio = 3/2) +
+  stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = .75, linetype = "dashed") +
+  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -12.5)
+# geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") +
+# scale_colour_brewer(palette = "Set1", direction = -1)
+boxplot_StrictlyAlps
+
+##### ======================================= #####
+
+##### Regular modeling ##### 
+### Apomixis VS altitude
+plot(Repr_mode_summ ~ Altitude, data = DATA)
+m1 <- glm(Repr_mode_summ ~ Altitude + Ploidy + GS, data = data_red, family = "binomial")
+summary(m1)
+plot(m1)
+
+### We can use the unsummarized dataset here since we don't take into account phylogeny
+plot(GS ~ Altitude, data = DATA) 
+abline(lm(GS ~ Altitude, data = DATA), col="red")
+summary(lm(GS ~ Altitude, data = DATA))
+plot(lm(GS ~ Altitude, data = DATA))
+
+plot(density(DATA$Altitude, na.rm=T)) # data also looks bimodal... 
+plot(density(DATA$GS, na.rm=T))
+
+# lm(Repr_mode ~ PloidyEvenOdd, DATA_red)
+
+###
+
+plot(GS ~ Altitude, data = DATA_red) # big genomes have massive leverage (ie: influential observations)
+abline(lm(GS ~ Altitude, data = DATA_red), col="red")
+summary(lm(GS ~ Altitude, data = DATA_red))
+
+plot(log(GS) ~ Altitude, data = DATA_red)
+abline(lm(log(GS) ~ Altitude, data = DATA_red), col="red")
+plot(lm(log(GS) ~ Altitude, data = DATA_red)) # log transformation mitigates but doesn't solve the issue
+summary(lm(GS ~ Altitude, data = DATA_red))
+
+###
+
+plot(lm(`1C` ~ Altitude, data = DATA))
+plot(`1C` ~ Altitude, data = DATA)
+abline(lm(`1C` ~ Altitude, data = DATA), col = "red")
+summary(lm(`1C` ~ Altitude, data = DATA))
+
+###
+
+plot(lm(GS_per_chrm ~ Altitude, data = DATA))
+plot(GS_per_chrm ~ Altitude, data = DATA)
+abline(lm(GS_per_chrm ~ Altitude, data = DATA), col = "red")
+summary(lm(GS_per_chrm ~ Altitude, data = DATA))
+
+###
+# DATA_2xOnly <- DATA[DATA$Ploidy == levels(DATA$Ploidy)[1], ]
+# DATA_2xOnly$Ploidy <- gsub('x', '', DATA_2xOnly)
+# levels(DATA_2xOnly$Ploidy) <- droplevels(DATA_2xOnly$Ploidy)
+#
+plot(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ])
+abline(lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ]), col = "red")
+plot(lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ]))
+summary(lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ]))
+
+##### GLM ##### 
+data_red
+
+glm1 <- glm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+            data = data_red, family = binomial(link = 'logit'))
+plot(glm1)
+summary(glm1)
+
+glm2 <- glm(Repr_mode_summ ~ Altitude + Ploidy_summ + Init.month + Tot.months, 
+            data = data_red, family = binomial(link = 'logit'))
+plot(glm2)
+summary(glm2)
+
+library(caper)
+library(MCMCglmm)
+### Hieracium + Pilosella
+clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T)
+
+with(data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], table(Repr_mode))
+
+glm3 <- glm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+            data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], family = binomial(link = 'logit'))
+plot(glm3)
+summary(glm3)
+
+### Cichorieae tribe
+clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T)
+
+with(data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], table(Repr_mode))
+
+glm3 <- glm(Repr_mode_summ ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+            data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], family = binomial(link = 'logit'))
+plot(glm3)
+summary(glm3)
+
+### MCMCglmm on subsets of species 
+mHieraciumSS <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+                                 data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], 
+                                 family = "threshold", trunc = T, 
+                                 prior = list(R = list(V = diag(1), nu = 2)),
+                                 nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+                                 )
+summary(mHieraciumSS)
+plot(mHieraciumSS)
+
+mHieracium <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+                                 data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], 
+                                 family = "threshold", trunc = T, 
+                                 prior = list(R = list(V = diag(1), nu = 2)),
+                                 nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+                                 )
+summary(mHieracium)
+plot(mHieracium)
+
+mCichorieae <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+                                 data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], 
+                                 family = "threshold", trunc = T, 
+                                 prior = list(R = list(V = diag(1), nu = 2)),
+                                 nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+                                 )
+summary(mCichorieae)
+plot(mCichorieae)
+
+### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts. 
+
+
+# ##### MCMC models ##### 
+# ### Data prep
+# head(DATA_CC_red)
+# 
+# str(JanTree4)
+# str(JanTree5) # JanTree4 but fully dichotomous tree
+# 
+# animal <- as.data.frame(JanTree4$tip.label)
+# 
+# data <- DATA_CC_red[match(JanTree4$tip.label, DATA_CC_red$SpeciesName), ]
+# rownames(data) <- JanTree4$tip.label
+# rownames(data)
+# colnames(data)[2] <- "animal"
+# head(data)
+# 
+# ### Missing values are not permitted... 
+# nrow(data)
+# data_red <- data[complete.cases(data), ]
+# nrow(data_red)
+# rownames(data_red)
+# setdiff(data$animal, data_red$animal) # missing accessions other than those taxa not in Flora Alpina are due to missing Altitude datum... 
+# data_red <- data_red[match(JanTree4_red$tip.label, data_red$animal), ]
+# 
+# ### Handle tree
+# setdiff(JanTree4$tip.label, data_red$animal)
+# setdiff(data_red$animal, JanTree4$tip.label)
+# JanTree4_red <- ape::drop.tip(JanTree4, setdiff(JanTree4$tip.label, data_red$animal))
+# setdiff(JanTree4_red$tip.label, data_red$animal)
+# rownames(data_red) <- data_red$animal
+# geiger::name.check(JanTree4_red, data_red) # name.check is not to be trusted lately... 
+# setdiff(JanTree4_red$tip.label, data_red$animal)
+# setdiff(data_red$animal, JanTree4_red$tip.label)
+# nrow(data_red) == length(JanTree4_red$tip.label)
+# # View(cbind(JanTree4_red$tip.label, data_red$animal, rownames(data_red))) # sanity check
+# plot(JanTree4_red, cex = .25)
+# is.binary(JanTree4_red)
+# JanTree4_red <- multi2di(JanTree4_red) # randomly resolve polytomies
+# is.binary(JanTree4_red)
+# plot(JanTree4_red, cex = .25)
+# is.ultrametric(JanTree4_red)
+# JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen") # compute branch lengths
+# is.ultrametric(JanTree4_red)
+# JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # no branch lengths have value zero
+# plot(JanTree4_red, cex = .3)
+# JanTree4_red
+# 
+# ### Handle data
+# str(data_red)
+# data_red$animal <- as.factor(data_red$animal)
+# data_red$Repr_mode <- data_red$Repr_mode_summ
+# levels(data_red$Repr_mode) <- list(Sexual = "Sexual", Apomictic = c("Apomicitc", "Mixed")) # 2 levels
+# data_red$Repr_mode_summ <- factor(data_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic" )) # 3 levels
+# data_red$PloidyEvenOdd <- as.factor(data_red$PloidyEvenOdd)
+# data_red$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_red$Ploidy)
+# data_red$Ploidy_summ <- factor(data_red$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
+# table(data_red$Ploidy_summ)
+# data_red$Phytosociology <- as.factor(data_red$Phytosociology)
+# data_red$Ca <- as.factor(data_red$Ca)
+# data_red$Ca.Si <- as.factor(data_red$Ca.Si)
+# data_red$Si <- as.factor(data_red$Si)
+# data_red$pH <- as.factor(data_red$pH)
+# data_red$N <- as.factor(data_red$N)
+# data_red$Water <- as.factor(data_red$Water)
+# data_red$w <- as.factor(data_red$w)
+# class(data_red) <- "data.frame"
+# levels(data_red$animal)
+# # test <- sapply(data_red, as.factor) # or use sapply y'know... 
+# 
+# ### Make sure factor levels are correct
+# data_red$Repr_mode_summ <- factor(data_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+# data_red$Ploidy <- factor(data_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+# 
+# ##### Binomial (categorical) distribution - weak priors #####
+# library(MCMCglmm)
+# # prior <- list(R = list(V = 1, nu = 0.002)) # Maite's prior, weak
+# # nitt= 1000000, thin=500, burnin=25000 # Maite's run parameters
+# # prior <- list(R = list(V = 1, nu = 0.002, fix = 1))
+# # 
+# # prior <- list(R = list(V = 1, nu = 0.002),
+# #               G = list(G1 = list(V = 1, nu = 0.002))
+# #               )
+# # 
+# # a = 1000
+# # prior <- list(R = list(V = diag(3), nu = 0.002),
+# #               G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a))) # strong prior
+# # 
+# # prior <- list(R = list(V = diag(3), nu = 0.002),
+# #                G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
+# #                         G2 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
+# #                         G3 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a)))
+# # 
+# # prior = list(R = list(V = diag(2), fix = 1), 
+# #              G = list(G1 = list(V = diag(2), nu = 1, alpha.mu = c(0, 0), alpha.V = diag(2) * 100))
+# #              )
+# # 
+# prior <- list(R = list(V = diag(2), nu = 2))
+# # 
+# # a = 1000
+# # prior <- list(V = diag(2), nu = 2, alpha.mu = c(0,0), alpha.V = diag(2)*a)
+# # 
+# # prior <- list(R = list(fix = 1, V = diag(2), nu = 0.002), 
+# #               B = list(mu = rep(0, 5), V = diag(5)*1e4))
+# 
+# set.seed(111)
+# mBin1 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                  family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+# plot(mBin1)
+# summary(mBin1)
+# 
+# set.seed(111)
+# mBin1_noGS <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                   family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+# plot(mBin1_noGS)
+# summary(mBin1_noGS)
+# 
+# # mBin1_evenodd <- MCMCglmm(Repr_mode_summ ~ Altitude + PloidyEvenOdd + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+# #                   family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+# # plot(mBin1_evenodd)
+# # summary(mBin1_evenodd)
+# 
+# # want eff. samp to be close to the sample size given, if big difference = bad
+# plot(mBin1$VCV) # If you can see one particularly high peak at the start increase burnin so sampling will start after trace has evened out
+# plot(mBin1$Sol) # Want traces to be relatively even and compacted
+# 
+# mean(mBin1$Sol[,"Altitude"]) # this gives the coefficient printed by summary(mBin1)
+# mean(exp(mBin1$Sol[,"Altitude"])) # this gives the odds ratio
+# 
+# mean(exp(mBin1$Sol[,"Altitude"]))
+# mean(exp(mBin1$Sol[,"Ploidy3x"]))
+# mean(exp(mBin1$Sol[,"Ploidy4x"]))
+# mean(exp(mBin1$Sol[,"Ploidy6x"]))
+# mean(exp(mBin1$Sol[,"Ploidy8x"]))
+# mean(exp(mBin1$Sol[,"GS"]))
+# mean(exp(mBin1$Sol[,"Init.month"]))
+# 
+# (mean(exp(mBin1$Sol[,"Altitude"]))-1)*100 # % change in the probability of being sexual per unit of Altitude
+# (mean(exp(mBin1$Sol[,"Ploidy3x"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Ploidy4x"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Ploidy6x"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Ploidy8x"]))-1)*100
+# (mean(exp(mBin1$Sol[,"GS"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Init.month"]))-1)*100
+# 
+# mean(exp(mBin1$Sol[,"Altitude"]))/(1+mean(exp(mBin1$Sol[,"Altitude"]))) # probability of being sexual having Alitutde at its mean (?)
+# mean(exp(mBin1$Sol[,"Ploidy3x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy3x"]))) # probability of being sexual being 3x
+# mean(exp(mBin1$Sol[,"Ploidy4x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy4x"])))
+# mean(exp(mBin1$Sol[,"Init.month"]))/(1+mean(exp(mBin1$Sol[,"Init.month"]))) # probability of being sexual having Init.month at its mean (?)
+# 
+# # ### from Jerrod Hadfield's course notes on MCMCglmm: 
+# # IC.1 <- mBin1$VCV[, 1]/(rowSums(mBin1$VCV) + pi^2/3)
+# # IC.2 <- mBin2$VCV[, 1]/(rowSums(mBin2$VCV) + pi^2/3)
+# # plot(mcmc.list(IC.1, IC.2))
+# # 
+# # c2 <- ((16 * sqrt(3))/(15 * pi))^2
+# # Int.1 <- mBin1$Sol/sqrt(1 + c2 * mBin1$VCV[, 2])
+# # Int.2 <- mBin2$Sol/sqrt(1 + c2 * mBin2$VCV[, 2])
+# # plot(mcmc.list(as.mcmc(Int.1), as.mcmc(Int.2)))
+# 
+# ###
+# set.seed(569)
+# mBin2 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                   family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+# summary(mBin2)
+# plot(mBin2)
+# 
+# ###
+# set.seed(935)
+# mBin3 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                            family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+# summary(mBin3)
+# plot(mBin3)
+# 
+# ### Check convergence of multiple chains
+# chainListBin1 <- mcmc.list(mBin1$Sol, mBin2$Sol, mBin3$Sol)
+# chainListBin2 <- mcmc.list(mBin1$VCV, mBin2$VCV, mBin3$VCV)
+# ### Gelman rubin diagnostic: should be close to 1.
+# gelman.diag(chainListBin1)
+# gelman.diag(chainListBin2)
+# 
+# heidel.diag(mBin1$VCV)
+# heidel.diag(mBin2$VCV)
+# heidel.diag(mBin3$VCV)
+# heidel.diag(mBin1$Sol)
+# heidel.diag(mBin2$Sol)
+# heidel.diag(mBin3$Sol)
+# 
+# geweke.plot(mBin1$Sol)
+# geweke.plot(mBin2$Sol)
+# geweke.plot(mBin3$Sol)
+# 
+# ##### Binomial (categorical) distribution - strong priors #####
+# prior_strong <- list(R = list(fix = 2, V = diag(2)*a, nu = 2)) # strong prior
+# # nitt= 1000000, thin=500, burnin=25000 # same run parameters as wek prior's models
+# set.seed(111)
+# mBin4 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+# summary(mBin4)
+# plot(mBin4)
+# 
+# # set.seed(111)
+# # mBin4_evenodd <- MCMCglmm(Repr_mode ~ Altitude + PloidyEvenOdd + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+# #                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+# # summary(mBin4_evenodd)
+# # plot(mBin4_evenodd)
+# 
+# ### 
+# set.seed(569)
+# mBin5 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+# summary(mBin5)
+# plot(mBin5)
+# 
+# ### 
+# set.seed(935)
+# mBin6 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red, 
+#                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+# summary(mBin6)
+# plot(mBin6)
+# 
+# ### Check convergence of multiple chains
+# chainListBin3 <- mcmc.list(mBin4$Sol, mBin5$Sol, mBin6$Sol)
+# chainListBin4 <- mcmc.list(mBin4$VCV, mBin5$VCV, mBin6$VCV)
+# 
+# ### Gelman rubin diagnostic: should be close to 1.
+# gelman.diag(chainListBin3)
+# gelman.diag(chainListBin4)
+# 
+# heidel.diag(mBin4$VCV)
+# heidel.diag(mBin4_evenodd$VCV)
+# heidel.diag(mBin5$VCV)
+# heidel.diag(mBin6$VCV)
+# heidel.diag(mBin4$Sol)
+# heidel.diag(mBin4_evenodd$Sol)
+# heidel.diag(mBin5$Sol)
+# heidel.diag(mBin6$Sol)
+# 
+# geweke.plot(mBin4$Sol)
+# geweke.plot(mBin5$Sol)
+# geweke.plot(mBin6$Sol)
+# 
+# 
+# 
+# ##### Maite's model ##### 
+# library(MCMCglmm)
+# 
+# data_red$Repr_mode # 2 levels
+# data_red$Repr_mode_summ # 3 levels
+# 
+# ### Phylogeny black magic... 
+# invJanTree4_red <- inverseA(JanTree4_red, nodes = "ALL", scale = TRUE) # ALL is better for large phylogenies
+# invJanTree4_red_tips <- inverseA(JanTree4_red, nodes = "TIPS", scale = TRUE)
+# 
+# #########
+# prior_nu1000_1 <- list(R = list(V = 1, fix = 1), 
+#                        G = list(G1 = list(V = 1, nu = 1000, alpha.mu = 0, alpha.V = 1))
+#                        ) 
+# 
+# set.seed(111)
+# mTre1 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                   ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                   random = ~animal, 
+#                   verbose = T, 
+#                   data = data_red, 
+#                   family = "threshold", 
+#                   trunc = T, 
+#                   prior = prior_nu1000_1, 
+#                   nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre1)
+# plot(mTre1)
+# 
+# heidel.diag(mTre1$VCV) 
+# heidel.diag(mTre1$Sol)
+# geweke.plot(mTre1$Sol)
+# autocorr.diag(mTre1$Sol)
+# 
+# mTre1_noPhy <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                         verbose = T, data = data_red, 
+#                         family = "threshold", 
+#                         trunc = T, 
+#                         prior = prior_nu1000_1, 
+#                         nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre1_noPhy)
+# plot(mTre1_noPhy)
+# 
+# ### Repr_mode with only 2 levels
+# mTre1.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                     ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                     random = ~animal, 
+#                     verbose = T, 
+#                     data = data_red, 
+#                     family = "threshold", 
+#                     trunc = T, 
+#                     prior = prior_nu1000_1, 
+#                     nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre1.1)
+# # plot(mTre1.1)
+# 
+# heidel.diag(mTre1.1$VCV) 
+# heidel.diag(mTre1.1$Sol)
+# geweke.plot(mTre1.1$Sol)
+# autocorr.diag(mTre1.1$Sol)
+# 
+# ##### Second batch: set.seed(534) #####
+# print("Second batch: set.seed(534)")
+# set.seed(534)
+# ### Repr_mode with only 3 levels
+# mTre2 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                   ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                   random = ~ animal, 
+#                   verbose = T, 
+#                   data = data_red, 
+#                   family = "threshold", 
+#                   trunc = T, 
+#                   prior = prior_nu1000_1, 
+#                   nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre2)
+# print("DiagPlots_mTre2.1%03d.png")
+# png('DiagPlots_mTre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+# plot(mTre2, ask = F)
+# 
+# dev.off()
+# 
+# heidel.diag(mTre2$VCV)
+# heidel.diag(mTre2$Sol)
+# print("Geweke_mTre2%03d.png")
+# png('Geweke_mTre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+# geweke.plot(mTre2$Sol, ask = F)
+# 
+# dev.off()
+# autocorr.diag(mTre2$Sol)
+# 
+# ### Repr_mode with only 2 levels
+# mTre2.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                     ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                     random = ~ animal, 
+#                     verbose = T, 
+#                     data = data_red, 
+#                     family = "threshold", 
+#                     trunc = T, 
+#                     prior = prior_nu1000_1, 
+#                     nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre2.1)
+# print("DiagPlots_mTre2.1%03d.png")
+# png('DiagPlots_mTre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+# plot(mTre2.1, ask = F)
+# 
+# dev.off()
+# 
+# heidel.diag(mTre2.1$VCV) 
+# heidel.diag(mTre2.1$Sol)
+# print("Geweke_mTre2.1.png")
+# png('Geweke_mTre2.1.png', width = 15, height = 15, units = 'cm', res = 300)
+# geweke.plot(mTre2.1$Sol, ask = F)
+# 
+# dev.off()
+# autocorr.diag(mTre2.1$Sol)
+# 
+# ##### Third batch: set.seed(386) #####
+# print("Third batch: set.seed(386)")
+# set.seed(386)
+# ### Repr_mode with only 3 levels
+# mTre3 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                   ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                   random = ~ animal, 
+#                   verbose = T, 
+#                   data = data_red, 
+#                   family = "threshold", 
+#                   trunc = T, 
+#                   prior = prior_nu1000_1, 
+#                   nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre3)
+# print("DiagPlots_mTre3.1%03d.png")
+# png('DiagPlots_mTre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+# plot(mTre3, ask = F)
+# 
+# dev.off()
+# 
+# heidel.diag(mTre3$VCV)
+# heidel.diag(mTre3$Sol)
+# print("Geweke_mTre3%03d.png")
+# png('Geweke_mTre3%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+# geweke.plot(mTre3$Sol, ask = F)
+# 
+# dev.off()
+# autocorr.diag(mTre3$Sol)
+# 
+# ### Repr_mode with only 2 levels
+# mTre3.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                     ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                     random = ~ animal, 
+#                     verbose = T, 
+#                     data = data_red, 
+#                     family = "threshold", 
+#                     trunc = T, 
+#                     prior = prior_nu1000_1, 
+#                     nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mTre3.1)
+# print("DiagPlots_mTre3.1%03d.png")
+# png('DiagPlots_mTre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+# plot(mTre3.1, ask = F)
+# 
+# dev.off()
+# 
+# heidel.diag(mTre3.1$VCV) 
+# heidel.diag(mTre3.1$Sol)
+# print("Geweke_mTre3.1.png")
+# png('Geweke_mTre3.1.png', width = 15, height = 15, units = 'cm', res = 300)
+# geweke.plot(mTre3.1$Sol, ask = F)
+# 
+# dev.off()
+# autocorr.diag(mTre3.1$Sol)
+# 
+# ##### Multiple chains convergence diagnostics ##### 
+# chainListTre1_Sol <- mcmc.list(mTre1$Sol, mTre2$Sol, mTre3$Sol)
+# chainListTre1_VCV <- mcmc.list(mTre1$VCV, mTre2$VCV, mTre3$VCV)
+# 
+# chainListTre2_Sol <- mcmc.list(mTre1.1$Sol, mTre2.1$Sol, mTre3.1$Sol)
+# chainListTre2_VCV <- mcmc.list(mTre1.1$VCV, mTre2.1$VCV, mTre3.1$VCV)
+# 
+# ### Gelman rubin diagnostic: should be close to 1
+# gelman.diag(chainListTre1_Sol)
+# gelman.diag(chainListTre1_Sol)
+# 
+# gelman.diag(chainListTre2_Sol)
+# gelman.diag(chainListTre2_Sol)
+# 
+# 
+# 
+# ##### DIFFERENT prior ##### 
+# library(MCMCglmm)
+# prior_G.V1000_nu.0002_1 <- list(R = list(V = 1000, fix = 1000), 
+#                        G = list(G1 = list(V = 1000, nu = 200, alpha.mu = 1000, alpha.V = 10000))
+#                        ) 
+# 
+# set.seed(111)
+# mTre4 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, 
+#                   ginverse = list(animal = invJanTree4_red_tips$Ainv), 
+#                   random = ~animal, 
+#                   verbose = T, 
+#                   data = data_red, 
+#                   family = "threshold", 
+#                   trunc = T, 
+#                   prior = prior_nu.0002_1, 
+#                   nitt = 10000, thin = 50, burnin = 100)
+# summary(mTre4)
+# plot(mTre4)
+
+
+
+##### phylosig #####
+### Must give a named numerical vector to the function; use SetNames to set the names
+### Factors in R are always encoded numerically, you can get that index via as.numeric(myfactor)
+library(phytools)
+
+data_lambda_k <- DATA_CC_mean_red
+class(data_lambda_k) <- "data.frame"
+str(data_lambda_k)
+ToBeFactors <- c("ID_FloraAlpina", "ID", "Repr_mode_summ", "Chr.number", "PloidyEvenOdd",
+                 "Endemic", "Indigenous", "Distribution", "CompleteName",
+                 "Collinaire", "Montane", "Subalpine", "Alpine", "Nival",
+                 "Init.month", "Tot.months", "Phytosociology", "Habitat",
+                 "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w", "Sect_Occ", "Repr_mode")
+data_lambda_k[ToBeFactors] <- lapply(data_lambda_k[ToBeFactors], factor)
+str(data_lambda_k)
+rownames(data_lambda_k) <- data_lambda_k$SpeciesName
+
+geiger::name.check(JanTree4, DATA_CC_mean_red)
+
+i = 5
+K_lambda_table <- data.frame("Variable" = character(),
+                             "K" = double(), "p_K" = double(), "p_k-stars" = character(),
+                             "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
+                             stringsAsFactors = F)
+while (i %in% 5:ncol(data_lambda_k)) {
+  obj1 <- phylosig(tree = JanTree4, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "K", test = T)
+  obj2 <- phylosig(tree = JanTree4, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "lambda", test = T)
+  K_lambda_table[i-4,] <- cbind(colnames(data_lambda_k[i]),
+                                obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
+                                obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
+  )
+  i = i + 1
+}
+K_lambda_table
+
+### lambda tells about the distribution of the traits in relation to evolution by brownian motion;
+### lambda close to 0: completely uncorrelated species; lambda close to 1: brownian motion
+### K tells about the ripartition of variance between clades;
+### K < 1: variance mainly within clades; K > 1: variance mainly among clades.
+
+write.csv(K_lambda_table, file = "Phylosig_K_lambda.csv")
+
+##### THE END #####
