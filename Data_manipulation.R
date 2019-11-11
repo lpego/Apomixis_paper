@@ -273,15 +273,15 @@ DATA$SpeciesName
 str(DATA)
 
 ### Pick similar species to fill gaps
-DATA[DATA$SpeciesName == "Hieracium_valdepilosum", 12:117] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 12:117][1,]
-DATA[DATA$SpeciesName == "Hieracium_glaucopsis", 12:117] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 12:117][1,]
-DATA[DATA$SpeciesName == "Hieracium_cydoniifolium", 12:117] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 12:117][1,]
-DATA[DATA$SpeciesName == "Hieracium_froelichianum", 12:117] <- FloraAlpina[grep('Hieracium bifidum', FloraAlpina$CompleteName), 2:107]
-DATA[DATA$SpeciesName == "Hieracium_ramosissimums_subsp._lactucifolium", 12:117] <- DATA[DATA$SpeciesName == "Hieracium_amplexicaule", 12:117][1,]
-DATA[DATA$SpeciesName == "Schlagintweitia_huteri_subsp._lantoscana", 12:117] <- DATA[DATA$SpeciesName == "Schlagintweitia_intybacea", 12:117][1,]
-DATA[DATA$SpeciesName == "Aremisia_nitida", 12:117] <- DATA[DATA$SpeciesName == "Artemisia_glacialis", 12:117][1,] # doesn't have altitude in any case
-DATA[DATA$SpeciesName == "Sonchus_tenerrimus", 12:117] <- DATA[DATA$SpeciesName == "Sonchus_oleraceus", 12:117][1,]
-DATA[DATA$SpeciesName == "Calendula_tripterocarpa", 12:117] <- FloraAlpina[grep('Calendula arvensis', FloraAlpina$CompleteName), 2:107]
+DATA[DATA$SpeciesName == "Hieracium_valdepilosum", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 11:116][1,]
+DATA[DATA$SpeciesName == "Hieracium_glaucopsis", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 11:116][1,]
+DATA[DATA$SpeciesName == "Hieracium_cydoniifolium", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 11:116][1,]
+DATA[DATA$SpeciesName == "Hieracium_froelichianum", 11:116] <- FloraAlpina[grep('Hieracium bifidum', FloraAlpina$CompleteName), 2:107]
+DATA[DATA$SpeciesName == "Hieracium_ramosissimums_subsp._lactucifolium", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_amplexicaule", 11:116][1,]
+DATA[DATA$SpeciesName == "Schlagintweitia_huteri_subsp._lantoscana", 11:116] <- DATA[DATA$SpeciesName == "Schlagintweitia_intybacea", 11:116][1,]
+DATA[DATA$SpeciesName == "Aremisia_nitida", 11:116] <- DATA[DATA$SpeciesName == "Artemisia_glacialis", 11:116][1,] # doesn't have altitude in any case
+DATA[DATA$SpeciesName == "Sonchus_tenerrimus", 11:116] <- DATA[DATA$SpeciesName == "Sonchus_oleraceus", 11:116][1,]
+DATA[DATA$SpeciesName == "Calendula_tripterocarpa", 11:116] <- FloraAlpina[grep('Calendula arvensis', FloraAlpina$CompleteName), 2:107]
 
 ##### Factorization of variables ##### 
 ### Need to reshape some data formats in order to use them
@@ -490,7 +490,7 @@ i = 1
 Repr_mode_summ <- factor(rep(1, length(unique(DATA$SpeciesName))))
 levels(Repr_mode_summ) <- c("Apomictic", "Sexual", "Mixed")
 Repr_mode_summ <- data.frame(Repr_mode_summ, "SpeciesName" = unique(DATA$SpeciesName))
-while (i <= length(DATA$Repr_mode)) {
+while (i <= length(unique(DATA$SpeciesName))) {
   if (length(levels(droplevels(DATA[which(unique(DATA$SpeciesName)[i] == DATA$SpeciesName), "Repr_mode"]))) >= 2) {
     Repr_mode_summ$Repr_mode_summ[i] <- "Mixed"} else {
       Repr_mode_summ$Repr_mode_summ[i] <- as.character(first(DATA[which(unique(DATA$SpeciesName)[i] == DATA$SpeciesName), "Repr_mode"]))
@@ -761,7 +761,7 @@ i = 1
 Repr_mode_summ <- factor(rep(1, length(unique(DATA_CC$SpeciesName))))
 levels(Repr_mode_summ) <- c("Apomictic", "Sexual", "Mixed")
 Repr_mode_summ <- data.frame(Repr_mode_summ, "SpeciesName" = unique(DATA_CC$SpeciesName))
-while (i <= length(DATA_CC$Repr_mode)) {
+while (i <= length(unique(DATA_CC$SpeciesName))) {
   if (length(levels(droplevels(as.factor(DATA_CC[which(unique(DATA_CC$SpeciesName)[i] == DATA_CC$SpeciesName), "Repr_mode"])))) >= 2) {
     Repr_mode_summ$Repr_mode_summ[i] <- "Mixed"} else {
       Repr_mode_summ$Repr_mode_summ[i] <- as.character(first(DATA_CC[which(unique(DATA_CC$SpeciesName)[i] == DATA_CC$SpeciesName), "Repr_mode"]))
@@ -805,7 +805,7 @@ DATA_CC_red <- DATA_CC %>%
          Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, 
          Water, w, Sect_Occ) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(funs(first))
+  summarize_all(list(first))
 
 DATA_CC_red <- DATA_CC_red[order(DATA_CC_red$SpeciesName),]
 nrow(DATA_CC_red)
@@ -901,13 +901,15 @@ elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
 
 elevation_Ozenda$avg <- sapply(1:nrow(elevation_Ozenda), function(x) sum(elevation_Ozenda[x,2:6])/elevation_Ozenda[x,"sum"])
 ### write to file
-write.csv(cbind(read.csv(file = "DATA_StrictlyAlps_red_man.csv", header = T), 
+write.csv(cbind(read.csv(file = "DATA_CC_mean_red.csv", header = T), 
                 elevation_Ozenda = elevation_Ozenda[, "avg"]), 
-          file = "DATA_StrictlyAlps_red_man_elevation_Ozenda.csv")
+          file = "DATA_CC_mean_red_elevation_Ozenda.csv")
 
-nrow(DATA_CC)
-unique(DATA_CC$SpeciesName)
-complete.cases(DATA_CC[,c(1:4, 29, 5:6, 30, 7:28)])
+DATA_CC_mean_red <- cbind(DATA_CC_mean_red, elevation_Ozenda = elevation_Ozenda[, "avg"])
+
+nrow(DATA_CC_mean_red)
+unique(DATA_CC_mean_red$SpeciesName)
+complete.cases(DATA_CC_mean_red[,c(1:4, 6:7, 19, 31)])
 
 
 
@@ -1122,7 +1124,7 @@ i = 1
 Repr_mode_summ <- factor(rep(1, length(unique(DATA_StrictlyAlps$SpeciesName))))
 levels(Repr_mode_summ) <- c("Apomictic", "Sexual", "Mixed")
 Repr_mode_summ <- data.frame(Repr_mode_summ, "SpeciesName" = unique(DATA_StrictlyAlps$SpeciesName))
-while (i <= length(DATA_StrictlyAlps$Repr_mode)) {
+while (i <= length(unique(DATA_StrictlyAlps$SpeciesName))) {
   if (length(levels(droplevels(as.factor(DATA_StrictlyAlps[which(unique(DATA_StrictlyAlps$SpeciesName)[i] == DATA_StrictlyAlps$SpeciesName), "Repr_mode"])))) >= 2) {
     Repr_mode_summ$Repr_mode_summ[i] <- "Mixed"} else {
       Repr_mode_summ$Repr_mode_summ[i] <- as.character(first(DATA_StrictlyAlps[which(unique(DATA_StrictlyAlps$SpeciesName)[i] == DATA_StrictlyAlps$SpeciesName), "Repr_mode"]))
@@ -1132,7 +1134,7 @@ while (i <= length(DATA_StrictlyAlps$Repr_mode)) {
 Repr_mode_summ
 
 Repr_mode_summ <- Repr_mode_summ[order(Repr_mode_summ[, "SpeciesName"]), ]
-Repr_mode_summ_ext <- merge(DATA_StrictlyAlps, Repr_mode_summ, by = "SpeciesName", all.x = T)[, c("SpeciesName", "Repr_mode_summ")]
+Repr_mode_summ_ext <- merge(DATA_StrictlyAlps, Repr_mode_summ, by = "SpeciesName", all.x = T)[, c(1, 126)]
 
 ### Make sure both dataset are in the same order before pasting the modified Repr_mode
 # View(cbind(Repr_mode_summ_ext[order(Repr_mode_summ_ext$SpeciesName),], DATA_StrictlyAlps[order(DATA_StrictlyAlps$SpeciesName), c(3,5)]))
@@ -1225,12 +1227,12 @@ write.tree(JanTree4_StrictlyAlps, file = "JanTree4_StrictlyAlps.tre")
 Temp1 <- DATA_StrictlyAlps %>% 
   select(to_keep[-c(5,8)]) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(funs(first))
+  summarize_all(list(first))
 
 Temp2 <- DATA_StrictlyAlps %>% 
   select(to_keep[c(1,3,5,8)]) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(funs(mean), na.rm = T)
+  summarize_all(list(mean), na.rm = T)
 
 DATA_StrictlyAlps_mean_red <- merge(Temp1, Temp2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
 colnames(DATA_StrictlyAlps_mean_red)
