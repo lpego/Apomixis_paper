@@ -81,6 +81,7 @@ plot(GS ~ Alpine, data = DATA_red)
 plot(GS ~ Nival, data = DATA_red)
 par(mfrow=c(1,1))
 
+### Is Init.month different between Sexual and Apomictic species? 
 class(DATA_red)
 test1 <- as.vector(DATA_red[DATA_red$Repr_mode_summ == "Sexual" & !is.na(DATA_red$Init.month), "Init.month"])
 class(test1) <- "data.frame"
@@ -124,119 +125,7 @@ geiger::name.check(JanTree5, DATA_red)
 
 ##### VISUALIZATION #####
 
-##### Mapping traits on tree ##### 
-### Preparing data 
-cex_original <- 1
-plot(JanTree5, cex = 0.25, no.margin = T, label.offset = 2, edge.width = 1.5) # can see more tree plotting options with: ?plot.phylo
-add.scale.bar(x=11, y=0.1, cex=0.7)
-cex <- cex_original
-par(mfrow=c(1,1))
-
-### GS
-GS <- DATA_red$GS
-names(GS) <- DATA_red$SpeciesName # makes a named vector
-phytools::plotTree.barplot(JanTree5, GS, type = "phylogram", args.plotTree = list(lwd = 1, fsize = .25))
-
-### Altitude
-Altitude <- as.numeric(DATA_red$Altitude)
-names(Altitude) <- DATA_red$SpeciesName # makes a named vector
-str(Altitude)
-str(JanTree5)
-JanTree6 <- compute.brlen(JanTree5)
-JanTree6$edge.length
-phytools::plotTree.barplot(JanTree5, Altitude, type = "phylogram", args.plotTree = list(lwd = 1, fsize = .25))
-par(mfrow=c(1,1))
-
-### Attempt at making a decent palette...
-library(RColorBrewer)
-display.brewer.all()
-colors.ploidy <- brewer.pal(6, "Dark2")[Ploidy]
-
-colors.altitude <- brewer.pal(6, "YlOrBr")[Altitude_cat]
-
-# make own palette
-BrownGreen <- colorRampPalette(rev(c("chocolate4", "chartreuse4")))
-BrownGreen(20)
-plot(rep(1,6),col=BrownGreen(6),pch=19,cex=3)
-
-colors.altitude2 <- BrownGreen(6)[Altitude_cat]
-
-#### Make a vector with colors, ordered by area:  area, area1, area2, etc
-colors <- c("black", "black")
-### Keep this the same (unsure why)
-colors.ploidy <- c("white","gray88","gray75", "gray60", "gray45", "black") 
-### 6 levels for ploidy
-colors.genome = c("white", "gray88", "gray75","gray60","gray45", "gray30", "black")
-### Do 7 levels (do a gradient)
-colors.altitude <- c("white", "gray88","gray60","gray45", "black")
-### Do levels (gradient)
-colors.rmode <- c("Red", "Black") # 2 levels only
-
-### Match the colour vector to area data
-Ploidy <- DATA_red$Ploidy
-colors2 <- colors.ploidy[Ploidy]
-
-Genome <- DATA_red$GS
-colors3 <- colors.genome[Genome]
-
-colors4 <- colors.altitude[DATA_red$Altitude]
-
-Rmode <- DATA_red$Repr_mode_summ
-colors5 <- colors.rmode[as.factor(DATA_red$Repr_mode_summ)]
-
-### Add coloured shapes to tree; ape functions
-par(mfrow = c(1,1))
-plot(JanTree5, cex = 0.25, no.margin = T, label.offset = 5, edge.width = 1.5)
-
-tiplabels(pch = 21, bg = colors.ploidy, col = "black", cex = .5, adj = 1.2)
-tiplabels(pch = 23, bg = colors.altitude, col = "black", cex = .5, adj = 2.2)
-
-tiplabels(pch = 21, bg = colors4, col=colors,cex=.5, adj=3.2)
-tiplabels(pch = 23, bg = colors5, col=colors,cex=.5, adj=4.2)
-
-### Categorize altitude
-Altitude_cat <- cut(DATA_red$Altitude, 
-                    breaks = c(-Inf, 600, 1300, 2000, 2500, Inf), 
-                    labels = c("collinaire", "montane", "subalpine", "alpine", "nival")
-                    )
-
-
-
-##### Phytools plotting #####
-library(phytools)
-plotTree(JanTree5, type = "fan", ftype="i", fsize = 0.25, lwd=1)
-
-ploidy_plot <- as.matrix(setNames(DATA_red$Ploidy, rownames(DATA_red)))
-ploidy_plot
-
-ploidy_cols <- setNames(RColorBrewer::brewer.pal(6, "Dark2"), levels(DATA_red$Ploidy))
-ploidy_cols
-
-dotTree(JanTree6, ploidy_plot, colors = ploidy_cols, data.type = "discrete", fsize = .25)
-
-dotTree(JanTree6, ploidy_plot, colors = ploidy_cols, data.type = "discrete", fsize = .25)
-
-# legend(0.0001,91, pch=c(21,21,21,21,21,21,22,22,22,22,22,22,22,23,23,23,23,23,24,24), col=c("black", "black", "black", "black"), pt.bg=c("white","gray88","gray75", "gray60", "gray45", "black", "white", "gray88", "gray75","gray60","gray45", "gray30", "black", "white", "gray88","gray60","gray45", "black", "White", "Black"), legend=c("2x","3x","4x","5x", "6x","8x", "0-5pg", "5.1-10pg", "10.1-15pg", "15.1-20pg", "21.1-25pg", "25.1-30pg", "30.1-35pg", "10-510m","511-1011m", "1012-1512m", "1513-2013m", "2014-2514m", "Sexual", "Apomitic"), cex=.7, bty="n", pt.cex=1.2 )
-legend(0.001,86, pch = c(21,21,21,21,21,23,23,22,22,22,22,22,22), 
-       col = c("black", "black", "black"), 
-       pt.bg = c("white", "gray88","gray60","gray45", "black", "White", "Black", "white", "gold", "yellowgreen", "red3", "steelblue1", "mediumorchid4"), 
-       legend = c("10-510m","511-1011m", "1012-1512m", "1513-2013m", "2014-2514m", "Sexual", "Apomitic", "2x","3x","4x","5x", "6x","8x"), 
-       cex = .7, bty = "n", pt.cex = 1.3)
-
-# Ploidy
-# 2x,3x,4x,5x,6x,8x
-# Genome size
-# 1=0-5, 2=5.1-10, 3=10.1-15, 4=15.1-20, 5=20.1-25, 6=25.1-30, 7=30.1-35
-# Altitude
-# 1=10-510,2=511-1011, 3=1012-1512, 4=1513-2013, 5=2014-2514
-
-# plot(Asteraceae_data$Ploidy ~ Asteraceae_data$Repr_mode_summ, cex = .1)
-
-# lm(DATA_red$Repr_mode_summ ~ DATA_red$Ploidy, data = DATA_red)
-
-DATA_red[which(DATA_red$Ploidy == "5x"),] # Calendula arvensis is the only 5x and is sexual... 
-
-### Plotting reproductive mode onto tree 
+### Phytools: plotting reproductive mode onto tree 
 library(phytools)
 plotTree(JanTree5, fsize = 0.25, lwd = 1, type = "fan")
 
@@ -259,11 +148,11 @@ tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1)
 dev.off()
 
 # ### Plotting character state along branches as well as on tips
-# png(filename = "ApomixisTree_ColBranches.png", width = 5000, height = 5000, units = "px", res = 600)
-# plotBranchbyTrait(JanTree5, Repr_mode_factor, mode = "tips", legend = F, palette = colorRampPalette(c("black", "red")), 
-#                   cex = 0.3, edge.width = 1.5, show.tip.label = F, type = "fan") # use colorRampPalette(c("black", "#d10000")) for a darker red
-# tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1) 
-# dev.off()
+png(filename = "ApomixisTree_ColBranches.png", width = 5000, height = 5000, units = "px", res = 600)
+plotBranchbyTrait(JanTree5, Repr_mode_factor, mode = "tips", legend = F, palette = colorRampPalette(c("black", "red")),
+                  cex = 0.3, edge.width = 1.5, show.tip.label = F, type = "fan") # use colorRampPalette(c("black", "#d10000")) for a darker red
+tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1)
+dev.off()
 
 ### Plotting ancestral character state reconstruction
 JanTree5.simMap <- make.simmap(JanTree5, Repr_mode_factor, model = "ER", nsim = 10)
