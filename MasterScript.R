@@ -241,6 +241,7 @@ ggJanTree5 + geom_facet(panel = "Altitude", data = DATA_red_ggtree, geom = geom_
                         mapping = aes(x = Altitude), stat = "identity", position = "dodge")
 
 str(DATA_red_ggtree[, c("SpeciesName", "Altitude")])
+is.na(DATA_red_ggtree$Altitude)
 DATA_red_ggtree[, c("Altitude")] <- as.integer(DATA_red_ggtree[, c("Altitude")])
 
 length(intersect(JanTree5$tip.label, DATA_red_ggtree$SpeciesName)) == length(JanTree5$tip.label)
@@ -256,7 +257,6 @@ ggplot(data = dummydata,
 
 ggJanTree5 + geom_facet(panel = "dummy", data = dummydata, geom = geom_barh, 
                         mapping = aes(x = dummy), stat = "identity") + xlim_expand(c(0,1500), "dummy")
-
 
 ### ggplot2 doesn't support multiple colour scales for different columns;
 ### one solution is to make an order list of colours based on the column's values and pass it directly as list of colours to geom_tippoint
