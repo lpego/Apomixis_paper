@@ -122,7 +122,6 @@ geiger::name.check(JanTree5, DATA_red)
 
 
 
-
 ##### VISUALIZATION #####
 
 ### Phytools: plotting reproductive mode onto tree 
@@ -143,23 +142,15 @@ Repr_mode_colours <- Repr_mode_colours[match]
 
 ### Regular plotting w/ character states at tips
 png(filename = "ApomixisTree_BlackBranches.png", width = 5000, height = 5000, units = "px", res = 600)
-plot(JanTree5, cex = .5, type = "fan", show.tip.label = F)
+plot(JanTree5, cex = .5, type = "fan", show.tip.label = T)
 tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1) 
-dev.off()
-
-# ### Plotting character state along branches as well as on tips
-png(filename = "ApomixisTree_ColBranches.png", width = 5000, height = 5000, units = "px", res = 600)
-plotBranchbyTrait(JanTree5, Repr_mode_factor, mode = "tips", legend = F, palette = colorRampPalette(c("black", "red")),
-                  cex = 0.3, edge.width = 1.5, show.tip.label = F, type = "fan") # use colorRampPalette(c("black", "#d10000")) for a darker red
-tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1)
 dev.off()
 
 ### Plotting ancestral character state reconstruction
 JanTree5.simMap <- make.simmap(JanTree5, Repr_mode_factor, model = "ER", nsim = 10)
+plotSimmap(JanTree5.simMap, type = "fan", fsize = .25)
 JanTree5.simMap_summ <- summary(JanTree5.simMap, plots = F)
 plot(JanTree5.simMap_summ, type = "fan", fsize = .35)
-
-plotSimmap(JanTree5.simMap, type = "fan", fsize = .25)
 
 
 
@@ -179,7 +170,7 @@ library(ggstance)
 # DATA_red$Repr_mode_summ <- as.factor(DATA_red$Repr_mode_summ)
 DATA_red$Altitude_cat <- as.factor(Altitude_cat)
 
-ape::Ntip(JanTree5) 
+Ntip(JanTree5) 
 
 DATA_red_ggtree <- DATA_CC_mean_red
 rownames(DATA_red_ggtree) <- NULL
@@ -230,7 +221,7 @@ ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
   geom_text2(aes(subset = node %in% mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1.1, nudge_y = 5) +
   geom_text2(aes(subset = node %in% mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1.1, nudge_y = 5) +
   geom_text2(aes(subset = node %in% mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1.1, nudge_y = 5) +
-  geom_tippoint(aes(color = Repr_mode_summ, x = x + .1), size = .3, hjust = 0.025) +
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + .1), size = .3) +
   scale_color_manual(values = c("red", "black", "orange")) +
   # ### Adding points for discretized variables Altitude and Ploidy
   # geom_tippoint(aes(color = Ploidy, x = x + .3), size = .3) +
@@ -278,17 +269,17 @@ facet_plot(p = ggJanTree5, panel = 'Trait', data = TEST,
 
 
 ### Adding facetplot: one bargraph of continuous variable
-# ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree,
-#                                geom = geom_segment,
-#                                mapping = aes(x = 0, xend = Altitude, y = y, yend = y),
-#                                size = .5)
-# ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2()
-# 
-# ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Sect_Occ', data = DATA_red_ggtree,
-#                                geom = geom_barh, 
-#                                mapping = aes(x = Sect_Occ),
-#                                size = .5)
-# ggJanTree5_panel
+ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree,
+                               geom = geom_segment,
+                               mapping = aes(x = 0, xend = Altitude, y = y, yend = y),
+                               size = .5)
+ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2()
+
+ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Sect_Occ', data = DATA_red_ggtree,
+                               geom = geom_barh,
+                               mapping = aes(x = Sect_Occ),
+                               size = .5)
+ggJanTree5_panel
 
 ggJanTree5_panel2 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree, 
                                 geom = geom_segment, aes(x = 0, xend = GS, y = y, yend = y), size = .5)
@@ -299,7 +290,7 @@ ggJanTree5_panel_facet + theme(legend.position = "bottom")
 ggJanTree5_panel_facet2 <- facet_widths(ggJanTree5_panel2, 8) # this applies the multiplier to the first facet of the specified object
 ggJanTree5_panel_facet2 + theme(legend.position = "bottom")
 
-### Coloured by categories # geom_segm, unnecessarily convoluted
+### Coloured by categories geom_segm, unnecessarily convoluted
 library(ggstance) # for plotting axes flipped easily
 ggJanTree5_panel_colours <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree, 
                                        geom = geom_barh, mapping = aes(x = GS, y = y, fill = Ploidy), 
@@ -364,8 +355,8 @@ Altitude_bar <- ggplot(DATA_red, aes(x = SpeciesName, y = Altitude, color = Alti
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 Altitude_bar
 
-Altitude_barh <- ggplot(DATA_red, aes(x = SpeciesName, y = Altitude, color = Altitude)) +
-  geom_barh(stat = "identity") +
+Altitude_barh <- ggplot(DATA_red[!is.na(DATA_red$Altitude),], aes(x = SpeciesName, y = Altitude, color = Altitude)) +
+  geom_barh(stat = "identity", position = "stackv") +
   scale_color_continuous(low = "darkgreen", high = "saddlebrown") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 Altitude_barh
@@ -373,6 +364,12 @@ Altitude_barh
 GS_bar <- ggplot(DATA_red, aes(x = SpeciesName, y = GS, fill = Ploidy)) + 
   geom_bar(stat = "identity") + scale_colour_brewer(palette = "Dark2") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
+GS_bar
+
+GS_bar <- ggplot(DATA_red, aes(x = SpeciesName, y = GS, fill = Ploidy)) + 
+  geom_bar(stat = "identity") + scale_colour_brewer(palette = "Dark2") + 
+  # theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom") + 
+  coord_flip()
 GS_bar
 
 GS_barh <- ggplot(DATA_red, aes(x = SpeciesName, y = GS, fill = Ploidy)) + 
