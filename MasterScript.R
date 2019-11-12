@@ -236,6 +236,28 @@ ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
 
 ggJanTree5
 
+### geom_facet
+ggJanTree5 + geom_facet(panel = "Altitude", data = DATA_red_ggtree, geom = geom_barh, 
+                        mapping = aes(x = Altitude), stat = "identity", position = "dodge")
+
+str(DATA_red_ggtree[, c("SpeciesName", "Altitude")])
+DATA_red_ggtree[, c("Altitude")] <- as.integer(DATA_red_ggtree[, c("Altitude")])
+
+length(intersect(JanTree5$tip.label, DATA_red_ggtree$SpeciesName)) == length(JanTree5$tip.label)
+
+dummydata <- as.data.frame(JanTree5$tip.label)
+dummydata$dummy <- rnorm(nrow(dummydata), mean = 1200, sd = 200)
+
+ggplot(data = dummydata, 
+       aes(y = dummy, x = JanTree5$tip.label), 
+       fill = dummy) + 
+  geom_bar(stat = "identity") + 
+  scale_fill_continuous(type = "viridis")
+
+ggJanTree5 + geom_facet(panel = "dummy", data = dummydata, geom = geom_barh, 
+                        mapping = aes(x = dummy), stat = "identity") + xlim_expand(c(0,1500), "dummy")
+
+
 ### ggplot2 doesn't support multiple colour scales for different columns;
 ### one solution is to make an order list of colours based on the column's values and pass it directly as list of colours to geom_tippoint
 
@@ -258,15 +280,17 @@ ggplot(data = DATA_red_ggtree,
 TEST <- data.frame("SpeciesName" = JanTree5$tip.label, "trait" = rnorm(length(JanTree5$tip.label), mean = 1500, sd = 1000))
 str(TEST)
 
-facet_plot(p = ggJanTree5, panel = 'Trait', data = TEST,
+p <- facet_plot(p = ggJanTree5, panel = 'Trait', data = TEST,
            geom = geom_barh,
            mapping = aes(x = trait, y = y), 
            stat = "identity", 
-           size = .5) + 
-  xlim_expand(c(0,2000), panel = "Trait") +
-  # xlim_tree(50) + 
-  theme_tree2()
+           size = .5) #+
+  # xlim_expand(c(0,2000), panel = "Trait") + 
+  # xlim(c(-1000,4000)) +
+  # xlim_tree(c(0,50)) +
+  # theme_tree2()
 
+p + xlim_expand(c(0,2000), panel = 'Trait')
 
 ### Adding facetplot: one bargraph of continuous variable
 ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree,
