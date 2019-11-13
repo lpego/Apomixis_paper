@@ -459,9 +459,6 @@ dev.off() # reset graphics device
 library(ggplot2)
 library(RColorBrewer)
 
-DATA_StrictlyAlps_mean_red$Repr_mode_summ <- factor(DATA_StrictlyAlps_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_StrictlyAlps_mean_red$Repr_mode <- factor(gsub('Mixed', 'Apomictic', DATA_StrictlyAlps_mean_red$Repr_mode_summ), levels = c("Sexual", "Apomictic"))
-
 boxplot_StrictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
                                aes(x = Repr_mode,
                                    y = as.numeric(Init.month),

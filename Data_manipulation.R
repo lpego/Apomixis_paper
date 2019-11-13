@@ -1252,6 +1252,10 @@ rownames(DATA_StrictlyAlps_mean_red) <- DATA_StrictlyAlps_mean_red$SpeciesName
 DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 4, 19)]), ]
 DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 4, 8, 19)]), ]
 
+DATA_StrictlyAlps_mean_red$Ploidy <- factor(DATA_StrictlyAlps_mean_red$Ploidy, levels = c("2x","3x","4x","6x","8x","12x"))
+DATA_StrictlyAlps_mean_red$Repr_mode_summ <- factor(DATA_StrictlyAlps_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_StrictlyAlps_mean_red$Repr_mode <- factor(gsub('Mixed', 'Apomictic', DATA_StrictlyAlps_mean_red$Repr_mode_summ), levels = c("Sexual", "Apomictic"))
+
 cbind(JanTree4_StrictlyAlps$tip.label, as.character(DATA_StrictlyAlps_mean_red$SpeciesName))
 
 geiger::name.check(JanTree4_StrictlyAlps, DATA_StrictlyAlps_mean_red)
