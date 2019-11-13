@@ -858,6 +858,9 @@ DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(2, 4, 8, 19)]), ]
 
 DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
 DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_CC_mean_red$Repr_mode <- gsub('Mixed', 'Apomictic', DATA_CC_mean_red$Repr_mode_summ)
+DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
+DATA_CC_mean_red$Repr_mode
 
 cbind(JanTree4$tip.label, as.character(DATA_CC_mean_red$SpeciesName))
 

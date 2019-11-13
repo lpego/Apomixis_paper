@@ -378,10 +378,6 @@ nrow(DATA_red[DATA_red$Repr_mode_summ != "Mixed", ])
 
 nrow(DATA_red) - sum(table(DATA_red$Init.month)) # 20 species missing Init.month
 
-DATA_CC_mean_red$Repr_mode <- gsub('Mixed', 'Apomictic', DATA_CC_mean_red$Repr_mode_summ)
-DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
-DATA_CC_mean_red$Repr_mode
-
 ### Barplot
 library(ggplot2)
 library(RColorBrewer)
@@ -458,6 +454,38 @@ dev.off() # reset graphics device
 ##### Other plots: strictly Alps #####
 library(ggplot2)
 library(RColorBrewer)
+
+bargraph <- ggplot(Asteraceae_barplot,
+                   aes(factor(Ploidy),
+                       n,
+                       fill = Repr_mode_summ)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.6) +
+  # theme_bw(base_size = 14) +
+  labs(x = "Ploidy level") +
+  labs(y = "Number of species") +
+  theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "gray50"),
+        plot.title = element_text(size = 24, hjust = 0.5),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        axis.title.x = element_blank()
+  ) +
+  # theme(axis.title = element_text(size=18),
+  #       axis.text = element_text(size=18, colour = "gray50"),
+  #       plot.title = element_text(size = 24, hjust = 0.5),
+  #       legend.text = element_text(size = 16),
+  #       legend.title = element_blank()
+  #       ) +
+  theme(aspect.ratio = 3/2) +
+  # scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = 0) +
+  scale_fill_manual(values = c(brewer.pal(name = "Set1", 3)[2],
+                               brewer.pal(name = "Set1", 3)[3],
+                               brewer.pal(name = "Set1", 3)[1])) +
+  theme(legend.position = c(.7425,.80))
+# ggtitle("Apomixis and ploidy")
+bargraph
+ggsave(plot = bargraph, filename = "ApomixisVSPloidy_ggsave.pdf", dpi = 150, device = "pdf", scale = 1)
+
 
 boxplot_StrictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
                                aes(x = Repr_mode,
