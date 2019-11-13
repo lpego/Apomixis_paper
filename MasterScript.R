@@ -439,7 +439,7 @@ boxplot <- ggplot(data = DATA_CC_mean_red,
   ) +
   theme(aspect.ratio = 3/2) +
   stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = .75, linetype = "dashed") +
-  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -17.5)
+  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -12.5)
   # geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") +
   # scale_colour_brewer(palette = "Set1", direction = -1)
 boxplot
@@ -528,7 +528,7 @@ boxplot_strictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
   ) +
   theme(aspect.ratio = 3/2) +
   stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = .75, linetype = "dashed") +
-  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -12.5)
+  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -10)
 # geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") +
 # scale_colour_brewer(palette = "Set1", direction = -1)
 boxplot_strictlyAlps
@@ -536,18 +536,15 @@ boxplot_strictlyAlps
 ggsave(plot = boxplot_strictlyAlps, filename= "ApomixisVSPhenology_ggsave_strictlyAlps.pdf", dpi = 150, device = "pdf", scale = 1)
 
 ggpubr::ggarrange(bargraph_strictlyAlps, boxplot_strictlyAlps, ncol = 2, nrow = 1)
-ggsave(ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1), 
+ggsave(ggpubr::ggarrange(bargraph_strictlyAlps, boxplot_strictlyAlps, ncol = 2, nrow = 1), 
        filename = "Barplot_Boxplot_ggarrange_strictlyAlps.pdf", device = "pdf", dpi = 150)
 
 dev.off() # reset graphics device
 
 
 
-##### ======================================= #####
-
-
-
-##### Regular modeling #####
+##### MODELING #####
+### Regular modeling
 ### Apomixis VS altitude
 plot(Repr_mode_summ ~ Altitude, data = DATA)
 m1 <- glm(Repr_mode_summ ~ Altitude + Ploidy + GS, data = data_red, family = "binomial")
