@@ -544,101 +544,91 @@ dev.off() # reset graphics device
 
 
 ##### MODELING #####
-### Regular modeling
-### Apomixis VS altitude
-plot(Repr_mode_summ ~ Altitude, data = DATA)
-m1 <- glm(Repr_mode_summ ~ Altitude + Ploidy + GS, data = data_red, family = "binomial")
-summary(m1)
-plot(m1)
-
+### Regular modeling: Apomixis VS altitude
 ### We can use the unsummarized dataset here since we don't take into account phylogeny
 plot(GS ~ Altitude, data = DATA)
 abline(lm(GS ~ Altitude, data = DATA), col="red")
-summary(lm(GS ~ Altitude, data = DATA))
-plot(lm(GS ~ Altitude, data = DATA))
+m1 <- lm(GS ~ Altitude, data = DATA)
+summary(m1) # big genomes have massive leverage (ie: influential observations)
+plot(m1)
 
 plot(density(DATA$Altitude, na.rm=T)) # data also looks bimodal...
 plot(density(DATA$GS, na.rm=T))
 
-# lm(Repr_mode ~ PloidyEvenOdd, DATA_red)
+plot(log(GS) ~ Altitude, data = DATA)
+abline(lm(log(GS) ~ Altitude, data = DATA), col="red")
+m2 <- lm(log(GS) ~ Altitude, data = DATA_red)
+summary(m2)
+plot(m2) # log transformation mitigates but doesn't solve the issue
 
-###
-
-plot(GS ~ Altitude, data = DATA_red) # big genomes have massive leverage (ie: influential observations)
-abline(lm(GS ~ Altitude, data = DATA_red), col="red")
-summary(lm(GS ~ Altitude, data = DATA_red))
-
-plot(log(GS) ~ Altitude, data = DATA_red)
-abline(lm(log(GS) ~ Altitude, data = DATA_red), col="red")
-plot(lm(log(GS) ~ Altitude, data = DATA_red)) # log transformation mitigates but doesn't solve the issue
-summary(lm(GS ~ Altitude, data = DATA_red))
-
-###
-
-plot(lm(`1C` ~ Altitude, data = DATA))
 plot(`1C` ~ Altitude, data = DATA)
 abline(lm(`1C` ~ Altitude, data = DATA), col = "red")
-summary(lm(`1C` ~ Altitude, data = DATA))
+m3 <- lm(`1C` ~ Altitude, data = DATA)
+summary(m3)
+plot(m3) # using 1C instead doesn't change much
 
-###
-
-plot(lm(GS_per_chrm ~ Altitude, data = DATA))
 plot(GS_per_chrm ~ Altitude, data = DATA)
 abline(lm(GS_per_chrm ~ Altitude, data = DATA), col = "red")
-summary(lm(GS_per_chrm ~ Altitude, data = DATA))
+m4 <- lm(GS_per_chrm ~ Altitude, data = DATA)
+summary(m4)
+plot(m4) # using GS/Chromosome number also doesn't affect much
 
-###
-# DATA_2xOnly <- DATA[DATA$Ploidy == levels(DATA$Ploidy)[1], ]
-# DATA_2xOnly$Ploidy <- gsub('x', '', DATA_2xOnly)
-# levels(DATA_2xOnly$Ploidy) <- droplevels(DATA_2xOnly$Ploidy)
-#
 plot(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ])
 abline(lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ]), col = "red")
-plot(lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ]))
-summary(lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ]))
+m5 <- lm(GS ~ Altitude, data = DATA[which(DATA$Ploidy == "2x"), ])
+summary(m5)
+plot(m5) # using only diploids
 
-##### GLM #####
-data_red
 
-glm1 <- glm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-            data = data_red, family = binomial(link = 'logit'))
-plot(glm1)
+
+##### GLMs #####
+### Need to use complete cases for GLMs, no missing values allowed
+glm1 <- glm(Repr_mode_summ ~ Altitude + Ploidy + GS, 
+            data = DATA_CC_mean_red, family = "binomial")
 summary(glm1)
+plot(glm1)
 
-glm2 <- glm(Repr_mode_summ ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-            data = data_red, family = binomial(link = 'logit'))
-plot(glm2)
+glm1.1 <- glm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+            data = DATA_CC_mean_red, family = "binomial")
+summary(glm1.1)
+plot(glm1.1)
+
+glm1.2 <- glm(Repr_mode_summ ~ Altitude + Init.month + Tot.months,
+            data = DATA_CC_mean_red, family = "binomial")
+summary(glm1.2)
+plot(glm1.2)
+
+### Using only an apomictic clade, Hieracium + Pilosella: 
+caper::clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T)
+with(DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], table(Repr_mode))
+
+glm2 <- glm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+            data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], 
+            family = "binomial") # too few datapoints probably...  
 summary(glm2)
+plot(glm2)
 
-library(caper)
-library(MCMCglmm)
-### Hieracium + Pilosella
-clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T)
+### Using only an apomictic clade, extended: Cichorieae tribe
+caper::clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T)
+with(DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], table(Repr_mode))
 
-with(data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], table(Repr_mode))
-
-glm3 <- glm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-            data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], family = binomial(link = 'logit'))
-plot(glm3)
+glm3 <- glm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months,
+            data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], 
+            family = "binomial")
 summary(glm3)
-
-### Cichorieae tribe
-clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T)
-
-with(data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], table(Repr_mode))
-
-glm3 <- glm(Repr_mode_summ ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-            data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], family = binomial(link = 'logit'))
 plot(glm3)
-summary(glm3)
+
+
+
+##### MCMC models #####
 
 ### MCMCglmm on subsets of species
 mHieraciumSS <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-                                 data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
-                                 family = "threshold", trunc = T,
-                                 prior = list(R = list(V = diag(1), nu = 2)),
-                                 nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-                                 )
+                                   data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
+                                   family = "threshold", trunc = T,
+                                   prior = list(R = list(V = diag(1), nu = 2)),
+                                   nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+)
 summary(mHieraciumSS)
 plot(mHieraciumSS)
 
@@ -647,23 +637,24 @@ mHieracium <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month
                                  family = "threshold", trunc = T,
                                  prior = list(R = list(V = diag(1), nu = 2)),
                                  nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-                                 )
+)
 summary(mHieracium)
 plot(mHieracium)
 
 mCichorieae <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-                                 data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ],
-                                 family = "threshold", trunc = T,
-                                 prior = list(R = list(V = diag(1), nu = 2)),
-                                 nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-                                 )
+                                  data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ],
+                                  family = "threshold", trunc = T,
+                                  prior = list(R = list(V = diag(1), nu = 2)),
+                                  nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+)
 summary(mCichorieae)
 plot(mCichorieae)
 
 ### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
 
-# ##### MCMC models #####
+
+
 # ### Data prep
 # head(DATA_CC_red)
 #
