@@ -452,13 +452,28 @@ ggsave(ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1),
 dev.off() # reset graphics device
 
 ##### Other plots: strictly Alps #####
+library(dplyr)
+Asteraceae_barplot_strictlyAlps <- DATA_StrictlyAlps_mean_red %>%
+  group_by(Ploidy, Repr_mode_summ) %>%
+  count()
+str(Asteraceae_barplot_strictlyAlps)
+
+table(DATA_StrictlyAlps_mean_red$Ploidy)
+
+table(DATA_StrictlyAlps_mean_red[, c("Repr_mode_summ", "Init.month")])
+table(DATA_StrictlyAlps_mean_red$Repr_mode_summ)
+nrow(DATA_StrictlyAlps_mean_red)
+nrow(DATA_StrictlyAlps_mean_red[DATA_StrictlyAlps_mean_red$Repr_mode_summ != "Mixed", ])
+
+nrow(DATA_StrictlyAlps_mean_red) - sum(table(DATA_StrictlyAlps_mean_red$Init.month)) # 0 species missing Init.month
+
 library(ggplot2)
 library(RColorBrewer)
-
-bargraph <- ggplot(Asteraceae_barplot,
-                   aes(factor(Ploidy),
-                       n,
-                       fill = Repr_mode_summ)) +
+### Barplot striclty Alps
+bargraph_strictlyAlps <- ggplot(Asteraceae_barplot_strictlyAlps,
+                                aes(factor(Ploidy),
+                                    n,
+                                    fill = Repr_mode_summ)) +
   geom_bar(stat = "identity", position = "stack", width = 0.6) +
   # theme_bw(base_size = 14) +
   labs(x = "Ploidy level") +
@@ -483,11 +498,11 @@ bargraph <- ggplot(Asteraceae_barplot,
                                brewer.pal(name = "Set1", 3)[1])) +
   theme(legend.position = c(.7425,.80))
 # ggtitle("Apomixis and ploidy")
-bargraph
-ggsave(plot = bargraph, filename = "ApomixisVSPloidy_ggsave.pdf", dpi = 150, device = "pdf", scale = 1)
+bargraph_strictlyAlps
+ggsave(plot = bargraph_strictlyAlps, filename = "ApomixisVSPloidy_ggsave_strictlyAlps.pdf", dpi = 150, device = "pdf", scale = 1)
 
-
-boxplot_StrictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
+### Boxplot strictly Alps
+boxplot_strictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
                                aes(x = Repr_mode,
                                    y = as.numeric(Init.month),
                                    fill = Repr_mode)) +
@@ -516,9 +531,21 @@ boxplot_StrictlyAlps <- ggplot(data = DATA_StrictlyAlps_mean_red,
   stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -12.5)
 # geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") +
 # scale_colour_brewer(palette = "Set1", direction = -1)
-boxplot_StrictlyAlps
+boxplot_strictlyAlps
+
+ggsave(plot = boxplot_strictlyAlps, filename= "ApomixisVSPhenology_ggsave_strictlyAlps.pdf", dpi = 150, device = "pdf", scale = 1)
+
+ggpubr::ggarrange(bargraph_strictlyAlps, boxplot_strictlyAlps, ncol = 2, nrow = 1)
+ggsave(ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1), 
+       filename = "Barplot_Boxplot_ggarrange_strictlyAlps.pdf", device = "pdf", dpi = 150)
+
+dev.off() # reset graphics device
+
+
 
 ##### ======================================= #####
+
+
 
 ##### Regular modeling #####
 ### Apomixis VS altitude
