@@ -21,11 +21,11 @@ cbind(sub, as.vector(GSheet[,1])) # sanity check to see if all went well
 
 GSheet[,1] <- sub
 write.csv(GSheet, file="GSheet_mod.csv")
-
 # View(GSheet)
 
-##### Append FloraAlpinaID to ApomixisTable2018 #####
 
+
+##### Append FloraAlpinaID to ApomixisTable2018, from Google Sheet #####
 ### Matching using species names
 NewApomixisData <- read.csv("NewApomixis_Table_2018.csv")
 
@@ -48,8 +48,7 @@ setdiff(NewApomixisData$SpeciesName, NewApoData1$SpeciesName)
 nrow(NewApomixisData) - nrow(unique(NewApoData1))
 
 ### Matching using collector's ID
-
-GSheet$ID <- gsub('(?i)Luca Pegoraro ','',GSheet$Collector.s.ID)
+GSheet$ID <- gsub('(?i)Luca Pegoraro ', '', GSheet$Collector.s.ID)
 NewApoData2 <- merge(NewApomixisData, unique(GSheet[,c("ID", "Flora.Alpina.ID")]), by = "ID")
 
 nrow(NewApomixisData) - nrow(NewApoData2)
@@ -82,6 +81,26 @@ write.csv(NewApomixisData_FloraAlpinaID, file ="NewApomixisData_FloraAlpinaID.cs
 ### BEFORE REINPUTTING THE DATA IN R NEED TO RESOLVE DOUBLE IDs! 
 
 
+
+##### Flora Alpina original data prep #####
+FloraAlpina <- read.csv("FloraAlpina_Asteraceae_OriginalData.csv", sep = ";")
+colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
+
+### Modify Flora Alpina ID to reflect unidentified subspecies
+sub1 <- as.vector(FloraAlpina$ID_FloraAlpina)
+index1 <- grep('124\\.[0-9]+\\.[0-9]+$', sub1) # grab the positions of the values matched by the RegEx
+sub1[index1] # these are the actual values that I want to change
+
+sub1[index1] <- paste(sub1[index1], ".0", sep="") # paste DIRECTLY onto the grabbed positions 
+sub1
+length(sub1) == length(FloraAlpina$ID_FloraAlpina)
+cbind(sub1, as.vector(FloraAlpina$ID_FloraAlpina)) # sanity check to see if all went well
+
+FloraAlpina$ID_FloraAlpina <- sub1
+
+
+
+##### ~ #####
 
 
 
@@ -139,6 +158,8 @@ JanTree2 <- phytools::force.ultrametric(JanTree2)
 ape::is.binary(JanTree2)
 
 new <- names_correspondences[order(names_correspondences$Name.on.tree),]
+
+
 
 ##### Adding tips to tree #####
 library(phytools)
@@ -199,6 +220,8 @@ setdiff(new_names, JanTree3$tip.label)
 
 ### MANUAL STEP OUTSIDE SCRIPT! 
 
+
+
 ##### Check that names on tree correspond to names on dataset #####
 NewApomixisData_FloraAlpinaID_manual <- read.csv(file = "NewApomixisData_FloraAlpinaID_manual_Jaume.csv")
 NewApomixisData_FloraAlpinaID_manual$X <- NULL
@@ -242,37 +265,138 @@ plot(JanTree4, cex = .25, tip.color = ifelse(JanTree4$tip.label %in% setdiff(Jan
 par(mfrow=c(1,1))
 
 
+##### ~ ##### 
 
-##### Appending Flora Alpina Data to Apomixis Table #####
-FloraAlpina <- read.csv("FloraAlpina_Asteraceae_OriginalData.csv", sep = ";")
-colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
-
-### Modify Flora Alpina ID to reflect unidentified subspecies
-sub1 <- as.vector(FloraAlpina$ID_FloraAlpina)
-index1 <- grep('124\\.[0-9]+\\.[0-9]+$', sub1) # grab the positions of the values matched by the RegEx
-sub1[index1] # these are the actual values that I want to change
-
-sub1[index1] <- paste(sub1[index1], ".0", sep="") # paste DIRECTLY onto the grabbed positions 
-sub1
-length(sub1) == length(FloraAlpina$ID_FloraAlpina)
-cbind(sub1, as.vector(FloraAlpina$ID_FloraAlpina)) # sanity check to see if all went well
-
-FloraAlpina$ID_FloraAlpina <- sub1
-
-### Merge with dataset using FLoraAlpina ID as key
-DATA <- merge(NewApomixisData_FloraAlpinaID_manual, FloraAlpina, by = "ID_FloraAlpina", all.x = T)
-setdiff(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina)
-colnames(DATA)[9] <- "Chr.number"
-
-# View(DATA)
 
 
 ##### EXTENDED DATASET: alpine collections + botanic gardens and other localities #####
+### Merge NewApomixisData_manual with Flora Alpina original data using FloraAlpina ID as key
+colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
+DATA <- merge(NewApomixisData_FloraAlpinaID_manual, FloraAlpina, by = "ID_FloraAlpina", all.x = T)
+setdiff(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina)
+colnames(DATA)[9] <- "Chr.number"
+# View(DATA)
+
 DATA$SpeciesName <- as.factor(DATA$SpeciesName)
 DATA$SpeciesName
 str(DATA)
 
-### Pick similar species to fill gaps
+##### Correspondence between unspecified subspecies and one of the subspecies #####
+### This is to avoid missing values. Subspecies were chosen manually, according to where the samples come from. 
+old_IDs <- c("124.2.1.0", 
+             "124.6.1.0", 
+             "124.31.11.0", 
+             "124.31.19.0", 
+             "124.31.2.0", 
+             "124.35.2.0", 
+             "124.39.2.0", 
+             "124.39.8.0", 
+             "124.46.8.0", 
+             "124.48.14.0", 
+             "124.96.1.0", 
+             "124.96.1.0", 
+             "124.86.4.0", 
+             "124.68.25.0", 
+             "124.67.1.0", 
+             "124.65.1.0", 
+             "124.56.3.0", 
+             "124.61.3.0", 
+             "124.60.9.0", 
+             "124.60.4.0"
+)
+
+new_IDs <- c("124.2.1.2", 
+             "124.6.1.1", 
+             "124.31.11.1", 
+             "124.31.19.1", 
+             "124.31.2.1", 
+             "124.35.2.1", 
+             "124.39.2.1", 
+             "124.39.8.3", 
+             "124.46.8.2", 
+             "124.48.14.1", 
+             "124.96.1.1", 
+             "124.96.1.1", 
+             "124.86.4.3", 
+             "124.68.25.1", 
+             "124.67.1.1", 
+             "124.65.1.2", 
+             "124.56.3.1", 
+             "124.61.3.1", 
+             "124.60.9.3",
+             "124.60.4.1"
+)
+
+### Initialize temporary objects for cycle
+i = 1
+collapsed <- data.frame(OLD_SpeciesName = as.character(), 
+                        OLD_FloraAlpina.ID = as.character()
+)
+collapsed1 <- data.frame(NEW_Genus = as.character(),
+                         NEW_Species = as.character(),
+                         NEW_Subspecies = as.character(),
+                         NEW_FloraAlpina.ID = as.character()
+)
+### Create correspondence table with chosen subspecies for undertemined accessions. 
+if (length(old_IDs) == length(new_IDs)) {
+  while (i <= length(old_IDs)) {
+    collapsed <- rbind(collapsed, DATA[grep(old_IDs[[i]], DATA$ID_FloraAlpina), 
+                                          c("SpeciesName", "ID_FloraAlpina", "ID")]) 
+    collapsed1 <- rbind(collapsed1, FloraAlpina[grep(new_IDs[[i]], FloraAlpina$ID_FloraAlpina), 
+                                                c("Genus", "Species", "Subspecies", "ID_FloraAlpina")]) 
+    i = i + 1}
+  pos <- match(gsub('.0$', '', collapsed$ID_FloraAlpina), gsub('.[0-9]$', '', collapsed1$ID_FloraAlpina))
+  Subspecies_selection_table <- cbind(collapsed, collapsed1[pos,])
+  colnames(Subspecies_selection_table) <- c("OLD_SpeciesName", "OLD_ID_FloraAlpina", "ID", 
+                                            "NEW_Genus", "NEW_Species", "NEW_Subspecies", "NEW_ID_FloraAlpina")
+  # rm(collapsed)
+  # rm(collapsed1)
+} else {
+  collapsed <- "ERROR" 
+  collapsed1 <- "ERROR"
+}
+Subspecies_selection_table
+write.csv(Subspecies_selection_table, file = "Subspecies_selection_table.csv")
+
+### Substitute the IDs with the ones referring to the subspecies (as chosen above)
+
+### Try RegEx in isolation
+grep('124.2.1.0', DATA$ID_FloraAlpina)
+grep('124.2.1.0', gsub(old_IDs[1], new_IDs[1], DATA$ID_FloraAlpina))
+grep('124.2.1.2', DATA$ID_FloraAlpina)
+grep('124.2.1.2', gsub(old_IDs[1], new_IDs[1], DATA$ID_FloraAlpina))
+
+### Put RegEx in a cycle
+nrow(Subspecies_selection_table)
+### Initialize objects
+i = 1
+ids <- DATA$ID_FloraAlpina
+while (i <= length(old_IDs)) {
+  ids <- gsub(old_IDs[i], new_IDs[i], ids)
+  i = i+1
+}
+cbind(as.character(DATA$ID_FloraAlpina), ids)
+setdiff(DATA$ID_FloraAlpina, ids)
+
+length(ids) == length(DATA$ID_FloraAlpina) # sanity check
+DATA$ID_FloraAlpina <- ids # substitute modified IDs onto dataset
+
+
+
+##### Merge with Flora Alpina original database #####
+DATA <- merge(DATA[, c(1:10)], FloraAlpina, by = "ID_FloraAlpina", all.x = T)
+### Check that missing values are only due to taxa that are not matchable to others in Flora Alpina
+setdiff(DATA$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina)
+DATA[grep('124$', DATA$ID_FloraAlpina), 1:4] # Neophyte
+DATA[grep('124.51$', DATA$ID_FloraAlpina), 1:4] # Neophyte
+DATA[grep('124.88$', DATA$ID_FloraAlpina), 1:4] # Not in the Alps
+DATA[grep('124.99$', DATA$ID_FloraAlpina), 1:4] # Hieracium taxa not in Flora Alpina
+
+1+1+1+6 # number of taxa with missing values
+
+
+
+##### Pick similar species to fill gaps #####
 DATA[DATA$SpeciesName == "Hieracium_valdepilosum", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 11:116][1,]
 DATA[DATA$SpeciesName == "Hieracium_glaucopsis", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 11:116][1,]
 DATA[DATA$SpeciesName == "Hieracium_cydoniifolium", 11:116] <- DATA[DATA$SpeciesName == "Hieracium_villosum", 11:116][1,]
@@ -283,8 +407,9 @@ DATA[DATA$SpeciesName == "Aremisia_nitida", 11:116] <- DATA[DATA$SpeciesName == 
 DATA[DATA$SpeciesName == "Sonchus_tenerrimus", 11:116] <- DATA[DATA$SpeciesName == "Sonchus_oleraceus", 11:116][1,]
 DATA[DATA$SpeciesName == "Calendula_tripterocarpa", 11:116] <- FloraAlpina[grep('Calendula arvensis', FloraAlpina$CompleteName), 2:107]
 
+
+
 ##### Factorization of variables ##### 
-### Need to reshape some data formats in order to use them
 ### Phytosociology 
 DATA$Phytosociology <- gsub("\\(", "", DATA$Phytosociology)
 DATA$Phytosociology <- gsub("\\)", "", DATA$Phytosociology)
@@ -296,7 +421,7 @@ DATA$Phytosociology
 
 ### Phenology
 library(dplyr)
-Phen <- select(DATA, c(1:3, 25:36))
+Phen <- DATA[, c(1:3, 25:36)]
 Phen[,4:15] <- apply(Phen[,4:15], 2, function(y) as.numeric(gsub('x', '1', y)))
 Phen$Tot.months <- apply(Phen[,4:15], 1, function(y) sum(y, na.rm=T))
 Phen$Init.month <- apply(Phen[,4:15], 1, function (y) first(which(y == '1')))
@@ -488,7 +613,7 @@ DATA$Repr_mode <- as.factor(DATA$Repr_mode)
 ### Adding a level for "mixed" reproductive mode
 i = 1
 Repr_mode_summ <- factor(rep(1, length(unique(DATA$SpeciesName))))
-levels(Repr_mode_summ) <- c("Apomictic", "Sexual", "Mixed")
+levels(Repr_mode_summ) <- c("Sexual", "Mixed", "Apomictic")
 Repr_mode_summ <- data.frame(Repr_mode_summ, "SpeciesName" = unique(DATA$SpeciesName))
 while (i <= length(unique(DATA$SpeciesName))) {
   if (length(levels(droplevels(DATA[which(unique(DATA$SpeciesName)[i] == DATA$SpeciesName), "Repr_mode"]))) >= 2) {
@@ -515,41 +640,34 @@ DATA
 
 DATA$SpeciesName
 
-write.csv(DATA, file = "Apomixis_DATA_unsimmarized.csv")
+write.csv(DATA, file = "Apomixis_DATA_unsummarized.csv")
 
 DATA$SpeciesName
 nrow(DATA)
 
-vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
+### How many unique genera?
 unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+##### OTHER TRIVIA ABOUT THE DATA GOES HERE? ie: how many species, how many apomicts, etc? 
 
 
 ##### Summarizing data: all accessions, missing values #####
 library(dplyr)
-
-to_keep <- c("ID_FloraAlpina", "SpeciesName", "Repr_mode_summ", "GS", "Ploidy", "PloidyEvenOdd", 
-             "Altitude", "Chr.number", 
-             "Endemic", "Indigenous", "Distribution", "CompleteName", 
-             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
-             "Init.month", "Tot.months", "Endemic", 
-             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", 
-             "Water", "w", "Sect_Occ")
-
 DATA_red <- DATA %>%
-  select(ID_FloraAlpina, ID, SpeciesName, Repr_mode_summ, GS, Ploidy, PloidyEvenOdd, Altitude, Chr.number,
-         Endemic, Indigenous, Distribution, CompleteName,
-         Collinaire, Montane, Subalpine, Alpine, Nival,
-         Init.month, Tot.months, Endemic,
-         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N,
-         Water, w, Sect_Occ) %>%
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Altitude, Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, Sect_Occ, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Init.month, Tot.months, End.month, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
   group_by(ID_FloraAlpina, SpeciesName) %>%
   summarize_all(list(first))
 
-### 
-
+str(DATA_red)
 DATA_red <- DATA_red[order(DATA_red$SpeciesName),]
 DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
 DATA_red$Repr_mode_summ  <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_red$Repr_mode  <- factor(DATA_red$Repr_mode, levels = c("Sexual", "Apomictic"))
 
 setdiff(DATA_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_red$SpeciesName)
@@ -559,9 +677,6 @@ which(duplicated(JanTree4$tip.label))
 
 rownames(DATA_red) <- DATA_red$SpeciesName
 
-levels(DATA_red$Repr_mode_summ)
-# DATA_red$Repr_mode <- gsub('Apomictic ', 'Apomictic', DATA_red$Repr_mode)
-
 geiger::name.check(JanTree4, DATA_red)
 
 # class(DATA_red) <- "data.frame"
@@ -570,247 +685,37 @@ geiger::name.check(JanTree4, DATA_red)
 write.csv(DATA_red, file = "DATA_red.csv")
 
 
+##### Complete cases ##### 
+to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "CompleteName", 
+             "Repr_mode", "Repr_mode_summ", "GS", "1C", "Ploidy", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
+             "Altitude", "Longevity", "BiologicalForm", 
+             "Endemic", "Indigenous", "Distribution", "Sect_Occ", 
+             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
+             "Init.month", "Tot.months", "End.month", 
+             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w")
 
-##### Unsummarized data complete cases  - for MCMCglmm analyses ##### 
-DATA_cc <- NewApomixisData_FloraAlpinaID_manual
-DATA_cc[, "ID_FloraAlpina"] <- as.character(DATA_cc[, "ID_FloraAlpina"])
-
-### Create correspondence between unspecified subspecies and one of the subspecises, 
-### to avoid missing values. These were chosen manually, according to where the samples come from. 
-old_IDs <- c("124.2.1.0", 
-             "124.6.1.0", 
-             "124.31.11.0", 
-             "124.31.19.0", 
-             "124.31.2.0", 
-             "124.35.2.0", 
-             "124.39.2.0", 
-             "124.39.8.0", 
-             "124.46.8.0", 
-             "124.48.14.0", 
-             "124.96.1.0", 
-             "124.96.1.0", 
-             "124.86.4.0", 
-             "124.68.25.0", 
-             "124.67.1.0", 
-             "124.65.1.0", 
-             "124.56.3.0", 
-             "124.61.3.0", 
-             "124.60.9.0", 
-             "124.60.4.0"
-             )
-
-new_IDs <- c("124.2.1.2", 
-             "124.6.1.1", 
-             "124.31.11.1", 
-             "124.31.19.1", 
-             "124.31.2.1", 
-             "124.35.2.1", 
-             "124.39.2.1", 
-             "124.39.8.3", 
-             "124.46.8.2", 
-             "124.48.14.1", 
-             "124.96.1.1", 
-             "124.96.1.1", 
-             "124.86.4.3", 
-             "124.68.25.1", 
-             "124.67.1.1", 
-             "124.65.1.2", 
-             "124.56.3.1", 
-             "124.61.3.1", 
-             "124.60.9.3",
-             "124.60.4.1"
-             )
-
-### Initialize temporary objects for cycle
-i = 1
-collapsed <- data.frame(OLD_SpeciesName = as.character(), 
-                        OLD_FloraAlpina.ID = as.character()
-                        )
-collapsed1 <- data.frame(NEW_Genus = as.character(),
-                         NEW_Species = as.character(),
-                         NEW_Subspecies = as.character(),
-                         NEW_FloraAlpina.ID = as.character()
-                         )
-### Create correspondence table with chosen subspecies for undertemined accessions. 
-if (length(old_IDs) == length(new_IDs)) {
-  while (i <= length(old_IDs)) {
-    collapsed <- rbind(collapsed, DATA_cc[grep(old_IDs[[i]], DATA_cc$ID_FloraAlpina), 
-                                          c("SpeciesName", "ID_FloraAlpina", "ID")]) 
-    collapsed1 <- rbind(collapsed1, FloraAlpina[grep(new_IDs[[i]], FloraAlpina$ID_FloraAlpina), 
-                                                c("Genus", "Species", "Subspecies", "ID_FloraAlpina")]) 
-    i = i+1}
-  pos <- match(gsub('.0$', '', collapsed$ID_FloraAlpina), gsub('.[0-9]$', '', collapsed1$ID_FloraAlpina))
-  Subspecies_selection_table <- cbind(collapsed, collapsed1[pos,])
-  colnames(Subspecies_selection_table) <- c("OLD_SpeciesName", "OLD_ID_FloraAlpina", "ID", 
-                                            "NEW_Genus", "NEW_Species", "NEW_Subspecies", "NEW_ID_FloraAlpina")
-  # rm(collapsed)
-  # rm(collapsed1)
-  } else {
-    collapsed <- "ERROR" 
-    collapsed1 <- "ERROR"
-    }
-Subspecies_selection_table
-write.csv(Subspecies_selection_table, file = "Subspecies_selection_table.csv")
-
-### Substitute the IDs with the ones referring to the subspecies (as chosen above)
-
-### Try RegEx in isolation
-grep('124.2.1.0', DATA_cc$ID_FloraAlpina)
-grep('124.2.1.0', gsub(old_IDs[1], new_IDs[1], DATA_cc$ID_FloraAlpina))
-grep('124.2.1.2', DATA_cc$ID_FloraAlpina)
-grep('124.2.1.2', gsub(old_IDs[1], new_IDs[1], DATA_cc$ID_FloraAlpina))
-
-### Put RegEx in a cycle
-nrow(Subspecies_selection_table)
-### Initialize objects
-i = 1
-ids <- DATA_cc$ID_FloraAlpina
-while (i <= length(old_IDs)) {
-  ids <- gsub(old_IDs[i], new_IDs[i], ids)
-  i = i+1
-}
-cbind(DATA_cc$ID_FloraAlpina, ids)
-setdiff(DATA_cc$ID_FloraAlpina, ids)
-
-length(ids) == length(DATA_cc$ID_FloraAlpina) # sanity check
-DATA_cc$ID_FloraAlpina <- ids # substitute modified IDs onto dataset
-
-### Merge databases
-colnames(DATA_cc)[10] <- "ID_FloraAlpina"
-colnames(DATA_cc)[8] <- "Chr.number"
-DATA_CC <- merge(DATA_cc, FloraAlpina, by = "ID_FloraAlpina", all.x = T)
-### Check that missing values are only due to taxa that are not matchable to others in Flora Alpina
-setdiff(DATA_CC$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina)
-DATA_CC[grep('124$', DATA_CC$ID_FloraAlpina), 1:4] # Neophyte
-DATA_CC[grep('124.51$', DATA_CC$ID_FloraAlpina), 1:4] # Neophyte
-DATA_CC[grep('124.88$', DATA_CC$ID_FloraAlpina), 1:4] # Not in the Alps
-DATA_CC[grep('124.99$', DATA_CC$ID_FloraAlpina), 1:4] # Hieracium taxa not in Flora Alpina
-
-1+1+1+6 # number of taxa with missing values
-
-### Need to reshape some data formats in order to use them
-### Phytosociology 
-DATA_CC$Phytosociology <- gsub("\\(", "", DATA_CC$Phytosociology)
-DATA_CC$Phytosociology <- gsub("\\)", "", DATA_CC$Phytosociology)
-DATA_CC$Phytosociology <- gsub("\\(", "", DATA_CC$Phytosociology)
-DATA_CC$Phytosociology <- gsub(" - ", "", DATA_CC$Phytosociology)
-DATA_CC$Phytosociology <- gsub("\\[", "NEO_", DATA_CC$Phytosociology)
-DATA_CC$Phytosociology <- gsub("\\]", "", DATA_CC$Phytosociology)
-DATA_CC$Phytosociology
-
-### Phenology
-library(dplyr)
-Phen <- select(DATA_CC, c(1:3, 25:36))
-Phen[,4:15] <- apply(Phen[,4:15], 2, function(y) as.numeric(gsub('x', '1', y)))
-Phen$Tot.months <- apply(Phen[,4:15], 1, function(y) sum(y, na.rm=T))
-Phen$Init.month <- apply(Phen[,4:15], 1, function (y) first(which(y == '1')))
-Phen$End.month <- apply(Phen[,4:15], 1, function (y) last(which(y == '1')))
-
-DATA_CC$Tot.months <- Phen$Tot.months
-DATA_CC$Init.month <- Phen$Init.month
-DATA_CC$End.month <- Phen$End.month 
-
-### pH and N
-pH <- NULL
-i = 1
-while (i<=nrow(DATA_CC)) {
-  pH[i] <- factorize_pH(DATA_CC, i)
-  i <- i+1
-}
-
-DATA_CC$pH <- pH
-
-N <- NULL
-i = 1
-while (i<=nrow(DATA_CC)) {
-  N[i] <- factorize_N(DATA_CC, i)
-  i <- i+1
-}
-
-DATA_CC$N <- N
-
-### Water availability 
-W <- NULL
-i = 1
-while (i<=nrow(DATA_CC)) {
-  W[i] <- factorize_Water(DATA_CC, i)
-  i <- i+1
-}
-
-DATA_CC$Water <- W
-
-### Geographic occurrences 
-Occ <- NULL
-i = 1
-while (i<=nrow(DATA_CC)) {
-  Occ[i] <- sum(DATA_CC[i, 42:96]=="+")
-  i <- i+1
-}
-Occ
-### the apply alternative:
-DATA_CC$Sect_Occ <- apply(DATA_CC[, 42:96]=="+", 1, sum)
-### sanity check:
-Occ == apply(DATA_CC[, 42:96]=="+", 1, sum)
-rbind(Occ, apply(DATA_CC[, 42:96]=="+", 1, sum))
-
-### Odd VS Even ploidy levels
-DATA_CC$PloidyEvenOdd <- sapply(DATA_CC$Ploidy, factorize_Ploidy)
-
-DATA_CC$SpeciesName <- as.factor(DATA_CC$SpeciesName)
-
-### Adding a level for "mixed" reproductive mode
-i = 1
-Repr_mode_summ <- factor(rep(1, length(unique(DATA_CC$SpeciesName))))
-levels(Repr_mode_summ) <- c("Apomictic", "Sexual", "Mixed")
-Repr_mode_summ <- data.frame(Repr_mode_summ, "SpeciesName" = unique(DATA_CC$SpeciesName))
-while (i <= length(unique(DATA_CC$SpeciesName))) {
-  if (length(levels(droplevels(as.factor(DATA_CC[which(unique(DATA_CC$SpeciesName)[i] == DATA_CC$SpeciesName), "Repr_mode"])))) >= 2) {
-    Repr_mode_summ$Repr_mode_summ[i] <- "Mixed"} else {
-      Repr_mode_summ$Repr_mode_summ[i] <- as.character(first(DATA_CC[which(unique(DATA_CC$SpeciesName)[i] == DATA_CC$SpeciesName), "Repr_mode"]))
-    }
-  i = i + 1
-}
-Repr_mode_summ
-
-Repr_mode_summ <- Repr_mode_summ[order(Repr_mode_summ[, "SpeciesName"]), ]
-Repr_mode_summ_ext <- merge(DATA_CC, Repr_mode_summ, by = "SpeciesName", all.x = T)[c(1,125)]
-
-# View(cbind(Repr_mode_summ_ext[order(Repr_mode_summ_ext$SpeciesName),], DATA_CC[order(DATA_CC$SpeciesName), c(3,5)]))
-# View(cbind(Repr_mode_summ_ext, DATA_CC[, c(3,5)]))
-
-### Make sure both dataset are in the same order before pasting the modified Repr_mode
-DATA_CC <- DATA_CC[order(DATA_CC$SpeciesName),]
-
-DATA_CC$Repr_mode_summ <- as.factor(Repr_mode_summ_ext$Repr_mode_summ)
-str(DATA_CC)
-DATA_CC <- DATA_CC[, c(1:5, 125, 6:124)]
-DATA_CC
-
-
+DATA[!complete.cases(DATA[, to_keep]), ] # these are the 6 accessions that will be dropped
+DATA_CC <- DATA[complete.cases(DATA[, to_keep]), ]
+nrow(DATA) - nrow(DATA_CC) # 6 accessions dropped
 
 ##### Summarizing data: complete cases only #####
 library(dplyr)
-
-to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "Repr_mode_summ", "GS", "Ploidy", "PloidyEvenOdd", 
-             "Altitude", "Chr.number", 
-             "Endemic", "Indigenous", "Distribution", "CompleteName", 
-             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
-             "Init.month", "Tot.months", "Endemic", 
-             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", 
-             "Water", "w", "Sect_Occ")
-
 DATA_CC_red <- DATA_CC %>% 
-  select(ID_FloraAlpina, ID, SpeciesName, Repr_mode_summ, GS, Ploidy, PloidyEvenOdd, Altitude, Chr.number, 
-         Endemic, Indigenous, Distribution, CompleteName, 
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Altitude, Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, Sect_Occ, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
-         Init.month, Tot.months, Endemic, 
-         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, 
-         Water, w, Sect_Occ) %>% 
+         Init.month, Tot.months, End.month, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
   group_by(ID_FloraAlpina, SpeciesName) %>% 
   summarize_all(list(first))
 
 DATA_CC_red <- DATA_CC_red[order(DATA_CC_red$SpeciesName),]
 nrow(DATA_CC_red)
+
+
+#### I STOPPED DEBUGGING HERE! 13 nov 19
 
 setdiff(DATA_CC_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName)
@@ -902,7 +807,7 @@ nrow(elevation_Ozenda)
 colnames(elevation_Ozenda)
 elevation_Ozenda$sum <- rowSums(elevation_Ozenda[, 2:6])
 elevation_Ozenda[, 2] <- elevation_Ozenda[, 2]*350 # collineen
-elevation_Ozenda[, 3] <- elevation_Ozenda[, 3]*1050 # montagnard
+elevation_Ozenda[, 3] <- elevation_Ozengda[, 3]*1050 # montagnard
 elevation_Ozenda[, 4] <- elevation_Ozenda[, 4]*1750 # subalpin
 elevation_Ozenda[, 5] <- elevation_Ozenda[, 5]*2450 # alpin
 elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival

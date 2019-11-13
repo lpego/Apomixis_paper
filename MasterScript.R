@@ -621,485 +621,485 @@ plot(glm3)
 
 
 ##### MCMC models #####
+library(MCMCglmm)
+library(caper)
+# ### MCMCglmm on subsets of species
+# mHieraciumSS <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+#                                    data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
+#                                    family = "threshold", trunc = T,
+#                                    prior = list(R = list(V = diag(1), nu = 2)),
+#                                    nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+# )
+# summary(mHieraciumSS)
+# plot(mHieraciumSS)
+# 
+# mHieracium <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+#                                  data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
+#                                  family = "threshold", trunc = T,
+#                                  prior = list(R = list(V = diag(1), nu = 2)),
+#                                  nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+# )
+# summary(mHieracium)
+# plot(mHieracium)
+# 
+# mCichorieae <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
+#                                   data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ],
+#                                   family = "threshold", trunc = T,
+#                                   prior = list(R = list(V = diag(1), nu = 2)),
+#                                   nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+# )
+# summary(mCichorieae)
+# plot(mCichorieae)
+# 
+# ### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
-### MCMCglmm on subsets of species
-mHieraciumSS <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-                                   data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
-                                   family = "threshold", trunc = T,
-                                   prior = list(R = list(V = diag(1), nu = 2)),
-                                   nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-)
-summary(mHieraciumSS)
-plot(mHieraciumSS)
-
-mHieracium <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-                                 data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
-                                 family = "threshold", trunc = T,
-                                 prior = list(R = list(V = diag(1), nu = 2)),
-                                 nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-)
-summary(mHieracium)
-plot(mHieracium)
-
-mCichorieae <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-                                  data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ],
-                                  family = "threshold", trunc = T,
-                                  prior = list(R = list(V = diag(1), nu = 2)),
-                                  nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-)
-summary(mCichorieae)
-plot(mCichorieae)
-
-### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
 
 
+### Data prep
+head(DATA_CC_mean_red)
 
-# ### Data prep
-# head(DATA_CC_red)
+str(JanTree4)
+str(JanTree5) # JanTree4 but fully dichotomous tree
+
+MCMC_data <- DATA_CC_mean_red[match(JanTree4$tip.label, DATA_CC_mean_red$SpeciesName), ]
+rownames(MCMC_data) <- JanTree4$tip.label
+rownames(MCMC_data)
+colnames(MCMC_data)[2] <- "animal"
+head(MCMC_data)
+
+### Missing values are not permitted...
+nrow(MCMC_data)
+# data_red <- 
+  MCMC_data[!complete.cases(MCMC_data), 1:12]
+nrow(data_red)
+rownames(data_red)
+setdiff(data$animal, data_red$animal) # missing accessions other than those taxa not in Flora Alpina are due to missing Altitude datum...
+data_red <- data_red[match(JanTree4_red$tip.label, data_red$animal), ]
+
+### Handle tree
+setdiff(JanTree4$tip.label, data_red$animal)
+setdiff(data_red$animal, JanTree4$tip.label)
+JanTree4_red <- ape::drop.tip(JanTree4, setdiff(JanTree4$tip.label, data_red$animal))
+setdiff(JanTree4_red$tip.label, data_red$animal)
+rownames(data_red) <- data_red$animal
+geiger::name.check(JanTree4_red, data_red) # name.check is not to be trusted lately...
+setdiff(JanTree4_red$tip.label, data_red$animal)
+setdiff(data_red$animal, JanTree4_red$tip.label)
+nrow(data_red) == length(JanTree4_red$tip.label)
+# View(cbind(JanTree4_red$tip.label, data_red$animal, rownames(data_red))) # sanity check
+plot(JanTree4_red, cex = .25)
+is.binary(JanTree4_red)
+JanTree4_red <- multi2di(JanTree4_red) # randomly resolve polytomies
+is.binary(JanTree4_red)
+plot(JanTree4_red, cex = .25)
+is.ultrametric(JanTree4_red)
+JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen") # compute branch lengths
+is.ultrametric(JanTree4_red)
+JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # no branch lengths have value zero
+plot(JanTree4_red, cex = .3)
+JanTree4_red
+
+### Handle data
+str(data_red)
+data_red$animal <- as.factor(data_red$animal)
+data_red$Repr_mode <- data_red$Repr_mode_summ
+levels(data_red$Repr_mode) <- list(Sexual = "Sexual", Apomictic = c("Apomicitc", "Mixed")) # 2 levels
+data_red$Repr_mode_summ <- factor(data_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic" )) # 3 levels
+data_red$PloidyEvenOdd <- as.factor(data_red$PloidyEvenOdd)
+data_red$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_red$Ploidy)
+data_red$Ploidy_summ <- factor(data_red$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
+table(data_red$Ploidy_summ)
+data_red$Phytosociology <- as.factor(data_red$Phytosociology)
+data_red$Ca <- as.factor(data_red$Ca)
+data_red$Ca.Si <- as.factor(data_red$Ca.Si)
+data_red$Si <- as.factor(data_red$Si)
+data_red$pH <- as.factor(data_red$pH)
+data_red$N <- as.factor(data_red$N)
+data_red$Water <- as.factor(data_red$Water)
+data_red$w <- as.factor(data_red$w)
+class(data_red) <- "data.frame"
+levels(data_red$animal)
+# test <- sapply(data_red, as.factor) # or use sapply y'know...
+
+### Make sure factor levels are correct
+data_red$Repr_mode_summ <- factor(data_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+data_red$Ploidy <- factor(data_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+
+##### Binomial (categorical) distribution - weak priors #####
+library(MCMCglmm)
+# prior <- list(R = list(V = 1, nu = 0.002)) # Maite's prior, weak
+# nitt= 1000000, thin=500, burnin=25000 # Maite's run parameters
+# prior <- list(R = list(V = 1, nu = 0.002, fix = 1))
 #
-# str(JanTree4)
-# str(JanTree5) # JanTree4 but fully dichotomous tree
+# prior <- list(R = list(V = 1, nu = 0.002),
+#               G = list(G1 = list(V = 1, nu = 0.002))
+#               )
 #
-# animal <- as.data.frame(JanTree4$tip.label)
+# a = 1000
+# prior <- list(R = list(V = diag(3), nu = 0.002),
+#               G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a))) # strong prior
 #
-# data <- DATA_CC_red[match(JanTree4$tip.label, DATA_CC_red$SpeciesName), ]
-# rownames(data) <- JanTree4$tip.label
-# rownames(data)
-# colnames(data)[2] <- "animal"
-# head(data)
+# prior <- list(R = list(V = diag(3), nu = 0.002),
+#                G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
+#                         G2 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
+#                         G3 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a)))
 #
-# ### Missing values are not permitted...
-# nrow(data)
-# data_red <- data[complete.cases(data), ]
-# nrow(data_red)
-# rownames(data_red)
-# setdiff(data$animal, data_red$animal) # missing accessions other than those taxa not in Flora Alpina are due to missing Altitude datum...
-# data_red <- data_red[match(JanTree4_red$tip.label, data_red$animal), ]
+# prior = list(R = list(V = diag(2), fix = 1),
+#              G = list(G1 = list(V = diag(2), nu = 1, alpha.mu = c(0, 0), alpha.V = diag(2) * 100))
+#              )
 #
-# ### Handle tree
-# setdiff(JanTree4$tip.label, data_red$animal)
-# setdiff(data_red$animal, JanTree4$tip.label)
-# JanTree4_red <- ape::drop.tip(JanTree4, setdiff(JanTree4$tip.label, data_red$animal))
-# setdiff(JanTree4_red$tip.label, data_red$animal)
-# rownames(data_red) <- data_red$animal
-# geiger::name.check(JanTree4_red, data_red) # name.check is not to be trusted lately...
-# setdiff(JanTree4_red$tip.label, data_red$animal)
-# setdiff(data_red$animal, JanTree4_red$tip.label)
-# nrow(data_red) == length(JanTree4_red$tip.label)
-# # View(cbind(JanTree4_red$tip.label, data_red$animal, rownames(data_red))) # sanity check
-# plot(JanTree4_red, cex = .25)
-# is.binary(JanTree4_red)
-# JanTree4_red <- multi2di(JanTree4_red) # randomly resolve polytomies
-# is.binary(JanTree4_red)
-# plot(JanTree4_red, cex = .25)
-# is.ultrametric(JanTree4_red)
-# JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen") # compute branch lengths
-# is.ultrametric(JanTree4_red)
-# JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # no branch lengths have value zero
-# plot(JanTree4_red, cex = .3)
-# JanTree4_red
+prior <- list(R = list(V = diag(2), nu = 2))
 #
-# ### Handle data
-# str(data_red)
-# data_red$animal <- as.factor(data_red$animal)
-# data_red$Repr_mode <- data_red$Repr_mode_summ
-# levels(data_red$Repr_mode) <- list(Sexual = "Sexual", Apomictic = c("Apomicitc", "Mixed")) # 2 levels
-# data_red$Repr_mode_summ <- factor(data_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic" )) # 3 levels
-# data_red$PloidyEvenOdd <- as.factor(data_red$PloidyEvenOdd)
-# data_red$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_red$Ploidy)
-# data_red$Ploidy_summ <- factor(data_red$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
-# table(data_red$Ploidy_summ)
-# data_red$Phytosociology <- as.factor(data_red$Phytosociology)
-# data_red$Ca <- as.factor(data_red$Ca)
-# data_red$Ca.Si <- as.factor(data_red$Ca.Si)
-# data_red$Si <- as.factor(data_red$Si)
-# data_red$pH <- as.factor(data_red$pH)
-# data_red$N <- as.factor(data_red$N)
-# data_red$Water <- as.factor(data_red$Water)
-# data_red$w <- as.factor(data_red$w)
-# class(data_red) <- "data.frame"
-# levels(data_red$animal)
-# # test <- sapply(data_red, as.factor) # or use sapply y'know...
+# a = 1000
+# prior <- list(V = diag(2), nu = 2, alpha.mu = c(0,0), alpha.V = diag(2)*a)
 #
-# ### Make sure factor levels are correct
-# data_red$Repr_mode_summ <- factor(data_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-# data_red$Ploidy <- factor(data_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-#
-# ##### Binomial (categorical) distribution - weak priors #####
-# library(MCMCglmm)
-# # prior <- list(R = list(V = 1, nu = 0.002)) # Maite's prior, weak
-# # nitt= 1000000, thin=500, burnin=25000 # Maite's run parameters
-# # prior <- list(R = list(V = 1, nu = 0.002, fix = 1))
-# #
-# # prior <- list(R = list(V = 1, nu = 0.002),
-# #               G = list(G1 = list(V = 1, nu = 0.002))
-# #               )
-# #
-# # a = 1000
-# # prior <- list(R = list(V = diag(3), nu = 0.002),
-# #               G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a))) # strong prior
-# #
-# # prior <- list(R = list(V = diag(3), nu = 0.002),
-# #                G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
-# #                         G2 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
-# #                         G3 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a)))
-# #
-# # prior = list(R = list(V = diag(2), fix = 1),
-# #              G = list(G1 = list(V = diag(2), nu = 1, alpha.mu = c(0, 0), alpha.V = diag(2) * 100))
-# #              )
-# #
-# prior <- list(R = list(V = diag(2), nu = 2))
-# #
-# # a = 1000
-# # prior <- list(V = diag(2), nu = 2, alpha.mu = c(0,0), alpha.V = diag(2)*a)
-# #
-# # prior <- list(R = list(fix = 1, V = diag(2), nu = 0.002),
-# #               B = list(mu = rep(0, 5), V = diag(5)*1e4))
-#
-# set.seed(111)
-# mBin1 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-#                  family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
-# plot(mBin1)
-# summary(mBin1)
-#
-# set.seed(111)
-# mBin1_noGS <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+# prior <- list(R = list(fix = 1, V = diag(2), nu = 0.002),
+#               B = list(mu = rep(0, 5), V = diag(5)*1e4))
+
+set.seed(111)
+mBin1 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                 family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+plot(mBin1)
+summary(mBin1)
+
+set.seed(111)
+mBin1_noGS <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                  family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+plot(mBin1_noGS)
+summary(mBin1_noGS)
+
+# mBin1_evenodd <- MCMCglmm(Repr_mode_summ ~ Altitude + PloidyEvenOdd + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
 #                   family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
-# plot(mBin1_noGS)
-# summary(mBin1_noGS)
+# plot(mBin1_evenodd)
+# summary(mBin1_evenodd)
+
+# want eff. samp to be close to the sample size given, if big difference = bad
+plot(mBin1$VCV) # If you can see one particularly high peak at the start increase burnin so sampling will start after trace has evened out
+plot(mBin1$Sol) # Want traces to be relatively even and compacted
+
+mean(mBin1$Sol[,"Altitude"]) # this gives the coefficient printed by summary(mBin1)
+mean(exp(mBin1$Sol[,"Altitude"])) # this gives the odds ratio
+
+mean(exp(mBin1$Sol[,"Altitude"]))
+mean(exp(mBin1$Sol[,"Ploidy3x"]))
+mean(exp(mBin1$Sol[,"Ploidy4x"]))
+mean(exp(mBin1$Sol[,"Ploidy6x"]))
+mean(exp(mBin1$Sol[,"Ploidy8x"]))
+mean(exp(mBin1$Sol[,"GS"]))
+mean(exp(mBin1$Sol[,"Init.month"]))
+
+(mean(exp(mBin1$Sol[,"Altitude"]))-1)*100 # % change in the probability of being sexual per unit of Altitude
+(mean(exp(mBin1$Sol[,"Ploidy3x"]))-1)*100
+(mean(exp(mBin1$Sol[,"Ploidy4x"]))-1)*100
+(mean(exp(mBin1$Sol[,"Ploidy6x"]))-1)*100
+(mean(exp(mBin1$Sol[,"Ploidy8x"]))-1)*100
+(mean(exp(mBin1$Sol[,"GS"]))-1)*100
+(mean(exp(mBin1$Sol[,"Init.month"]))-1)*100
+
+mean(exp(mBin1$Sol[,"Altitude"]))/(1+mean(exp(mBin1$Sol[,"Altitude"]))) # probability of being sexual having Alitutde at its mean (?)
+mean(exp(mBin1$Sol[,"Ploidy3x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy3x"]))) # probability of being sexual being 3x
+mean(exp(mBin1$Sol[,"Ploidy4x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy4x"])))
+mean(exp(mBin1$Sol[,"Init.month"]))/(1+mean(exp(mBin1$Sol[,"Init.month"]))) # probability of being sexual having Init.month at its mean (?)
+
+# ### from Jerrod Hadfield's course notes on MCMCglmm:
+# IC.1 <- mBin1$VCV[, 1]/(rowSums(mBin1$VCV) + pi^2/3)
+# IC.2 <- mBin2$VCV[, 1]/(rowSums(mBin2$VCV) + pi^2/3)
+# plot(mcmc.list(IC.1, IC.2))
 #
-# # mBin1_evenodd <- MCMCglmm(Repr_mode_summ ~ Altitude + PloidyEvenOdd + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-# #                   family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
-# # plot(mBin1_evenodd)
-# # summary(mBin1_evenodd)
-#
-# # want eff. samp to be close to the sample size given, if big difference = bad
-# plot(mBin1$VCV) # If you can see one particularly high peak at the start increase burnin so sampling will start after trace has evened out
-# plot(mBin1$Sol) # Want traces to be relatively even and compacted
-#
-# mean(mBin1$Sol[,"Altitude"]) # this gives the coefficient printed by summary(mBin1)
-# mean(exp(mBin1$Sol[,"Altitude"])) # this gives the odds ratio
-#
-# mean(exp(mBin1$Sol[,"Altitude"]))
-# mean(exp(mBin1$Sol[,"Ploidy3x"]))
-# mean(exp(mBin1$Sol[,"Ploidy4x"]))
-# mean(exp(mBin1$Sol[,"Ploidy6x"]))
-# mean(exp(mBin1$Sol[,"Ploidy8x"]))
-# mean(exp(mBin1$Sol[,"GS"]))
-# mean(exp(mBin1$Sol[,"Init.month"]))
-#
-# (mean(exp(mBin1$Sol[,"Altitude"]))-1)*100 # % change in the probability of being sexual per unit of Altitude
-# (mean(exp(mBin1$Sol[,"Ploidy3x"]))-1)*100
-# (mean(exp(mBin1$Sol[,"Ploidy4x"]))-1)*100
-# (mean(exp(mBin1$Sol[,"Ploidy6x"]))-1)*100
-# (mean(exp(mBin1$Sol[,"Ploidy8x"]))-1)*100
-# (mean(exp(mBin1$Sol[,"GS"]))-1)*100
-# (mean(exp(mBin1$Sol[,"Init.month"]))-1)*100
-#
-# mean(exp(mBin1$Sol[,"Altitude"]))/(1+mean(exp(mBin1$Sol[,"Altitude"]))) # probability of being sexual having Alitutde at its mean (?)
-# mean(exp(mBin1$Sol[,"Ploidy3x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy3x"]))) # probability of being sexual being 3x
-# mean(exp(mBin1$Sol[,"Ploidy4x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy4x"])))
-# mean(exp(mBin1$Sol[,"Init.month"]))/(1+mean(exp(mBin1$Sol[,"Init.month"]))) # probability of being sexual having Init.month at its mean (?)
-#
-# # ### from Jerrod Hadfield's course notes on MCMCglmm:
-# # IC.1 <- mBin1$VCV[, 1]/(rowSums(mBin1$VCV) + pi^2/3)
-# # IC.2 <- mBin2$VCV[, 1]/(rowSums(mBin2$VCV) + pi^2/3)
-# # plot(mcmc.list(IC.1, IC.2))
-# #
-# # c2 <- ((16 * sqrt(3))/(15 * pi))^2
-# # Int.1 <- mBin1$Sol/sqrt(1 + c2 * mBin1$VCV[, 2])
-# # Int.2 <- mBin2$Sol/sqrt(1 + c2 * mBin2$VCV[, 2])
-# # plot(mcmc.list(as.mcmc(Int.1), as.mcmc(Int.2)))
-#
-# ###
-# set.seed(569)
-# mBin2 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-#                   family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
-# summary(mBin2)
-# plot(mBin2)
-#
-# ###
-# set.seed(935)
-# mBin3 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-#                            family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
-# summary(mBin3)
-# plot(mBin3)
-#
-# ### Check convergence of multiple chains
-# chainListBin1 <- mcmc.list(mBin1$Sol, mBin2$Sol, mBin3$Sol)
-# chainListBin2 <- mcmc.list(mBin1$VCV, mBin2$VCV, mBin3$VCV)
-# ### Gelman rubin diagnostic: should be close to 1.
-# gelman.diag(chainListBin1)
-# gelman.diag(chainListBin2)
-#
-# heidel.diag(mBin1$VCV)
-# heidel.diag(mBin2$VCV)
-# heidel.diag(mBin3$VCV)
-# heidel.diag(mBin1$Sol)
-# heidel.diag(mBin2$Sol)
-# heidel.diag(mBin3$Sol)
-#
-# geweke.plot(mBin1$Sol)
-# geweke.plot(mBin2$Sol)
-# geweke.plot(mBin3$Sol)
-#
-# ##### Binomial (categorical) distribution - strong priors #####
-# prior_strong <- list(R = list(fix = 2, V = diag(2)*a, nu = 2)) # strong prior
-# # nitt= 1000000, thin=500, burnin=25000 # same run parameters as wek prior's models
+# c2 <- ((16 * sqrt(3))/(15 * pi))^2
+# Int.1 <- mBin1$Sol/sqrt(1 + c2 * mBin1$VCV[, 2])
+# Int.2 <- mBin2$Sol/sqrt(1 + c2 * mBin2$VCV[, 2])
+# plot(mcmc.list(as.mcmc(Int.1), as.mcmc(Int.2)))
+
+###
+set.seed(569)
+mBin2 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                  family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+summary(mBin2)
+plot(mBin2)
+
+###
+set.seed(935)
+mBin3 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                           family = "categorical", rcov = ~us(trait):units, prior = prior, nitt=1000000, thin=500, burnin=25000)
+summary(mBin3)
+plot(mBin3)
+
+### Check convergence of multiple chains
+chainListBin1 <- mcmc.list(mBin1$Sol, mBin2$Sol, mBin3$Sol)
+chainListBin2 <- mcmc.list(mBin1$VCV, mBin2$VCV, mBin3$VCV)
+### Gelman rubin diagnostic: should be close to 1.
+gelman.diag(chainListBin1)
+gelman.diag(chainListBin2)
+
+heidel.diag(mBin1$VCV)
+heidel.diag(mBin2$VCV)
+heidel.diag(mBin3$VCV)
+heidel.diag(mBin1$Sol)
+heidel.diag(mBin2$Sol)
+heidel.diag(mBin3$Sol)
+
+geweke.plot(mBin1$Sol)
+geweke.plot(mBin2$Sol)
+geweke.plot(mBin3$Sol)
+
+##### Binomial (categorical) distribution - strong priors #####
+prior_strong <- list(R = list(fix = 2, V = diag(2)*a, nu = 2)) # strong prior
+# nitt= 1000000, thin=500, burnin=25000 # same run parameters as wek prior's models
+set.seed(111)
+mBin4 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                  family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+summary(mBin4)
+plot(mBin4)
+
 # set.seed(111)
-# mBin4 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+# mBin4_evenodd <- MCMCglmm(Repr_mode ~ Altitude + PloidyEvenOdd + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
 #                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
-# summary(mBin4)
-# plot(mBin4)
-#
-# # set.seed(111)
-# # mBin4_evenodd <- MCMCglmm(Repr_mode ~ Altitude + PloidyEvenOdd + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-# #                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
-# # summary(mBin4_evenodd)
-# # plot(mBin4_evenodd)
-#
-# ###
-# set.seed(569)
-# mBin5 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-#                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
-# summary(mBin5)
-# plot(mBin5)
-#
-# ###
-# set.seed(935)
-# mBin6 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
-#                   family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
-# summary(mBin6)
-# plot(mBin6)
-#
-# ### Check convergence of multiple chains
-# chainListBin3 <- mcmc.list(mBin4$Sol, mBin5$Sol, mBin6$Sol)
-# chainListBin4 <- mcmc.list(mBin4$VCV, mBin5$VCV, mBin6$VCV)
-#
-# ### Gelman rubin diagnostic: should be close to 1.
-# gelman.diag(chainListBin3)
-# gelman.diag(chainListBin4)
-#
-# heidel.diag(mBin4$VCV)
-# heidel.diag(mBin4_evenodd$VCV)
-# heidel.diag(mBin5$VCV)
-# heidel.diag(mBin6$VCV)
-# heidel.diag(mBin4$Sol)
-# heidel.diag(mBin4_evenodd$Sol)
-# heidel.diag(mBin5$Sol)
-# heidel.diag(mBin6$Sol)
-#
-# geweke.plot(mBin4$Sol)
-# geweke.plot(mBin5$Sol)
-# geweke.plot(mBin6$Sol)
-#
-#
-#
-# ##### Maite's model #####
-# library(MCMCglmm)
-#
-# data_red$Repr_mode # 2 levels
-# data_red$Repr_mode_summ # 3 levels
-#
-# ### Phylogeny black magic...
-# invJanTree4_red <- inverseA(JanTree4_red, nodes = "ALL", scale = TRUE) # ALL is better for large phylogenies
-# invJanTree4_red_tips <- inverseA(JanTree4_red, nodes = "TIPS", scale = TRUE)
-#
-# #########
-# prior_nu1000_1 <- list(R = list(V = 1, fix = 1),
-#                        G = list(G1 = list(V = 1, nu = 1000, alpha.mu = 0, alpha.V = 1))
-#                        )
-#
-# set.seed(111)
-# mTre1 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                   ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                   random = ~animal,
-#                   verbose = T,
-#                   data = data_red,
-#                   family = "threshold",
-#                   trunc = T,
-#                   prior = prior_nu1000_1,
-#                   nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre1)
-# plot(mTre1)
-#
-# heidel.diag(mTre1$VCV)
-# heidel.diag(mTre1$Sol)
-# geweke.plot(mTre1$Sol)
-# autocorr.diag(mTre1$Sol)
-#
-# mTre1_noPhy <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                         verbose = T, data = data_red,
-#                         family = "threshold",
-#                         trunc = T,
-#                         prior = prior_nu1000_1,
-#                         nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre1_noPhy)
-# plot(mTre1_noPhy)
-#
-# ### Repr_mode with only 2 levels
-# mTre1.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                     ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                     random = ~animal,
-#                     verbose = T,
-#                     data = data_red,
-#                     family = "threshold",
-#                     trunc = T,
-#                     prior = prior_nu1000_1,
-#                     nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre1.1)
-# # plot(mTre1.1)
-#
-# heidel.diag(mTre1.1$VCV)
-# heidel.diag(mTre1.1$Sol)
-# geweke.plot(mTre1.1$Sol)
-# autocorr.diag(mTre1.1$Sol)
-#
-# ##### Second batch: set.seed(534) #####
-# print("Second batch: set.seed(534)")
-# set.seed(534)
-# ### Repr_mode with only 3 levels
-# mTre2 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                   ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                   random = ~ animal,
-#                   verbose = T,
-#                   data = data_red,
-#                   family = "threshold",
-#                   trunc = T,
-#                   prior = prior_nu1000_1,
-#                   nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre2)
-# print("DiagPlots_mTre2.1%03d.png")
-# png('DiagPlots_mTre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-# plot(mTre2, ask = F)
-#
-# dev.off()
-#
-# heidel.diag(mTre2$VCV)
-# heidel.diag(mTre2$Sol)
-# print("Geweke_mTre2%03d.png")
-# png('Geweke_mTre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-# geweke.plot(mTre2$Sol, ask = F)
-#
-# dev.off()
-# autocorr.diag(mTre2$Sol)
-#
-# ### Repr_mode with only 2 levels
-# mTre2.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                     ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                     random = ~ animal,
-#                     verbose = T,
-#                     data = data_red,
-#                     family = "threshold",
-#                     trunc = T,
-#                     prior = prior_nu1000_1,
-#                     nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre2.1)
-# print("DiagPlots_mTre2.1%03d.png")
-# png('DiagPlots_mTre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-# plot(mTre2.1, ask = F)
-#
-# dev.off()
-#
-# heidel.diag(mTre2.1$VCV)
-# heidel.diag(mTre2.1$Sol)
-# print("Geweke_mTre2.1.png")
-# png('Geweke_mTre2.1.png', width = 15, height = 15, units = 'cm', res = 300)
-# geweke.plot(mTre2.1$Sol, ask = F)
-#
-# dev.off()
-# autocorr.diag(mTre2.1$Sol)
-#
-# ##### Third batch: set.seed(386) #####
-# print("Third batch: set.seed(386)")
-# set.seed(386)
-# ### Repr_mode with only 3 levels
-# mTre3 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                   ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                   random = ~ animal,
-#                   verbose = T,
-#                   data = data_red,
-#                   family = "threshold",
-#                   trunc = T,
-#                   prior = prior_nu1000_1,
-#                   nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre3)
-# print("DiagPlots_mTre3.1%03d.png")
-# png('DiagPlots_mTre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-# plot(mTre3, ask = F)
-#
-# dev.off()
-#
-# heidel.diag(mTre3$VCV)
-# heidel.diag(mTre3$Sol)
-# print("Geweke_mTre3%03d.png")
-# png('Geweke_mTre3%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-# geweke.plot(mTre3$Sol, ask = F)
-#
-# dev.off()
-# autocorr.diag(mTre3$Sol)
-#
-# ### Repr_mode with only 2 levels
-# mTre3.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                     ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                     random = ~ animal,
-#                     verbose = T,
-#                     data = data_red,
-#                     family = "threshold",
-#                     trunc = T,
-#                     prior = prior_nu1000_1,
-#                     nitt = 10^6, thin = 500, burnin = 25000)
-# summary(mTre3.1)
-# print("DiagPlots_mTre3.1%03d.png")
-# png('DiagPlots_mTre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-# plot(mTre3.1, ask = F)
-#
-# dev.off()
-#
-# heidel.diag(mTre3.1$VCV)
-# heidel.diag(mTre3.1$Sol)
-# print("Geweke_mTre3.1.png")
-# png('Geweke_mTre3.1.png', width = 15, height = 15, units = 'cm', res = 300)
-# geweke.plot(mTre3.1$Sol, ask = F)
-#
-# dev.off()
-# autocorr.diag(mTre3.1$Sol)
-#
-# ##### Multiple chains convergence diagnostics #####
-# chainListTre1_Sol <- mcmc.list(mTre1$Sol, mTre2$Sol, mTre3$Sol)
-# chainListTre1_VCV <- mcmc.list(mTre1$VCV, mTre2$VCV, mTre3$VCV)
-#
-# chainListTre2_Sol <- mcmc.list(mTre1.1$Sol, mTre2.1$Sol, mTre3.1$Sol)
-# chainListTre2_VCV <- mcmc.list(mTre1.1$VCV, mTre2.1$VCV, mTre3.1$VCV)
-#
-# ### Gelman rubin diagnostic: should be close to 1
-# gelman.diag(chainListTre1_Sol)
-# gelman.diag(chainListTre1_Sol)
-#
-# gelman.diag(chainListTre2_Sol)
-# gelman.diag(chainListTre2_Sol)
-#
-#
-#
-# ##### DIFFERENT prior #####
-# library(MCMCglmm)
-# prior_G.V1000_nu.0002_1 <- list(R = list(V = 1000, fix = 1000),
-#                        G = list(G1 = list(V = 1000, nu = 200, alpha.mu = 1000, alpha.V = 10000))
-#                        )
-#
-# set.seed(111)
-# mTre4 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
-#                   ginverse = list(animal = invJanTree4_red_tips$Ainv),
-#                   random = ~animal,
-#                   verbose = T,
-#                   data = data_red,
-#                   family = "threshold",
-#                   trunc = T,
-#                   prior = prior_nu.0002_1,
-#                   nitt = 10000, thin = 50, burnin = 100)
-# summary(mTre4)
-# plot(mTre4)
+# summary(mBin4_evenodd)
+# plot(mBin4_evenodd)
+
+###
+set.seed(569)
+mBin5 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                  family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+summary(mBin5)
+plot(mBin5)
+
+###
+set.seed(935)
+mBin6 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months, pedigree = JanTree4_red, verbose = T, data = data_red,
+                  family = "categorical", rcov=~us(trait):units, prior = prior_strong, nitt=1000000, thin=500, burnin=25000)
+summary(mBin6)
+plot(mBin6)
+
+### Check convergence of multiple chains
+chainListBin3 <- mcmc.list(mBin4$Sol, mBin5$Sol, mBin6$Sol)
+chainListBin4 <- mcmc.list(mBin4$VCV, mBin5$VCV, mBin6$VCV)
+
+### Gelman rubin diagnostic: should be close to 1.
+gelman.diag(chainListBin3)
+gelman.diag(chainListBin4)
+
+heidel.diag(mBin4$VCV)
+heidel.diag(mBin4_evenodd$VCV)
+heidel.diag(mBin5$VCV)
+heidel.diag(mBin6$VCV)
+heidel.diag(mBin4$Sol)
+heidel.diag(mBin4_evenodd$Sol)
+heidel.diag(mBin5$Sol)
+heidel.diag(mBin6$Sol)
+
+geweke.plot(mBin4$Sol)
+geweke.plot(mBin5$Sol)
+geweke.plot(mBin6$Sol)
+
+
+
+##### Maite's model #####
+library(MCMCglmm)
+
+data_red$Repr_mode # 2 levels
+data_red$Repr_mode_summ # 3 levels
+
+### Phylogeny black magic...
+invJanTree4_red <- inverseA(JanTree4_red, nodes = "ALL", scale = TRUE) # ALL is better for large phylogenies
+invJanTree4_red_tips <- inverseA(JanTree4_red, nodes = "TIPS", scale = TRUE)
+
+#########
+prior_nu1000_1 <- list(R = list(V = 1, fix = 1),
+                       G = list(G1 = list(V = 1, nu = 1000, alpha.mu = 0, alpha.V = 1))
+                       )
+
+set.seed(111)
+mTre1 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                  ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                  random = ~animal,
+                  verbose = T,
+                  data = data_red,
+                  family = "threshold",
+                  trunc = T,
+                  prior = prior_nu1000_1,
+                  nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre1)
+plot(mTre1)
+
+heidel.diag(mTre1$VCV)
+heidel.diag(mTre1$Sol)
+geweke.plot(mTre1$Sol)
+autocorr.diag(mTre1$Sol)
+
+mTre1_noPhy <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                        verbose = T, data = data_red,
+                        family = "threshold",
+                        trunc = T,
+                        prior = prior_nu1000_1,
+                        nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre1_noPhy)
+plot(mTre1_noPhy)
+
+### Repr_mode with only 2 levels
+mTre1.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                    ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                    random = ~animal,
+                    verbose = T,
+                    data = data_red,
+                    family = "threshold",
+                    trunc = T,
+                    prior = prior_nu1000_1,
+                    nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre1.1)
+# plot(mTre1.1)
+
+heidel.diag(mTre1.1$VCV)
+heidel.diag(mTre1.1$Sol)
+geweke.plot(mTre1.1$Sol)
+autocorr.diag(mTre1.1$Sol)
+
+##### Second batch: set.seed(534) #####
+print("Second batch: set.seed(534)")
+set.seed(534)
+### Repr_mode with only 3 levels
+mTre2 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                  ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                  random = ~ animal,
+                  verbose = T,
+                  data = data_red,
+                  family = "threshold",
+                  trunc = T,
+                  prior = prior_nu1000_1,
+                  nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre2)
+print("DiagPlots_mTre2.1%03d.png")
+png('DiagPlots_mTre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+plot(mTre2, ask = F)
+
+dev.off()
+
+heidel.diag(mTre2$VCV)
+heidel.diag(mTre2$Sol)
+print("Geweke_mTre2%03d.png")
+png('Geweke_mTre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+geweke.plot(mTre2$Sol, ask = F)
+
+dev.off()
+autocorr.diag(mTre2$Sol)
+
+### Repr_mode with only 2 levels
+mTre2.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                    ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                    random = ~ animal,
+                    verbose = T,
+                    data = data_red,
+                    family = "threshold",
+                    trunc = T,
+                    prior = prior_nu1000_1,
+                    nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre2.1)
+print("DiagPlots_mTre2.1%03d.png")
+png('DiagPlots_mTre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+plot(mTre2.1, ask = F)
+
+dev.off()
+
+heidel.diag(mTre2.1$VCV)
+heidel.diag(mTre2.1$Sol)
+print("Geweke_mTre2.1.png")
+png('Geweke_mTre2.1.png', width = 15, height = 15, units = 'cm', res = 300)
+geweke.plot(mTre2.1$Sol, ask = F)
+
+dev.off()
+autocorr.diag(mTre2.1$Sol)
+
+##### Third batch: set.seed(386) #####
+print("Third batch: set.seed(386)")
+set.seed(386)
+### Repr_mode with only 3 levels
+mTre3 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                  ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                  random = ~ animal,
+                  verbose = T,
+                  data = data_red,
+                  family = "threshold",
+                  trunc = T,
+                  prior = prior_nu1000_1,
+                  nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre3)
+print("DiagPlots_mTre3.1%03d.png")
+png('DiagPlots_mTre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+plot(mTre3, ask = F)
+
+dev.off()
+
+heidel.diag(mTre3$VCV)
+heidel.diag(mTre3$Sol)
+print("Geweke_mTre3%03d.png")
+png('Geweke_mTre3%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+geweke.plot(mTre3$Sol, ask = F)
+
+dev.off()
+autocorr.diag(mTre3$Sol)
+
+### Repr_mode with only 2 levels
+mTre3.1 <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                    ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                    random = ~ animal,
+                    verbose = T,
+                    data = data_red,
+                    family = "threshold",
+                    trunc = T,
+                    prior = prior_nu1000_1,
+                    nitt = 10^6, thin = 500, burnin = 25000)
+summary(mTre3.1)
+print("DiagPlots_mTre3.1%03d.png")
+png('DiagPlots_mTre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+plot(mTre3.1, ask = F)
+
+dev.off()
+
+heidel.diag(mTre3.1$VCV)
+heidel.diag(mTre3.1$Sol)
+print("Geweke_mTre3.1.png")
+png('Geweke_mTre3.1.png', width = 15, height = 15, units = 'cm', res = 300)
+geweke.plot(mTre3.1$Sol, ask = F)
+
+dev.off()
+autocorr.diag(mTre3.1$Sol)
+
+##### Multiple chains convergence diagnostics #####
+chainListTre1_Sol <- mcmc.list(mTre1$Sol, mTre2$Sol, mTre3$Sol)
+chainListTre1_VCV <- mcmc.list(mTre1$VCV, mTre2$VCV, mTre3$VCV)
+
+chainListTre2_Sol <- mcmc.list(mTre1.1$Sol, mTre2.1$Sol, mTre3.1$Sol)
+chainListTre2_VCV <- mcmc.list(mTre1.1$VCV, mTre2.1$VCV, mTre3.1$VCV)
+
+### Gelman rubin diagnostic: should be close to 1
+gelman.diag(chainListTre1_Sol)
+gelman.diag(chainListTre1_Sol)
+
+gelman.diag(chainListTre2_Sol)
+gelman.diag(chainListTre2_Sol)
+
+
+
+##### DIFFERENT prior #####
+library(MCMCglmm)
+prior_G.V1000_nu.0002_1 <- list(R = list(V = 1000, fix = 1000),
+                       G = list(G1 = list(V = 1000, nu = 200, alpha.mu = 1000, alpha.V = 10000))
+                       )
+
+set.seed(111)
+mTre4 <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + GS + Init.month + Tot.months,
+                  ginverse = list(animal = invJanTree4_red_tips$Ainv),
+                  random = ~animal,
+                  verbose = T,
+                  data = data_red,
+                  family = "threshold",
+                  trunc = T,
+                  prior = prior_nu.0002_1,
+                  nitt = 10000, thin = 50, burnin = 100)
+summary(mTre4)
+plot(mTre4)
 
 
 
