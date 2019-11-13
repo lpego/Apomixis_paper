@@ -360,7 +360,8 @@ ggsave(ggJanTree5_circular, filename = "ggJanTree5_circular.png",
 
 
 
-##### Other plots #####
+##### Other plots: extended dataset #####
+### Data prep
 library(dplyr)
 Asteraceae_barplot <- DATA_CC_mean_red %>%
   group_by(Ploidy, Repr_mode_summ) %>%
@@ -370,9 +371,20 @@ str(Asteraceae_barplot)
 table(DATA_red$Ploidy)
 table(DATA_CC_mean_red$Ploidy)
 
+table(DATA_red[, c("Repr_mode_summ", "Init.month")])
+table(DATA_red$Repr_mode_summ)
+nrow(DATA_red)
+nrow(DATA_red[DATA_red$Repr_mode_summ != "Mixed", ])
+
+nrow(DATA_red) - sum(table(DATA_red$Init.month)) # 20 species missing Init.month
+
+DATA_CC_mean_red$Repr_mode <- gsub('Mixed', 'Apomictic', DATA_CC_mean_red$Repr_mode_summ)
+DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
+DATA_CC_mean_red$Repr_mode
+
+### Barplot
 library(ggplot2)
 library(RColorBrewer)
-
 bargraph <- ggplot(Asteraceae_barplot,
                    aes(factor(Ploidy),
                        n,
@@ -403,29 +415,6 @@ bargraph <- ggplot(Asteraceae_barplot,
   # ggtitle("Apomixis and ploidy")
 bargraph
 ggsave(plot = bargraph, filename = "ApomixisVSPloidy_ggsave.pdf", dpi = 150, device = "pdf", scale = 1)
-
-
-
-c("January", "February", "March", "April",
-  "May", "June", "July", "August",
-  "September", "October", "November", "December")
-
-c("1" = "January", "2" = "February", "3" = "March", "4" = "April",
-  "5" = "May", "6" = "June", "7" = "July", "8" = "August",
-  "9" = "September", "10" = "October", "11" = "November", "12" = "December")
-
-table(DATA_red[, c("Repr_mode_summ", "Init.month")])
-DATA_red$Repr_mode_summ <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-
-table(DATA_red$Repr_mode_summ)
-nrow(DATA_red)
-nrow(DATA_red[DATA_red$Repr_mode_summ != "Mixed", ])
-
-nrow(DATA_red) - sum(table(DATA_red$Init.month)) # 28 species missing Init.month
-
-DATA_CC_mean_red$Repr_mode <- gsub('Mixed', 'Apomictic', DATA_CC_mean_red$Repr_mode_summ)
-DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
-DATA_CC_mean_red$Repr_mode
 
 ### Boxplot
 boxplot <- ggplot(data = DATA_CC_mean_red,
@@ -460,38 +449,13 @@ boxplot <- ggplot(data = DATA_CC_mean_red,
 boxplot
 ggsave(plot = boxplot, filename= "ApomixisVSPhenology_ggsave.pdf", dpi = 150, device = "pdf", scale = 1)
 
-ggpubr::ggarrange(bargraph, boxplot,
-                  ncol = 2, nrow = 1)
+ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1)
+ggsave(ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1), 
+       filename = "Barplot_Boxplot_ggarrange.pdf", device = "pdf", dpi = 150)
 
-# boxplot2 <- ggplot(data = Asteraceae_data,
-#                   aes(x = Repr_mode,
-#                       y = as.numeric(Flowering_initiation),
-#                       fill = Repr_mode,
-#                       colour = Repr_mode)) +
-#   geom_boxplot(width=0.5, lwd=0.1, fatten=10, outlier.size = -1, color = c("#1f77b4", "#ff7f0e")) +
-#   stat_boxplot(geom = "errorbar", width = 0.2, lwd = 0.5, color = c("#1f77b4", "#ff7f0e")) +
-#   scale_fill_manual(values = alpha(c("#1f77b4", "#ff7f0e"), .7)) +
-#   scale_alpha(0.9) +
-#   labs(x = "Reproduction mode") +
-#   labs(y = "Flowering initiation (month)") +
-#   ggtitle("Apomixis and phenology") +
-#   theme(legend.position = "none") +
-#   theme(axis.title = element_text(size=24),
-#         axis.text = element_text(size=24, colour = "gray50"),
-#         plot.title = element_text(size = 36, hjust = 0.5),
-#         legend.text = element_text(size = 18),
-#         legend.title = element_blank()
-#   ) +
-#   theme(aspect.ratio = 1/1) +
-#   geom_jitter(width = 0.1, show.legend = F, aes(colour = Repr_mode), alpha = 0.5) +
-#   scale_color_manual(values = c("#1f77b4", "#ff7f0e"))
-#
-# boxplot2
+dev.off() # reset graphics device
 
-dev.off()
-par(mfrow=c(1,1))
-
-##### Plot STRICTLY Alps #####
+##### Other plots: strictly Alps #####
 library(ggplot2)
 library(RColorBrewer)
 
