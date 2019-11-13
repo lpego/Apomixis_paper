@@ -147,13 +147,6 @@ plot(JanTree5, cex = .5, type = "fan", show.tip.label = F)
 tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1) 
 dev.off()
 
-# ### Plotting character state along branches as well as on tips
-png(filename = "ApomixisTree_ColBranches.png", width = 5000, height = 5000, units = "px", res = 600)
-plotBranchbyTrait(JanTree5, Repr_mode_factor, mode = "tips", legend = F, palette = colorRampPalette(c("black", "red")),
-                  cex = 0.3, edge.width = 1.5, show.tip.label = F, type = "fan") # use colorRampPalette(c("black", "#d10000")) for a darker red
-tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1)
-dev.off()
-
 ### Plotting ancestral character state reconstruction
 JanTree5.simMap <- make.simmap(JanTree5, Repr_mode_factor, model = "ER", nsim = 10)
 JanTree5.simMap_summ <- summary(JanTree5.simMap, plots = F)
