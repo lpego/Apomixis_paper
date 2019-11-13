@@ -178,6 +178,7 @@ DATA_red_ggtree <- DATA_red_ggtree[, c(2,1,3:ncol(DATA_red_ggtree))]
 # DATA_red_ggtree <- DATA_red_ggtree[match(JanTree5$tip.label, DATA_red_ggtree$SpeciesName), ]
 # JanTree5$tip.label == as.character(DATA_red_ggtree$SpeciesName)
 DATA_red_ggtree$Ploidy <- factor(DATA_red_ggtree$Ploidy, levels = c("2x","3x","4x","6x","8x","12x"))
+DATA_red_ggtree$Repr_mode_summ <- factor(DATA_red_ggtree$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
 
 ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
   geom_tiplab(size = 1, offset = .05) +
@@ -215,7 +216,7 @@ ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
   geom_text2(aes(subset = node %in% mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1.1, nudge_y = 5) +
   geom_text2(aes(subset = node %in% mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1.1, nudge_y = 5) +
   geom_tippoint(aes(color = Repr_mode_summ, x = x + .1), size = .3, hjust = 0.025) +
-  scale_color_manual(values = c("red", "black", "orange")) +
+  scale_color_manual(values = c("black", "orange", "red")) +
   # ### Adding points for discretized variables Altitude and Ploidy
   # geom_tippoint(aes(color = Ploidy, x = x + .3), size = .3) +
   # scale_color_manual(values = rev(brewer.pal(6, "Dark2"))) +
@@ -235,7 +236,7 @@ sum(is.na(DATA_red_ggtree$Altitude)) # no missing values
 DATA_red_ggtree[, c("SpeciesName", "GS")]
 DATA_red_ggtree[, c("SpeciesName", "Altitude")]
 
-# Simple ggplot versions work properly
+### Simple ggplot versions work properly
 ggplot(data = DATA_red_ggtree,
        aes(x = 0, xend = Altitude,
            y = 1:nrow(DATA_red_ggtree), yend = 1:nrow(DATA_red_ggtree)),
@@ -279,10 +280,10 @@ ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_g
                                geom = geom_barh, # geom_barh variant is straightforward
                                mapping = aes(x = DATA_red_ggtree$Altitude),
                                stat = "identity", size = .5)
-ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2()
+ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2() + xlim_expand(c(0,3000), panel = 'Altitude')
 
 ggJanTree5_panel2 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree,
-                                geom = geom_barh, # geom_segment variant is more complicated
+                                geom = geom_barh, 
                                 aes(x =DATA_red_ggtree$GS), 
                                 stat = "identity", size = .5)
 ggJanTree5_panel2 + theme(legend.position = "bottom") + theme_tree2()
@@ -290,13 +291,14 @@ ggJanTree5_panel2 + theme(legend.position = "bottom") + theme_tree2()
 ggJanTree5_panel_facet2 <- facet_widths(ggJanTree5_panel2, 8) # this applies the multiplier to the first facet of the specified object
 ggJanTree5_panel_facet2 + theme(legend.position = "bottom")
 
-### Coloured by categories, using geom_barh
+### IN DEBUGGING: Coloured by categories, using geom_barh
+### Complains about discrete value supplied to continuous scale? 
 ggJanTree5_panel_colours <- facet_plot(ggJanTree5_panel_colours, panel = 'Altitude', data = DATA_red_ggtree,
-                                        geom = geom_barh, mapping = aes(x = DATA_red_ggtree$Altitude),
-                                        stat = "identity", size = .5) + 
-  scale_color_continuous(low = "darkgreen", high = "saddlebrown") +
-  theme_tree2() + theme(legend.position = "bottom")
-ggJanTree5_panel_colours
+                                       geom = geom_barh, 
+                                       mapping = aes(x = DATA_red_ggtree$Altitude, fill = DATA_red_ggtree$Altitude),
+                                       stat = "identity", size = .5) + 
+  scale_color_continuous(low = "darkgreen", high = "saddlebrown") 
+ggJanTree5_panel_colours + theme_tree2() + theme(legend.position = "bottom")
 
 ggJanTree5_panel_colours2 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree,
                                         geom = geom_barh, mapping = aes(x = DATA_red_ggtree$GS, fill = DATA_red_ggtree$Ploidy),
@@ -312,8 +314,6 @@ ggJanTree5_panel_facet_ploidycolours2 + theme(legend.position = "bottom")
 
 
 ##### ggTree circular #####
-DATA_red_ggtree$Repr_mode_summ <- factor(DATA_red_ggtree$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-
 library(ape)
 library(ggplot2)
 library(ggtree)
@@ -355,6 +355,9 @@ ggJanTree5_circular <- ggtree(JanTree5, layout = "circular") %<+% DATA_red_ggtre
   guides(colour = guide_legend(override.aes = list(size = 3)))
 
 ggJanTree5_circular
+ggsave(ggJanTree5_circular, filename = "ggJanTree5_circular.png", 
+       device = "png", dpi = 300, scale = 1.5)
+
 
 
 ##### Other plots #####
