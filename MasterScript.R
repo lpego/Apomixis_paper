@@ -543,8 +543,8 @@ dev.off() # reset graphics device
 
 
 
-##### MODELING #####
-### Regular modeling: Apomixis VS altitude
+##### STATISTICAL ANALYSIS #####
+### Linear modeling: Apomixis VS altitude
 ### We can use the unsummarized dataset here since we don't take into account phylogeny
 plot(GS ~ Altitude, data = DATA)
 abline(lm(GS ~ Altitude, data = DATA), col="red")
@@ -1103,7 +1103,7 @@ plot(mCichorieae)
 
 
 
-##### phylosig #####
+##### Phylosig #####
 ### Must give a named numerical vector to the function; use SetNames to set the names
 ### Factors in R are always encoded numerically, you can get that index via as.numeric(myfactor)
 library(phytools)
