@@ -548,6 +548,8 @@ DATA_red <- DATA %>%
 ### 
 
 DATA_red <- DATA_red[order(DATA_red$SpeciesName),]
+DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_red$Repr_mode_summ  <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
 
 setdiff(DATA_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_red$SpeciesName)
@@ -853,6 +855,9 @@ rownames(DATA_CC_mean_red) <- DATA_CC_mean_red$SpeciesName
 
 DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(2, 4, 19)]), ]
 DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(2, 4, 8, 19)]), ]
+
+DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
 
 cbind(JanTree4$tip.label, as.character(DATA_CC_mean_red$SpeciesName))
 

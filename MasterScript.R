@@ -362,11 +362,6 @@ ggsave(ggJanTree5_circular, filename = "ggJanTree5_circular.png",
 
 ##### Other plots #####
 library(dplyr)
-
-DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-
 Asteraceae_barplot <- DATA_CC_mean_red %>%
   group_by(Ploidy, Repr_mode_summ) %>%
   count()
