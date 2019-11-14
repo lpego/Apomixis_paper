@@ -78,25 +78,7 @@ nrow(NewApomixisData_FloraAlpinaID) == nrow(NewApomixisData)
 
 write.csv(NewApomixisData_FloraAlpinaID, file ="NewApomixisData_FloraAlpinaID.csv")
 
-### BEFORE REINPUTTING THE DATA IN R NEED TO RESOLVE DOUBLE IDs! 
-
-
-
-##### Flora Alpina original data prep #####
-FloraAlpina <- read.csv("FloraAlpina_Asteraceae_OriginalData.csv", sep = ";")
-colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
-
-### Modify Flora Alpina ID to reflect unidentified subspecies
-sub1 <- as.vector(FloraAlpina$ID_FloraAlpina)
-index1 <- grep('124\\.[0-9]+\\.[0-9]+$', sub1) # grab the positions of the values matched by the RegEx
-sub1[index1] # these are the actual values that I want to change
-
-sub1[index1] <- paste(sub1[index1], ".0", sep="") # paste DIRECTLY onto the grabbed positions 
-sub1
-length(sub1) == length(FloraAlpina$ID_FloraAlpina)
-cbind(sub1, as.vector(FloraAlpina$ID_FloraAlpina)) # sanity check to see if all went well
-
-FloraAlpina$ID_FloraAlpina <- sub1
+### Need to resolve manually double IDs! See file FloraAlpina_Asteraceae_OriginalData.csv 
 
 
 
@@ -218,7 +200,7 @@ JanTree3$tip.label[which(duplicated(JanTree3$tip.label))]
 setdiff(JanTree3$tip.label, new_names)
 setdiff(new_names, JanTree3$tip.label)
 
-### MANUAL STEP OUTSIDE SCRIPT! 
+### Need to resolve manually double IDs! See file FloraAlpina_Asteraceae_OriginalData.csv 
 
 
 
@@ -265,11 +247,28 @@ plot(JanTree4, cex = .25, tip.color = ifelse(JanTree4$tip.label %in% setdiff(Jan
 par(mfrow=c(1,1))
 
 
+
 ##### ~ ##### 
 
 
 
 ##### EXTENDED DATASET: alpine collections + botanic gardens and other localities #####
+##### Flora Alpina original data prep #####
+FloraAlpina <- read.csv("FloraAlpina_Asteraceae_OriginalData.csv", sep = ";")
+colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
+
+### Modify Flora Alpina ID to reflect unidentified subspecies
+sub1 <- as.vector(FloraAlpina$ID_FloraAlpina)
+index1 <- grep('124\\.[0-9]+\\.[0-9]+$', sub1) # grab the positions of the values matched by the RegEx
+sub1[index1] # these are the actual values that I want to change
+
+sub1[index1] <- paste(sub1[index1], ".0", sep="") # paste DIRECTLY onto the grabbed positions 
+sub1
+length(sub1) == length(FloraAlpina$ID_FloraAlpina)
+cbind(sub1, as.vector(FloraAlpina$ID_FloraAlpina)) # sanity check to see if all went well
+
+FloraAlpina$ID_FloraAlpina <- sub1
+
 ### Merge NewApomixisData_manual with Flora Alpina original data using FloraAlpina ID as key
 colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
 DATA <- merge(NewApomixisData_FloraAlpinaID_manual, FloraAlpina, by = "ID_FloraAlpina", all.x = T)
@@ -671,7 +670,7 @@ nrow(elevation_Ozenda)
 colnames(elevation_Ozenda)
 elevation_Ozenda$sum <- rowSums(elevation_Ozenda[, 2:6])
 elevation_Ozenda[, 2] <- elevation_Ozenda[, 2]*350 # collineen
-elevation_Ozenda[, 3] <- elevation_Ozengda[, 3]*1050 # montagnard
+elevation_Ozenda[, 3] <- elevation_Ozenda[, 3]*1050 # montagnard
 elevation_Ozenda[, 4] <- elevation_Ozenda[, 4]*1750 # subalpin
 elevation_Ozenda[, 5] <- elevation_Ozenda[, 5]*2450 # alpin
 elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
@@ -789,7 +788,7 @@ Temp1 <- DATA_CC %>%
   group_by(ID_FloraAlpina, SpeciesName) %>% 
   summarize_at(vars(GS, `1C`, Chr.number, GS_per_chrm, 
                     Altitude, elevation_Ozenda, Sect_Occ, Init.month, Tot.months, End.month), 
-               funs(mean), na.rm = T)
+               list(mean), na.rm = T)
 
 Temp2 <- DATA_CC %>% 
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
@@ -805,7 +804,7 @@ Temp2 <- DATA_CC %>%
                     Endemic, Indigenous, Distribution, 
                     Collinaire, Montane, Subalpine, Alpine, Nival,
                     Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w),
-               funs(first))
+               list(first))
 
 DATA_CC_mean_red <- merge(Temp1, Temp2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
 colnames(DATA_CC_mean_red)
@@ -925,22 +924,23 @@ colnames(DATA_StrictlyAlps)
 DATA_StrictlyAlps[!complete.cases(DATA_StrictlyAlps[, c(3,5,6,8,9,119)]), ]
 nrow(DATA_StrictlyAlps)
 DATA_StrictlyAlps <- DATA_StrictlyAlps[complete.cases(DATA_StrictlyAlps[, c(3,5,6,8,9,119)]), ]
-nrow(DATA_StrictlyAlps)
+nrow(DATA_StrictlyAlps) # no missing values
 
-vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
+### How many unique genera in the striclty alpne dataset? 
 unique(vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+
+
 
 ##### Summarize strictly Alps data #####
 library(dplyr)
 DATA_StrictlyAlps_red <- DATA_StrictlyAlps %>%
-  select(ID_FloraAlpina, ID, SpeciesName,
-         Repr_mode_summ, GS, Ploidy,
-         PloidyEvenOdd, Altitude, Chr.number,
-         Endemic, Indigenous, Distribution, CompleteName,
-         Collinaire, Montane, Subalpine, Alpine, Nival,
-         Init.month, Tot.months, Endemic,
-         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N,
-         Water, w, Sect_Occ) %>%
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Altitude, elevation_Ozenda, Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, Sect_Occ, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Init.month, Tot.months, End.month, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
   group_by(ID_FloraAlpina, SpeciesName) %>%
   summarize_all(list(first))
 
@@ -989,24 +989,37 @@ geiger::name.check(JanTree4_StrictlyAlps, DATA_StrictlyAlps_red)
 write.csv(DATA_StrictlyAlps_red, file = "DATA_StrictlyAlps_red.csv")
 write.tree(JanTree4_StrictlyAlps, file = "JanTree4_StrictlyAlps.tre")
 
-##### Summarize using mean values: 
+##### Summarize strictly Alps data, using mean values ##### 
 Temp1 <- DATA_StrictlyAlps %>% 
-  select(to_keep[-c(5,8)]) %>% 
+  select(ID_FloraAlpina, SpeciesName, 
+         GS, `1C`, Chr.number, GS_per_chrm, Altitude, elevation_Ozenda, Sect_Occ, 
+         Init.month, Tot.months, End.month) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(list(first))
+  summarize_at(vars(GS, `1C`, Chr.number, GS_per_chrm, 
+                    Altitude, elevation_Ozenda, Sect_Occ, Init.month, Tot.months, End.month), 
+               list(mean), na.rm = T)
 
 Temp2 <- DATA_StrictlyAlps %>% 
-  select(to_keep[c(1,3,5,8)]) %>% 
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd, 
+         Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(list(mean), na.rm = T)
+  summarize_at(vars(ID, CompleteName,
+                    Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd,
+                    Longevity, BiologicalForm,
+                    Endemic, Indigenous, Distribution, 
+                    Collinaire, Montane, Subalpine, Alpine, Nival,
+                    Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w),
+               list(first))
 
 DATA_StrictlyAlps_mean_red <- merge(Temp1, Temp2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
 colnames(DATA_StrictlyAlps_mean_red)
 nrow(DATA_StrictlyAlps_mean_red)
 
-colnames(DATA_StrictlyAlps_mean_red)[c(1:4, 29, 5:6, 30, 7:28)] == colnames(DATA_StrictlyAlps_red)
-DATA_StrictlyAlps_mean_red <- DATA_StrictlyAlps_mean_red[, c(1:4, 29, 5:6, 30, 7:28)]
-colnames(DATA_StrictlyAlps_mean_red) == colnames(DATA_CC_red)
+DATA_StrictlyAlps_mean_red <- DATA_StrictlyAlps_mean_red[, to_keep] # reoder columns
 
 rownames(DATA_StrictlyAlps_mean_red) <- DATA_StrictlyAlps_mean_red$SpeciesName
 
@@ -1015,7 +1028,7 @@ DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 4, 
 
 DATA_StrictlyAlps_mean_red$Ploidy <- factor(DATA_StrictlyAlps_mean_red$Ploidy, levels = c("2x","3x","4x","6x","8x","12x"))
 DATA_StrictlyAlps_mean_red$Repr_mode_summ <- factor(DATA_StrictlyAlps_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_StrictlyAlps_mean_red$Repr_mode <- factor(gsub('Mixed', 'Apomictic', DATA_StrictlyAlps_mean_red$Repr_mode_summ), levels = c("Sexual", "Apomictic"))
+DATA_StrictlyAlps_mean_red$Repr_mode <- factor(DATA_StrictlyAlps_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
 
 cbind(JanTree4_StrictlyAlps$tip.label, as.character(DATA_StrictlyAlps_mean_red$SpeciesName))
 
