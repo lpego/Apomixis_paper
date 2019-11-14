@@ -17,6 +17,10 @@ DATA_red[ToBeFactors] <- lapply(DATA_red[ToBeFactors], factor)
 str(DATA_red)
 names(DATA_red)
 
+
+
+##### DATA ANALYTICS ##### 
+
 ##### How many genera and species? ######
 unique(gsub('_.*', '', DATA_red$SpeciesName)) # list of unique genera
 length(unique(gsub('_.*', '', DATA_red$SpeciesName))) # number of unique genera
@@ -39,6 +43,8 @@ DATA_red[((DATA_red[,"Altitude"]<1000) & (DATA_red[,"Repr_mode_summ"]=="Mixed"))
 # max(DATA_red$GS, na.rm = T)
 # min(DATA_red$GS, na.rm = T)
 # boxplot(DATA_red$GS)
+
+
 
 ##### How many "unexpected" reproductive modes in the accessions? #####
 nrow(DATA[DATA$Ploidy == "2x", 1:3]) # 258 total diploids
@@ -71,6 +77,152 @@ while (x %in% 1:length(rownames(table))) {
   sum = 0
 }
 MultiplePloidy$MultiplePloidy
+
+
+
+##### Checking taxa numbers across different versions of the dataset ##### 
+### Extended dataset
+vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
+genera_all <- unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+genera_all
+### Srictly Alps
+vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
+genera_alps <- unique(vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+genera_alps
+### Apomixis paper Supplementary Table v5
+table_v5 <- c("Achillea clavennae", "Achillea erba-rotta", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", 
+              "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea nana", "Achillea nana", "Achillea nana", 
+              "Achillea nana", "Achillea nobilis", "Achillea oxyloba", "Adenostyles alliariae", "Adenostyles alliariae", "Adenostyles alliariae", "Adenostyles alpina", 
+              "Adenostyles leucophylla", "Adenostyles leucophylla", "Adenostyles leucophylla", "Adenostyles leucophylla", "Andryala integrifolia", 
+              "Antennaria carpatica", "Antennaria carpatica", "Antennaria carpatica", "Antennaria dioica", "Antennaria dioica", "Antennaria dioica", 
+              "Antennaria dioica", "Antennaria dioica", "Antennaria dioica", "Aposeris foetida", "Arctium lappa", "Arctium lappa", "Arctium lappa", "Arctium lappa", 
+              "Arctium minus", "Arctium minus", "Arctium tomentosum", "Arnica montana", "Arnica montana", "Arnica montana", "Arnica montana", "Arnica montana", 
+              "Arnica montana", "Arnica montana", "Artemisia absinthium", "Artemisia absinthium", "Artemisia genipi", "Artemisia glacialis", "Artemisia nitida", 
+              "Artemisia nitida", "Artemisia umbelliformis subsp. eriantha", "Artemisia umbelliformis subsp. umbelliformis", "Artemisia umbelliformis subsp. umbelliformis", 
+              "Artemisia vulgaris", "Aster alpinus", "Aster alpinus", "Aster alpinus", "Aster alpinus", "Aster alpinus", "Aster alpinus", "Aster alpinus", 
+              "Bellidiastrum michelii", "Bellis perennis", "Berardia lanuginosa", "Berardia lanuginosa", "Bidens bipinnatus", "Bidens frondosus", 
+              "Buphthalmum salicifolium", "Buphthalmum salicifolium", "Buphthalmum salicifolium", "Buphthalmum salicifolium", "Buphthalmum salicifolium", 
+              "Calendula arvensis", "Calendula arvensis", "Calendula tripterocarpa", "Carduus acanthoides", "Carduus crispus", "Carduus defloratus", 
+              "Carduus defloratus subsp. carlinifolius", "Carduus defloratus subsp. summanus", "Carduus personata", "Carduus personata", "Carlina acanthifolia", 
+              "Carlina acaulis", "Carlina acaulis", "Carlina corymbosa", "Carlina vulgaris", "Catananche caerulea", "Catananche caerulea", "Catananche caerulea", 
+              "Catananche caerulea", "Centaurea benedicta", "Centaurea jacea", "Centaurea jacea", "Centaurea jacea", "Centaurea jacea subsp. gaudinii", 
+              "Centaurea jacea subsp. gaudinii", "Centaurea leucophaea", "Centaurea margaritacea", "Centaurea nervosa", "Centaurea nervosa", "Centaurea nigra", 
+              "Centaurea pectinata", "Centaurea rhaetica", "Centaurea rupestris", "Centaurea scabiosa subsp. alpestris", "Centaurea scabiosa subsp. alpestris", 
+              "Centaurea scabiosa subsp. alpestris", "Centaurea scabiosa subsp. alpestris", "Centaurea scabiosa subsp. alpestris", "Centaurea scabiosa subsp. grinensis", 
+              "Centaurea uniflora", "Centaurea uniflora", "Centaurea uniflora", "Centaurea valesiaca", "Chondrilla juncea", "Chondrilla juncea", "Cirsium acaulon", 
+              "Cirsium acaulon", "Cirsium acaulon", "Cirsium acaulon", "Cirsium acaulon", "Cirsium alsophilum", "Cirsium alsophilum", "Cirsium alsophilum", 
+              "Cirsium arvense", "Cirsium arvense", "Cirsium carniolicum", "Cirsium carniolicum", "Cirsium eriophorum", "Cirsium erisithales", "Cirsium erisithales", 
+              "Cirsium heterophyllum", "Cirsium monspessulanum", "Cirsium monspessulanum", "Cirsium monspessulanum", "Cirsium oleraceum", "Cirsium oleraceum", 
+              "Cirsium pannonicum", "Cirsium rivulare", "Cirsium spinosissimum", "Cirsium spinosissimum", "Cirsium tuberosum", "Cirsium vulgare", "Cirsium vulgare", 
+              "Cota tinctoria", "Cota tinctoria", "Cota triumfettii", "Crepis aurea", "Crepis aurea", "Crepis capillaris", "Crepis conyzifolia", "Crepis conyzifolia", 
+              "Crepis jacquinii subsp. kerneri", "Crepis paludosa", "Crepis paludosa", "Crepis pontana", "Crepis pontana", "Crepis pygmaea", "Crepis pygmaea", 
+              "Crepis pyrenaica", "Crepis pyrenaica", "Crepis rhaetica", "Crepis sancta", "Crepis tectorum", "Crepis terglouensis", "Crepis vesicaria", "Crepis vesicaria", 
+              "Crepis vesicaria", "Crepis vesicaria", "Crupina vulgaris", "Cyanus montanus", "Cyanus montanus", "Cyanus segetum", "Cyanus segetum", 
+              "Cyanus triumfettii", "Dittrichia graveolens", "Doronicum austriacum", "Doronicum clusii", "Doronicum grandiflorum", "Doronicum grandiflorum", 
+              "Doronicum grandiflorum", "Doronicum grandiflorum", "Doronicum grandiflorum", "Doronicum grandiflorum", "Doronicum grandiflorum", "Doronicum grandiflorum", 
+              "Doronicum grandiflorum", "Doronicum pardalianches", "Echinops exaltatus", "Echinops ritro", "Echinops sphaerocephalus", "Echinops sphaerocephalus", 
+              "Erigeron acris subsp. acris", "Erigeron acris subsp. acris", "Erigeron alpinus", "Erigeron alpinus", "Erigeron alpinus", "Erigeron alpinus", 
+              "Erigeron annuus", "Erigeron atticus", "Erigeron bonariensis", "Erigeron canadensis", "Erigeron canadensis", "Erigeron glabratus", "Erigeron karvinskianus", 
+              "Erigeron schleicheri", "Erigeron schleicheri", "Erigeron uniflorus", "Erigeron uniflorus", "Eupatorium cannabinum", "Galinsoga parviflora", 
+              "Galinsoga quadriradiata", "Gnaphalium hoppeanum", "Gnaphalium hoppeanum", "Gnaphalium hoppeanum", "Gnaphalium hoppeanum", "Gnaphalium supinum", 
+              "Gnaphalium supinum", "Gnaphalium supinum", "Gnaphalium sylvaticum", "Helianthus tuberosus", "Helichrysum italicum", "Helichrysum italicum", 
+              "Helichrysum italicum", "Hieracium alpinum", "Hieracium amplexicaule", "Hieracium amplexicaule", "Hieracium bifidum", "Hieracium cydoniifolium", 
+              "Hieracium froelichianum", "Hieracium glaucopsis", "Hieracium glaucum", "Hieracium humile", "Hieracium lawsonii", "Hieracium murorum", 
+              "Hieracium murorum", "Hieracium murorum", "Hieracium murorum", "Hieracium murorum", "Hieracium piliferum", "Hieracium piliferum", "Hieracium prenanthoides", 
+              "Hieracium ramosissimum subsp. lactucifolium", "Hieracium tomentosum", "Hieracium valdepilosum", "Hieracium villosum", "Hieracium villosum", 
+              "Hieracium villosum", "Homogyne alpina", "Homogyne alpina", "Homogyne alpina", "Homogyne discolor", "Homogyne sylvestris", "Hypochaeris maculata", 
+              "Hypochaeris maculata", "Hypochaeris maculata", "Hypochaeris radicata", "Hypochaeris radicata", "Hypochaeris uniflora", "Hypochaeris uniflora", 
+              "Hypochaeris uniflora", "Inula bifrons", "Inula conyzae", "Inula conyzae", "Inula helenium", "Inula helvetica", "Inula montana", "Inula oculus-christi", 
+              "Inula salicina", "Inula spiraefolia", "Jacobaea abrotanifolia subsp. abrotanifolia", "Jacobaea abrotanifolia subsp. abrotanifolia", 
+              "Jacobaea abrotanifolia subsp. abrotanifolia", "Jacobaea alpina subsp. alpina", "Jacobaea alpina subsp. alpina", "Jacobaea aquatica", "Jacobaea carniolica", 
+              "Jacobaea carniolica", "Jacobaea erucifolia", "Jacobaea erucifolia", "Jacobaea erucifolia", "Jacobaea incana", "Jacobaea incana", "Jacobaea incana", 
+              "Jacobaea incana", "Jacobaea incana", "Jacobaea incana", "Jacobaea incana", "Jacobaea incana", "Jacobaea subalpina", "Jurinea mollis", "Klasea lycopifolia", 
+              "Lactuca alpina ", "Lactuca alpina ", "Lactuca muralis", "Lactuca muralis", "Lactuca perennis", "Lactuca perennis", "Lactuca perennis", "Lactuca serriola", 
+              "Lactuca serriola", "Laphangium luteoalbum", "Lapsana communis", "Lapsana communis", "Leontodon crispus", "Leontodon hirtus", "Leontodon hispidus", 
+              "Leontodon hispidus", "Leontodon tenuiflorus ", "Leontopodium nivale subsp. alpinum", "Leontopodium nivale subsp. alpinum", 
+              "Leontopodium nivale subsp. alpinum", "Leontopodium nivale subsp. alpinum", "Leucanthemopsis alpina", "Leucanthemopsis alpina", "Leucanthemopsis alpina", 
+              "Leucanthemopsis alpina", "Leucanthemopsis alpina", "Leucanthemopsis alpina", "Leucanthemopsis alpina", "Leucanthemopsis alpina", "Leucanthemum adustum", 
+              "Leucanthemum adustum", "Leucanthemum adustum", "Leucanthemum adustum", "Leucanthemum adustum", "Leucanthemum adustum", "Leucanthemum adustum", 
+              "Leucanthemum adustum", "Leucanthemum adustum", "Leucanthemum adustum", "Leucanthemum atratum", "Leucanthemum atratum", "Leucanthemum coronopifolium", 
+              "Leucanthemum coronopifolium", "Leucanthemum coronopifolium", "Leucanthemum halleri", "Leucanthemum pallens", "Leucanthemum platylepis", 
+              "Matricaria chamomilla", "Onopordum acanthium", "Onopordum acanthium", "Pallenis spinosa", "Petasites albus", "Petasites paradoxus", "Phagnalon saxatile", 
+              "Picris hieracioides", "Picris hieracioides", "Picris hieracioides", "Pilosella aurantiaca", "Pilosella aurantiaca", "Pilosella cymosa", 
+              "Pilosella glacialis", "Pilosella hoppeana", "Pilosella lactucella", "Pilosella officinarum", "Pilosella peleteriana", "Pilosella peleteriana", 
+              "Pilosella piloselloides", "Podospermum laciniatum", "Podospermum purpureum", "Prenanthes purpurea", "Pulicaria dysenterica", "Pulicaria dysenterica", 
+              "Rhaponticum heleniifolium subsp. bicknellii", "Rhaponticum heleniifolium subsp. heleniifolium", "Rhaponticum scariosum", "Saussurea alpina", 
+              "Saussurea alpina", "Schlagintweitia huteri subsp. lantoscana", "Schlagintweitia intybacea", "Scorzonera humilis", "Scorzoneroides autumnalis", 
+              "Scorzoneroides crocea", "Scorzoneroides crocea", "Scorzoneroides montana", "Scorzoneroides montana", "Scorzoneroides montana", "Senecio doria", 
+              "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", 
+              "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", "Senecio doronicum", 
+              "Senecio doronicum", "Senecio inaequidens", "Senecio nemorensis subsp. jacquinianus", "Senecio ovatus", "Senecio squalidus subsp. rupestris", 
+              "Senecio squalidus subsp. rupestris", "Senecio viscosus", "Senecio viscosus", "Senecio vulgaris", "Senecio vulgaris", "Senecio vulgaris", "Senecio vulgaris", 
+              "Serratula tinctoria", "Sigesbeckia orientalis", "Solidago virgaurea", "Solidago virgaurea", "Solidago virgaurea", "Solidago virgaurea", 
+              "Solidago virgaurea", "Solidago virgaurea", "Solidago virgaurea subsp. minuta", "Sonchus oleraceus", "Sonchus oleraceus", "Sonchus tenerrimus", 
+              "Staehelina dubia", "Staehelina dubia", "Symphyotrichum squamatum", "Tanacetum corymbosum", "Tanacetum macrophyllum", "Tanacetum parthenium", 
+              "Taraxacum officinale", "Taraxacum officinale", "Taraxacum officinale", "Taraxacum officinale", "Telekia speciosa", "Telekia speciosa", 
+              "Tephroseris integrifolia", "Tephroseris integrifolia subsp. capitata", "Tephroseris longifolia subsp. gaudinii", "Tolpis staticifolia", 
+              "Tolpis staticifolia", "Tragopogon crocifolius", "Tragopogon dubius", "Tragopogon pratensis", "Tragopogon pratensis", "Tragopogon pratensis", 
+              "Tragopogon pratensis", "Tragopogon pratensis", "Tragopogon pratensis subsp. orientalis", "Tripleurospermum inodorum", "Tripleurospermum inodorum", 
+              "Tripleurospermum inodorum", "Tussilago farfara", "Urospermum dalechampii", "Urospermum dalechampii", "Urospermum picroides", 
+              "Xanthium orientale subsp. italicum ", "Xanthium orientale subsp. italicum", "Xeranthemum annuum", "Xerolekia speciosissima"
+)
+table_v5
+vapply(strsplit(table_v5, '(?<=[a-z])\\s+(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
+genera_table_v5 <- unique(vapply(strsplit(table_v5, '(?<=[a-z])\\s+(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+genera_table_v5
+
+setdiff(genera_table_v5, genera_all)
+setdiff(genera_all, genera_table_v5)
+
+setdiff(genera_table_v5, genera_alps)
+setdiff(genera_alps, genera_table_v5)
+
+
+
+#### How many apomictic taxa? ####
+### Extended dataset
+DATA_CC_mean_red
+table(DATA_CC_mean_red$Repr_mode_summ)
+
+DATA_CC_mean_red[DATA_CC_mean_red$Repr_mode_summ == "Apomictic", 
+                 "SpeciesName"]
+
+DATA_CC_mean_red[DATA_CC_mean_red$Repr_mode_summ == "Mixed", 
+                 "SpeciesName"]
+
+### Strictly Alps
+DATA_StrictlyAlps_mean_red
+table(DATA_StrictlyAlps_mean_red$Repr_mode_summ)
+
+DATA_StrictlyAlps_mean_red[DATA_StrictlyAlps_mean_red$Repr_mode_summ == "Apomictic", 
+                           "SpeciesName"]
+
+DATA_StrictlyAlps_mean_red[DATA_StrictlyAlps_mean_red$Repr_mode_summ == "Mixed", 
+                           "SpeciesName"]
+
+
+
+##### How many apomictic taxa per ploidy level? ##### 
+### Extended dataset
+with(DATA, table(Ploidy, Repr_mode))
+sum(with(DATA, table(Ploidy, Repr_mode))) == nrow(DATA) # sanity check
+
+### Strictly Alps
+with(DATA_StrictlyAlps, table(Ploidy, Repr_mode))
+sum(with(DATA_StrictlyAlps, table(Ploidy, Repr_mode))) == nrow(DATA_StrictlyAlps) # sanity check
+
+
+
+##### Elevation range? #### 
+### Extended dataset
+DATA$Altitude
+
+min(DATA$Altitude, na.rm = T)
+max(DATA$Altitude, na.rm = T)
+mean(DATA$Altitude, na.rm = T)
+boxplot(DATA$Altitude)
+
+
 
 ##### Exploratory analysis #####
 TraitsNames <- colnames(DATA_red[,-c(1:3, 12)])
@@ -139,6 +291,9 @@ plotTree(JanTree5, type = "fan", ftype="i", fsize = 0.25, lwd=1)
 geiger::name.check(JanTree4, DATA_red)
 geiger::name.check(JanTree5, DATA_red)
 
+
+
+##### ~ #####
 
 
 
