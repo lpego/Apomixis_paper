@@ -53,6 +53,25 @@ DATA[DATA$Ploidy == "4x" & DATA$Repr_mode == "Apomictic", 1:3] # 6 tetraploid ac
 
 DATA[DATA$Repr_mode_summ == "Mixed", c(1:3,8)] # mixed reproductive mode is found in 1 tetraploid, 1 triploid and 4 diploid species
 
+##### Are there taxa with multiple ploidy levels? #####
+table <- with(DATA, table(SpeciesName, Ploidy))
+rownames(table)
+table
+
+x = 1
+y = 1
+sum = 0
+MultiplePloidy <- data.frame(Name = as.character(rownames(table)), MultiplePloidy = factor(rep("~", length(rownames(table))), levels = c("~", "YES", "NO")))
+while (x %in% 1:length(rownames(table))) {
+  while (y <= 6) {
+    sum <- sum + as.numeric(table[x, y] >= 1)
+    y = y + 1}
+  if (sum > 1) {MultiplePloidy[x, "MultiplePloidy"] <- "YES"} else {MultiplePloidy[x, "MultiplePloidy"] <- "NO"}
+  x = x + 1
+  sum = 0
+}
+MultiplePloidy$MultiplePloidy
+
 ##### Exploratory analysis #####
 TraitsNames <- colnames(DATA_red[,-c(1:3, 12)])
 

@@ -608,7 +608,9 @@ levels(as.factor(DATA$Repr_mode))
 DATA$Repr_mode <- gsub('Apomictic ', 'Apomictic', DATA$Repr_mode)
 DATA$Repr_mode <- gsub('sexual', 'Sexual', DATA$Repr_mode)
 levels(as.factor(DATA$Repr_mode))
-DATA$Repr_mode <- as.factor(DATA$Repr_mode)
+DATA$Repr_mode <- factor(DATA$Repr_mode, levels = c("Sexual", "Apomictic"))
+
+DATA$Ploidy <- factor(DATA$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
 
 ### Adding a level for "mixed" reproductive mode
 i = 1
@@ -636,149 +638,9 @@ DATA <- DATA[order(DATA$SpeciesName),]
 DATA$Repr_mode_summ <- Repr_mode_summ_ext$Repr_mode_summ
 str(DATA)
 DATA <- DATA[, c(1:5, 127, 6:126)]
-DATA
+colnames(DATA)
 
-DATA$SpeciesName
-
-write.csv(DATA, file = "Apomixis_DATA_unsummarized.csv")
-
-DATA$SpeciesName
-nrow(DATA)
-
-### How many unique genera?
-unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
-##### OTHER TRIVIA ABOUT THE DATA GOES HERE? ie: how many species, how many apomicts, etc? 
-
-
-##### Summarizing data: all accessions, missing values #####
-library(dplyr)
-DATA_red <- DATA %>%
-  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
-         Altitude, Longevity, BiologicalForm, 
-         Endemic, Indigenous, Distribution, Sect_Occ, 
-         Collinaire, Montane, Subalpine, Alpine, Nival, 
-         Init.month, Tot.months, End.month, 
-         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
-  group_by(ID_FloraAlpina, SpeciesName) %>%
-  summarize_all(list(first))
-
-str(DATA_red)
-DATA_red <- DATA_red[order(DATA_red$SpeciesName),]
-DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_red$Repr_mode_summ  <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_red$Repr_mode  <- factor(DATA_red$Repr_mode, levels = c("Sexual", "Apomictic"))
-
-setdiff(DATA_red$SpeciesName, JanTree4$tip.label)
-setdiff(JanTree4$tip.label, DATA_red$SpeciesName)
-length(DATA_red$SpeciesName) == length(JanTree4$tip.label)
-which(duplicated(DATA_red$SpeciesName))
-which(duplicated(JanTree4$tip.label))
-
-rownames(DATA_red) <- DATA_red$SpeciesName
-
-geiger::name.check(JanTree4, DATA_red)
-
-# class(DATA_red) <- "data.frame"
-# write.csv(DATA_red[is.na(DATA_red$Altitude) == T, 1:9], row.names = F, file = "MissingAltitudes.csv")
-
-write.csv(DATA_red, file = "DATA_red.csv")
-
-
-##### Complete cases ##### 
-to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "CompleteName", 
-             "Repr_mode", "Repr_mode_summ", "GS", "1C", "Ploidy", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
-             "Altitude", "Longevity", "BiologicalForm", 
-             "Endemic", "Indigenous", "Distribution", "Sect_Occ", 
-             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
-             "Init.month", "Tot.months", "End.month", 
-             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w")
-
-DATA[!complete.cases(DATA[, to_keep]), ] # these are the 6 accessions that will be dropped
-DATA_CC <- DATA[complete.cases(DATA[, to_keep]), ]
-nrow(DATA) - nrow(DATA_CC) # 6 accessions dropped
-
-##### Summarizing data: complete cases only #####
-library(dplyr)
-DATA_CC_red <- DATA_CC %>% 
-  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
-         Altitude, Longevity, BiologicalForm, 
-         Endemic, Indigenous, Distribution, Sect_Occ, 
-         Collinaire, Montane, Subalpine, Alpine, Nival, 
-         Init.month, Tot.months, End.month, 
-         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
-  group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(list(first))
-
-DATA_CC_red <- DATA_CC_red[order(DATA_CC_red$SpeciesName),]
-nrow(DATA_CC_red)
-
-
-#### I STOPPED DEBUGGING HERE! 13 nov 19
-
-setdiff(DATA_CC_red$SpeciesName, JanTree4$tip.label)
-setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName)
-length(DATA_CC_red$SpeciesName) == length(JanTree4$tip.label)
-which(duplicated(DATA_CC_red$SpeciesName))
-which(duplicated(JanTree4$tip.label))
-
-colnames(DATA_CC_red)
-DATA_CC_red[!complete.cases(DATA_CC_red[, c(2, 4, 19)]), ] # still missing the Flora Alpina data from related species... 
-
-rownames(DATA_CC_red) <- DATA_CC_red$SpeciesName
-
-levels(as.factor(DATA_CC_red$Repr_mode_summ))
-# DATA_CC_red$Repr_mode <- gsub('Apomictic ', 'Apomictic', DATA_CC_red$Repr_mode)
-
-geiger::name.check(JanTree4, DATA_CC_red)
-cbind(JanTree4$tip.label, as.character(DATA_CC_red$SpeciesName))
-
-write.csv(DATA_CC_red, file = "DATA_CC_red.csv")
-
-###
-
-Temp1 <- DATA_CC %>% 
-  select(to_keep[-c(5,8)]) %>% 
-  group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(funs(first))
-
-Temp2 <- DATA_CC %>% 
-  select(to_keep[c(1,3,5,8)]) %>% 
-  group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_all(funs(mean), na.rm = T)
-
-DATA_CC_mean_red <- merge(Temp1, Temp2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
-colnames(DATA_CC_mean_red)
-nrow(DATA_CC_mean_red)
-
-colnames(DATA_CC_mean_red)[c(1:4, 29, 5:6, 30, 7:28)] == colnames(DATA_CC_red)
-DATA_CC_mean_red <- DATA_CC_mean_red[, c(1:4, 29, 5:6, 30, 7:28)]
-colnames(DATA_CC_mean_red) == colnames(DATA_CC_red)
-
-rownames(DATA_CC_mean_red) <- DATA_CC_mean_red$SpeciesName
-
-DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(2, 4, 19)]), ]
-DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(2, 4, 8, 19)]), ]
-
-DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_CC_mean_red$Repr_mode <- gsub('Mixed', 'Apomictic', DATA_CC_mean_red$Repr_mode_summ)
-DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
-DATA_CC_mean_red$Repr_mode
-
-cbind(JanTree4$tip.label, as.character(DATA_CC_mean_red$SpeciesName))
-
-geiger::name.check(JanTree4, DATA_CC_mean_red)
-JanTree4$tip.label == as.character(DATA_CC_mean_red$SpeciesName)
-DATA_CC_mean_red <- DATA_CC_mean_red[c(match(DATA_CC_mean_red$SpeciesName, JanTree4$tip.label)), ]
-geiger::name.check(JanTree4, DATA_CC_mean_red)
-JanTree4$tip.label == as.character(DATA_CC_mean_red$SpeciesName)
-
-write.csv(DATA_CC_mean_red, file = "DATA_CC_mean_red.csv")
-
-
-##### Calculate mean elevation from FloraAlpina #####
+##### Calculate mean elevation from Flora Alpina data and Ozenda 1985 #####
 ### From Ozenda 1985: cutpoints between vegtation belts for the Alps
 mean(c(600,800)) # collineen
 mean(c(1300,1500)) # montagnarde
@@ -802,7 +664,9 @@ mean(c(mean(c(2700,2900)),
        4500
 )) # nival
 
-elevation_Ozenda <- read.csv(file = "DATA_CC_mean_red.csv", header = T)[, c(3, 15:19)]
+elevation_Ozenda <- DATA[, c("SpeciesName", "Collinaire", "Montane", "Subalpine", "Alpine", "Nival")]
+nrow(elevation_Ozenda)
+elevation_Ozenda <- elevation_Ozenda[!duplicated(elevation_Ozenda$SpeciesName), ]
 nrow(elevation_Ozenda)
 colnames(elevation_Ozenda)
 elevation_Ozenda$sum <- rowSums(elevation_Ozenda[, 2:6])
@@ -813,16 +677,153 @@ elevation_Ozenda[, 5] <- elevation_Ozenda[, 5]*2450 # alpin
 elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
 
 elevation_Ozenda$avg <- sapply(1:nrow(elevation_Ozenda), function(x) sum(elevation_Ozenda[x,2:6])/elevation_Ozenda[x,"sum"])
-### write to file
-write.csv(cbind(read.csv(file = "DATA_CC_mean_red.csv", header = T), 
-                elevation_Ozenda = elevation_Ozenda[, "avg"]), 
-          file = "DATA_CC_mean_red_elevation_Ozenda.csv")
 
-DATA_CC_mean_red <- cbind(DATA_CC_mean_red, elevation_Ozenda = elevation_Ozenda[, "avg"])
+DATA <- merge(DATA, elevation_Ozenda[, c("SpeciesName", "avg")], by = "SpeciesName", all.x = T)
+colnames(DATA)[128] <- "elevation_Ozenda"
 
+write.csv(DATA, file = "DATA_elevation_Ozenda.csv")
+
+### How many unique genera?
+unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+##### OTHER TRIVIA ABOUT THE DATA GOES HERE? ie: how many species, how many apomicts, etc? #####
+
+
+##### Summarizing data: all accessions, missing values #####
+library(dplyr)
+DATA_red <- DATA %>%
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Altitude, elevation_Ozenda, Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, Sect_Occ, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Init.month, Tot.months, End.month, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
+  group_by(ID_FloraAlpina, SpeciesName) %>%
+  summarize_all(list(first))
+
+str(DATA_red)
+
+DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_red$Repr_mode_summ  <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_red$Repr_mode  <- factor(DATA_red$Repr_mode, levels = c("Sexual", "Apomictic"))
+
+setdiff(DATA_red$SpeciesName, JanTree4$tip.label)
+setdiff(JanTree4$tip.label, DATA_red$SpeciesName)
+length(DATA_red$SpeciesName) == length(JanTree4$tip.label)
+which(duplicated(DATA_red$SpeciesName))
+which(duplicated(JanTree4$tip.label))
+
+rownames(DATA_red) <- DATA_red$SpeciesName
+geiger::name.check(JanTree4, DATA_red)
+
+DATA_red <- DATA_red[match(DATA_red$SpeciesName, JanTree4$tip.label), ]
+# class(DATA_red) <- "data.frame"
+
+write.csv(DATA_red, file = "DATA_red.csv")
+
+
+##### Complete cases ##### 
+to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "CompleteName", 
+             "Repr_mode", "Repr_mode_summ", "GS", "1C", "Ploidy", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
+             "Altitude", "elevation_Ozenda", "Longevity", "BiologicalForm", 
+             "Endemic", "Indigenous", "Distribution", "Sect_Occ", 
+             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
+             "Init.month", "Tot.months", "End.month", 
+             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w")
+
+DATA[!complete.cases(DATA[, to_keep]), ] # these are the 6 accessions that will be dropped
+DATA_CC <- DATA[complete.cases(DATA[, to_keep]), ]
+nrow(DATA) - nrow(DATA_CC) # 6 accessions dropped
+
+DATA_CC$Ploidy <- factor(DATA_CC$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_CC$Repr_mode_summ  <- factor(DATA_CC$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_CC$Repr_mode  <- factor(DATA_CC$Repr_mode, levels = c("Sexual", "Apomictic"))
+
+
+
+##### Summarizing data: complete cases only #####
+library(dplyr)
+DATA_CC_red <- DATA_CC %>% 
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Altitude, Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, Sect_Occ, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Init.month, Tot.months, End.month, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>%
+  group_by(ID_FloraAlpina, SpeciesName) %>% 
+  summarize_all(list(first))
+
+nrow(DATA_CC_red)
+
+DATA_CC_red$Ploidy <- factor(DATA_CC_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_CC_red$Repr_mode_summ  <- factor(DATA_CC_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_CC_red$Repr_mode  <- factor(DATA_CC_red$Repr_mode, levels = c("Sexual", "Apomictic"))
+
+setdiff(DATA_CC_red$SpeciesName, JanTree4$tip.label)
+setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName)
+which(duplicated(DATA_CC_red$SpeciesName))
+which(duplicated(JanTree4$tip.label))
+
+# Sigesbeckia orientalis has no data in Flora Alpina, therefore needs to be dropped from the tree as well
+JanTree4_CC <- ape::drop.tip(JanTree4, setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName))
+
+rownames(DATA_CC_red) <- DATA_CC_red$SpeciesName
+geiger::name.check(JanTree4_CC, DATA_CC_red)
+length(DATA_CC_red$SpeciesName) == length(JanTree4_CC$tip.label)
+
+DATA_CC_red <- DATA_CC_red[match(DATA_CC_red$SpeciesName, JanTree4_CC$tip.label), ]
+
+colnames(DATA_CC_red)
+DATA_CC_red[!complete.cases(DATA_CC_red[, c(1:2, 5, 13, 25)]), ] # no missing values
+
+write.csv(DATA_CC_red, file = "DATA_CC_red.csv")
+
+
+
+##### Summarizing data: complete cases, mean ##### 
+Temp1 <- DATA_CC %>% 
+  select(ID_FloraAlpina, SpeciesName, 
+         GS, `1C`, Chr.number, GS_per_chrm, Altitude, elevation_Ozenda, Sect_Occ, 
+         Init.month, Tot.months, End.month) %>% 
+  group_by(ID_FloraAlpina, SpeciesName) %>% 
+  summarize_at(vars(GS, `1C`, Chr.number, GS_per_chrm, 
+                    Altitude, elevation_Ozenda, Sect_Occ, Init.month, Tot.months, End.month), 
+               funs(mean), na.rm = T)
+
+Temp2 <- DATA_CC %>% 
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd, 
+         Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>% 
+  group_by(ID_FloraAlpina, SpeciesName) %>% 
+  summarize_at(vars(ID, CompleteName,
+                    Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd,
+                    Longevity, BiologicalForm,
+                    Endemic, Indigenous, Distribution, 
+                    Collinaire, Montane, Subalpine, Alpine, Nival,
+                    Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w),
+               funs(first))
+
+DATA_CC_mean_red <- merge(Temp1, Temp2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
+colnames(DATA_CC_mean_red)
 nrow(DATA_CC_mean_red)
-unique(DATA_CC_mean_red$SpeciesName)
-complete.cases(DATA_CC_mean_red[,c(1:4, 6:7, 19, 31)])
+
+DATA_CC_mean_red <- DATA_CC_mean_red[, to_keep] # reorder columns
+
+DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(1:2, 5, 13, 25)]), ] # no missing values
+
+DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
+DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
+
+rownames(DATA_CC_mean_red) <- DATA_CC_mean_red$SpeciesName
+
+geiger::name.check(JanTree4_CC, DATA_CC_mean_red)
+
+write.csv(DATA_CC_mean_red, file = "DATA_CC_mean_red.csv")
 
 
 
