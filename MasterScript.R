@@ -797,7 +797,7 @@ plot(glm3)
 ##### MCMC models #####
 library(MCMCglmm)
 library(caper)
-### MCMCglmm on subsets of species
+### MCMCglmm on subsets of species, no phylogeny included
 mHieraciumSS <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
                          data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
                          family = "threshold", trunc = T,
@@ -828,7 +828,9 @@ plot(mCichorieae)
 ### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
 
-
+#### I'VE STOPPED DEBUGGING HERE! 14 Nov ####
+### need to clean up data and tree prep for MCMCglmm, and then clean up separate scripts for the cluster
+### Don't forget aobout Phylosig at the bottom! 
 
 ### Data prep
 head(DATA_CC_mean_red)
