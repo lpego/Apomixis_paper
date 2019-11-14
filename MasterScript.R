@@ -797,35 +797,35 @@ plot(glm3)
 ##### MCMC models #####
 library(MCMCglmm)
 library(caper)
-# ### MCMCglmm on subsets of species
-# mHieraciumSS <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
-#                                    data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
-#                                    family = "threshold", trunc = T,
-#                                    prior = list(R = list(V = diag(1), nu = 2)),
-#                                    nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-# )
-# summary(mHieraciumSS)
-# plot(mHieraciumSS)
-# 
-# mHieracium <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-#                                  data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ],
-#                                  family = "threshold", trunc = T,
-#                                  prior = list(R = list(V = diag(1), nu = 2)),
-#                                  nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-# )
-# summary(mHieracium)
-# plot(mHieracium)
-# 
-# mCichorieae <- MCMCglmm::MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month + Tot.months,
-#                                   data = data_red[data_red$animal %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ],
-#                                   family = "threshold", trunc = T,
-#                                   prior = list(R = list(V = diag(1), nu = 2)),
-#                                   nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-# )
-# summary(mCichorieae)
-# plot(mCichorieae)
-# 
-# ### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
+### MCMCglmm on subsets of species
+mHieraciumSS <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+                         data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
+                         family = "threshold", trunc = T,
+                         prior = list(R = list(V = diag(1), nu = 2)),
+                         nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+)
+summary(mHieraciumSS)
+plot(mHieraciumSS)
+
+mHieracium <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+                       data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
+                       family = "threshold", trunc = T,
+                       prior = list(R = list(V = diag(1), nu = 2)),
+                       nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+)
+summary(mHieracium)
+plot(mHieracium)
+
+mCichorieae <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+                        data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4_CC, tip.labels = T), ],
+                        family = "threshold", trunc = T,
+                        prior = list(R = list(V = diag(1), nu = 2)),
+                        nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+)
+summary(mCichorieae)
+plot(mCichorieae)
+
+### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
 
 

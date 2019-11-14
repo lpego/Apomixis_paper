@@ -602,6 +602,11 @@ range(DATA$'1C')
 mean(DATA$'1C')
 plot(DATA$'1C')
 
+### Create a new variable with higher ploidy levels collapsed together
+DATA$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', DATA$Ploidy)
+DATA$Ploidy_summ <- factor(DATA$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
+table(DATA$Ploidy_summ)
+
 ### Correcting mistakes in spelling
 levels(as.factor(DATA$Repr_mode))
 DATA$Repr_mode <- gsub('Apomictic ', 'Apomictic', DATA$Repr_mode)
@@ -626,7 +631,7 @@ while (i <= length(unique(DATA$SpeciesName))) {
 Repr_mode_summ
 
 Repr_mode_summ <- Repr_mode_summ[order(Repr_mode_summ[, "SpeciesName"]), ]
-Repr_mode_summ_ext <- merge(DATA, Repr_mode_summ, by = "SpeciesName", all.x = T)[c(1,127)]
+Repr_mode_summ_ext <- merge(DATA, Repr_mode_summ, by = "SpeciesName", all.x = T)[c("SpeciesName", "Repr_mode_summ")]
 
 # View(cbind(Repr_mode_summ_ext[order(Repr_mode_summ_ext$SpeciesName),], DATA[order(DATA$SpeciesName), c(3,5)]))
 # View(cbind(Repr_mode_summ_ext, DATA[, c(3,5)]))
@@ -636,7 +641,6 @@ DATA <- DATA[order(DATA$SpeciesName),]
 
 DATA$Repr_mode_summ <- Repr_mode_summ_ext$Repr_mode_summ
 str(DATA)
-DATA <- DATA[, c(1:5, 127, 6:126)]
 colnames(DATA)
 
 ##### Calculate mean elevation from Flora Alpina data and Ozenda 1985 #####
@@ -678,7 +682,7 @@ elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
 elevation_Ozenda$avg <- sapply(1:nrow(elevation_Ozenda), function(x) sum(elevation_Ozenda[x,2:6])/elevation_Ozenda[x,"sum"])
 
 DATA <- merge(DATA, elevation_Ozenda[, c("SpeciesName", "avg")], by = "SpeciesName", all.x = T)
-colnames(DATA)[128] <- "elevation_Ozenda"
+colnames(DATA)[129] <- "elevation_Ozenda"
 
 write.csv(DATA, file = "DATA_elevation_Ozenda.csv")
 
@@ -689,9 +693,10 @@ unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a
 
 ##### Summarizing data: all accessions, missing values #####
 library(dplyr)
-DATA_red <- DATA %>%
+DATA_red <- DATA %>% 
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, 
+         Ploidy, Ploidy_summ, PloidyEvenOdd, Chr.number, GS_per_chrm, 
          Altitude, elevation_Ozenda, Longevity, BiologicalForm, 
          Endemic, Indigenous, Distribution, Sect_Occ, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
@@ -701,10 +706,6 @@ DATA_red <- DATA %>%
   summarize_all(list(first))
 
 str(DATA_red)
-
-DATA_red$Ploidy <- factor(DATA_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_red$Repr_mode_summ  <- factor(DATA_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_red$Repr_mode  <- factor(DATA_red$Repr_mode, levels = c("Sexual", "Apomictic"))
 
 setdiff(DATA_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_red$SpeciesName)
@@ -721,9 +722,11 @@ DATA_red <- DATA_red[match(DATA_red$SpeciesName, JanTree4$tip.label), ]
 write.csv(DATA_red, file = "DATA_red.csv")
 
 
+
 ##### Complete cases ##### 
 to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "CompleteName", 
-             "Repr_mode", "Repr_mode_summ", "GS", "1C", "Ploidy", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
+             "Repr_mode", "Repr_mode_summ", "GS", "1C", 
+             "Ploidy", "Ploidy_summ", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
              "Altitude", "elevation_Ozenda", "Longevity", "BiologicalForm", 
              "Endemic", "Indigenous", "Distribution", "Sect_Occ", 
              "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
@@ -734,17 +737,14 @@ DATA[!complete.cases(DATA[, to_keep]), ] # these are the 6 accessions that will 
 DATA_CC <- DATA[complete.cases(DATA[, to_keep]), ]
 nrow(DATA) - nrow(DATA_CC) # 6 accessions dropped
 
-DATA_CC$Ploidy <- factor(DATA_CC$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_CC$Repr_mode_summ  <- factor(DATA_CC$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_CC$Repr_mode  <- factor(DATA_CC$Repr_mode, levels = c("Sexual", "Apomictic"))
-
 
 
 ##### Summarizing data: complete cases only #####
 library(dplyr)
 DATA_CC_red <- DATA_CC %>% 
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, 
+         Ploidy, Ploidy_summ, PloidyEvenOdd, Chr.number, GS_per_chrm, 
          Altitude, Longevity, BiologicalForm, 
          Endemic, Indigenous, Distribution, Sect_Occ, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
@@ -754,10 +754,6 @@ DATA_CC_red <- DATA_CC %>%
   summarize_all(list(first))
 
 nrow(DATA_CC_red)
-
-DATA_CC_red$Ploidy <- factor(DATA_CC_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_CC_red$Repr_mode_summ  <- factor(DATA_CC_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_CC_red$Repr_mode  <- factor(DATA_CC_red$Repr_mode, levels = c("Sexual", "Apomictic"))
 
 setdiff(DATA_CC_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName)
@@ -792,14 +788,14 @@ Temp1 <- DATA_CC %>%
 
 Temp2 <- DATA_CC %>% 
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd, 
+         Repr_mode, Repr_mode_summ, Ploidy, Ploidy_summ, PloidyEvenOdd, 
          Longevity, BiologicalForm, 
          Endemic, Indigenous, Distribution, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
          Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
   summarize_at(vars(ID, CompleteName,
-                    Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd,
+                    Repr_mode, Repr_mode_summ, Ploidy, Ploidy_summ, PloidyEvenOdd,
                     Longevity, BiologicalForm,
                     Endemic, Indigenous, Distribution, 
                     Collinaire, Montane, Subalpine, Alpine, Nival,
@@ -811,15 +807,11 @@ colnames(DATA_CC_mean_red)
 nrow(DATA_CC_mean_red)
 
 DATA_CC_mean_red <- DATA_CC_mean_red[, to_keep] # reorder columns
+colnames(DATA_CC_mean_red)
 
 DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(1:2, 5, 13, 25)]), ] # no missing values
 
-DATA_CC_mean_red$Ploidy <- factor(DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-DATA_CC_mean_red$Repr_mode_summ <- factor(DATA_CC_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_CC_mean_red$Repr_mode <- factor(DATA_CC_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
-
 rownames(DATA_CC_mean_red) <- DATA_CC_mean_red$SpeciesName
-
 geiger::name.check(JanTree4_CC, DATA_CC_mean_red)
 
 write.csv(DATA_CC_mean_red, file = "DATA_CC_mean_red.csv")
@@ -843,32 +835,32 @@ write.csv(merge(DATA, AA_MasterSheet[, c(2, 9:12)], by = "ID", all.x = T), file 
 ### Making a vector with IDs of accessions to drop
 
 ### Stuff from HB Lautaret
-DATA[grep('Laut', DATA$ID), c(1:3, 9)]
-NotWild <- as.character(DATA[grep('Laut', DATA$ID), c(1:3, 9)][, "ID"])
-DATA[grep('210.', DATA$Altitude), c(1:3, 9)][-c(7, 10), ]
-NotWild <- c(NotWild, as.character(DATA[grep('210.', DATA$Altitude), c(1:3, 9)][-c(7, 10), ][, "ID"]))
+DATA[grep('Laut', DATA$ID), c(1:3, 8)]
+NotWild <- as.character(DATA[grep('Laut', DATA$ID), c(1:3, 8)][, "ID"])
+DATA[grep('210.', DATA$Altitude), c(1:3, 8)][-c(7, 10), ]
+NotWild <- c(NotWild, as.character(DATA[grep('210.', DATA$Altitude), c(1:3, 8)][-c(7, 10), ][, "ID"]))
 ### Stuff from Rolland
-DATA[grep('RD', DATA$ID), c(1:3, 9)]
-NotWild <- c(NotWild, as.character(DATA[grep('RD', DATA$ID), c(1:3, 9)][, "ID"]))
+DATA[grep('RD', DATA$ID), c(1:3, 8)]
+NotWild <- c(NotWild, as.character(DATA[grep('RD', DATA$ID), c(1:3, 8)][, "ID"]))
 ### Stuff from Juri
-DATA[grep('Vos', DATA$ID), c(1:3, 9)]
-NotWild <- c(NotWild, as.character(DATA[grep('Vos', DATA$ID), c(1:3, 9)][, "ID"]))
+DATA[grep('Vos', DATA$ID), c(1:3, 8)]
+NotWild <- c(NotWild, as.character(DATA[grep('Vos', DATA$ID), c(1:3, 8)][, "ID"]))
 ### Stuff from Jaume
-DATA[grep('JP', DATA$ID), c(1:3, 9)]
-NotWild <- c(NotWild, as.character(DATA[grep('JP', DATA$ID), c(1:3, 9)][, "ID"]))
+DATA[grep('JP', DATA$ID), c(1:3, 8)]
+NotWild <- c(NotWild, as.character(DATA[grep('JP', DATA$ID), c(1:3, 8)][, "ID"]))
 ### Stuff from Teresa
-DATA[grep('GR', DATA$ID), c(1:3, 9)]
-NotWild <- c(NotWild, as.character(DATA[grep('GR', DATA$ID), c(1:3, 9)][, "ID"]))
+DATA[grep('GR', DATA$ID), c(1:3, 8)]
+NotWild <- c(NotWild, as.character(DATA[grep('GR', DATA$ID), c(1:3, 8)][, "ID"]))
 ### Stuff from Kew
-DATA[grep('RBGK', DATA$ID), c(1:3, 9)]
-NotWild <- c(NotWild, as.character(DATA[grep('RBGK', DATA$ID), c(1:3, 9)][, "ID"]))
+DATA[grep('RBGK', DATA$ID), c(1:3, 8)]
+NotWild <- c(NotWild, as.character(DATA[grep('RBGK', DATA$ID), c(1:3, 8)][, "ID"]))
 ### Stuff from Oriane (except the ones that are wild w/ altitude)
-DATA[grep('OH', DATA$ID), c(1:3, 9)][,-c(13, # Lautaret wild
+DATA[grep('OH', DATA$ID), c(1:3, 8)][,-c(13, # Lautaret wild
                                          16, # Ville-Vieille
                                          18, # Briançon
                                          19 # Col d'Izoard
                                          )] 
-NotWild <- c(NotWild, as.character(DATA[grep('OH', DATA$ID), c(1:3, 9)][ ,-c(13, 16, 18, 19)][, "ID"]))
+NotWild <- c(NotWild, as.character(DATA[grep('OH', DATA$ID), c(1:3, 8)][ ,-c(13, 16, 18, 19)][, "ID"]))
 ### Stuff outside of the Alps (using QGIS, I selected the features outside of the alpine arc)
 OutsideAlps <- c("FR42","FR60","FR61","FR62","FR63","FR64","FR65","FR66","FR67","FR67b",
                   "FR68","FR69","FR70","FR71","FR72","FR73","FR74","FR75a","FR75b","FR75c",
@@ -899,11 +891,11 @@ nrow(DATA)
 ### accessions outside of the Alps
 DATA_NotStrictlyAlps <- DATA[DATA$ID %in% NotWild, ]
 nrow(DATA_NotStrictlyAlps)
-write.csv(DATA_NotStrictlyAlps[, c(1:3, 9, 11)], file = "DATA_NotStrictlyAlps.csv")
+write.csv(DATA_NotStrictlyAlps[, c(1:3, 8, 10)], file = "DATA_NotStrictlyAlps.csv")
 
 DATA_StrictlyAlps <- DATA[!DATA$ID %in% NotWild, ]
 nrow(DATA_StrictlyAlps)
-write.csv(DATA_StrictlyAlps[, c(1:3, 9, 11)], file = "DATA_StrictlyAlps.csv")
+write.csv(DATA_StrictlyAlps[, c(1:3, 8, 10)], file = "DATA_StrictlyAlps.csv")
 
 setdiff(as.character(unique(DATA$SpeciesName)), as.character(unique(DATA_StrictlyAlps$SpeciesName)))
 
@@ -921,9 +913,9 @@ DATA_StrictlyAlps[is.na(DATA_StrictlyAlps$Repr_mode), ]
 DATA_StrictlyAlps[is.na(DATA_StrictlyAlps$Repr_mode_summ), ]
 
 colnames(DATA_StrictlyAlps)
-DATA_StrictlyAlps[!complete.cases(DATA_StrictlyAlps[, c(3,5,6,8,9,119)]), ]
+DATA_StrictlyAlps[!complete.cases(DATA_StrictlyAlps[, c(3,5,6,8,118)]), ]
 nrow(DATA_StrictlyAlps)
-DATA_StrictlyAlps <- DATA_StrictlyAlps[complete.cases(DATA_StrictlyAlps[, c(3,5,6,8,9,119)]), ]
+DATA_StrictlyAlps <- DATA_StrictlyAlps[complete.cases(DATA_StrictlyAlps[, c(3,5,6,8,118)]), ]
 nrow(DATA_StrictlyAlps) # no missing values
 
 ### How many unique genera in the striclty alpne dataset? 
@@ -935,7 +927,8 @@ unique(vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<
 library(dplyr)
 DATA_StrictlyAlps_red <- DATA_StrictlyAlps %>%
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, GS, `1C`, Ploidy, PloidyEvenOdd, Chr.number, GS_per_chrm, 
+         Repr_mode, Repr_mode_summ, GS, `1C`, 
+         Ploidy, Ploidy_summ, PloidyEvenOdd, Chr.number, GS_per_chrm, 
          Altitude, elevation_Ozenda, Longevity, BiologicalForm, 
          Endemic, Indigenous, Distribution, Sect_Occ, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
@@ -950,7 +943,7 @@ nrow(DATA_StrictlyAlps_red)
 # DATA_StrictlyAlps_red <- DATA_StrictlyAlps_red[order(DATA_StrictlyAlps_red$SpeciesName),]
 nrow(DATA_StrictlyAlps_red)
 colnames(DATA_StrictlyAlps_red)
-DATA_StrictlyAlps_red[!complete.cases(DATA_StrictlyAlps_red[, c(2,4,6:8,19:20)]), ]
+DATA_StrictlyAlps_red[!complete.cases(DATA_StrictlyAlps_red[, c(2,5:6,9:11,14,28)]), ]
 # View(DATA_StrictlyAlps_red[!complete.cases(DATA_StrictlyAlps_red[, c(2,4,6:8,19:20)]), ])
 
 setdiff(DATA_StrictlyAlps_red$SpeciesName, JanTree4$tip.label)
@@ -1001,14 +994,14 @@ Temp1 <- DATA_StrictlyAlps %>%
 
 Temp2 <- DATA_StrictlyAlps %>% 
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
-         Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd, 
+         Repr_mode, Repr_mode_summ, Ploidy, Ploidy_summ, PloidyEvenOdd, 
          Longevity, BiologicalForm, 
          Endemic, Indigenous, Distribution, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
          Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
   summarize_at(vars(ID, CompleteName,
-                    Repr_mode, Repr_mode_summ, Ploidy, PloidyEvenOdd,
+                    Repr_mode, Repr_mode_summ, Ploidy, Ploidy_summ, PloidyEvenOdd,
                     Longevity, BiologicalForm,
                     Endemic, Indigenous, Distribution, 
                     Collinaire, Montane, Subalpine, Alpine, Nival,
@@ -1023,14 +1016,8 @@ DATA_StrictlyAlps_mean_red <- DATA_StrictlyAlps_mean_red[, to_keep] # reoder col
 
 rownames(DATA_StrictlyAlps_mean_red) <- DATA_StrictlyAlps_mean_red$SpeciesName
 
-DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 4, 19)]), ]
-DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 4, 8, 19)]), ]
-
-DATA_StrictlyAlps_mean_red$Ploidy <- factor(DATA_StrictlyAlps_mean_red$Ploidy, levels = c("2x","3x","4x","6x","8x","12x"))
-DATA_StrictlyAlps_mean_red$Repr_mode_summ <- factor(DATA_StrictlyAlps_mean_red$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-DATA_StrictlyAlps_mean_red$Repr_mode <- factor(DATA_StrictlyAlps_mean_red$Repr_mode, levels = c("Sexual", "Apomictic"))
-
-cbind(JanTree4_StrictlyAlps$tip.label, as.character(DATA_StrictlyAlps_mean_red$SpeciesName))
+DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 5, 27)]), ]
+DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red[, c(2, 5, 27, 7)]), ]
 
 geiger::name.check(JanTree4_StrictlyAlps, DATA_StrictlyAlps_mean_red)
 JanTree4_StrictlyAlps$tip.label == as.character(DATA_StrictlyAlps_mean_red$SpeciesName)
