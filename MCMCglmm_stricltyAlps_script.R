@@ -1,4 +1,4 @@
-sink(file = "Apomixis_MCMCglmm_chains_StrictlyAlpine_mean.txt")
+sink(file = "MCMCglmm_strictlyAlps_script_Echo.txt")
 
 ##### HELLO! This is the beginning of the Apomixis_MCMCglmm_chains_reduced.R script! ##### 
 path <- getwd()

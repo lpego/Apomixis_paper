@@ -1,4 +1,4 @@
-sink(file = "MCMC_mean_red_Echo.txt")
+sink(file = "MCMCglmm_extended_script_Echo.txt")
 
 ##### HELLO! This is the beginning of the MCMCglmm_extended_script.R ! ##### 
 path <- getwd()
