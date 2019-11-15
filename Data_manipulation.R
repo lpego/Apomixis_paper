@@ -225,14 +225,25 @@ JanTree4 <- ape::drop.tip(JanTree3, c("Erigeron_borealis", "Erigeron_simplex", "
 
 setdiff(NewApomixisData_FloraAlpinaID_manual$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, NewApomixisData_FloraAlpinaID_manual$SpeciesName)
+### All taxa are in both tree and table 
 
-JanTree4
-ape::is.ultrametric(JanTree4)
-ape::is.binary(JanTree4)
-
-### All taxa are in both tree and table! 
-
-ape::write.tree(JanTree4, file = "JanTree4.tre")
+##### Checking tree properties (rooted, ultrametric, binary, etc) ##### 
+plot(JanTree4, cex = .5, no.margin = T)
+is.rooted(JanTree4)
+is.ultrametric(JanTree4)
+is.binary(JanTree4)
+JanTree4 <- multi2di(JanTree4, random = TRUE)
+is.rooted(JanTree4)
+is.ultrametric(JanTree4)
+is.binary(JanTree4)
+JanTree4$edge.length[JanTree4$edge.length == 0] # are there branch lengths with value zero? 
+JanTree4 <- compute.brlen(JanTree4, method = "Grafen")
+is.rooted(JanTree4)
+is.ultrametric(JanTree4)
+is.binary(JanTree4)
+JanTree4$edge.length[JanTree4$edge.length == 0]
+plot(JanTree4, cex = .5, no.margin = T)
+plotTree(JanTree4, type = "fan", ftype="i", fsize = 0.25, lwd=1)
 
 ### Visual check of differences betweeen trees
 library(phytools)
@@ -246,7 +257,7 @@ plot(JanTree2, cex = .25, tip.color = ifelse(JanTree2$tip.label %in% setdiff(Jan
 plot(JanTree4, cex = .25, tip.color = ifelse(JanTree4$tip.label %in% setdiff(JanTree4$tip.label, JanTree2$tip.label), "red","black"))
 par(mfrow=c(1,1))
 
-
+ape::write.tree(JanTree4, file = "JanTree4.tre")
 
 ##### ~ ##### 
 
@@ -780,6 +791,27 @@ DATA[!complete.cases(DATA[, to_keep]), ] # these are the 6 accessions that will 
 DATA_CC <- DATA[complete.cases(DATA[, to_keep]), ]
 nrow(DATA) - nrow(DATA_CC) # 6 accessions dropped
 
+##### Preparing tree for complete cases ##### 
+# Sigesbeckia orientalis has no data in Flora Alpina, therefore needs to be dropped from the tree
+JanTree4_CC <- ape::drop.tip(JanTree4, setdiff(JanTree4$tip.label, DATA_CC$SpeciesName))
+
+plot(JanTree4_CC, cex = .5, no.margin = T)
+is.rooted(JanTree4_CC)
+is.ultrametric(JanTree4_CC)
+is.binary(JanTree4_CC)
+JanTree4_CC <- multi2di(JanTree4_CC, random = TRUE)
+is.rooted(JanTree4_CC)
+is.ultrametric(JanTree4_CC)
+is.binary(JanTree4_CC)
+JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0] # are there branch lengths with value zero? 
+JanTree4_CC <- compute.brlen(JanTree4_CC, method = "Grafen")
+is.rooted(JanTree4_CC)
+is.ultrametric(JanTree4_CC)
+is.binary(JanTree4_CC)
+JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0]
+
+ape::write.tree(JanTree4_CC, file = "JanTree4_CC.tree")
+
 
 
 ##### Summarizing data: complete cases only #####
@@ -802,9 +834,6 @@ setdiff(DATA_CC_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName)
 which(duplicated(DATA_CC_red$SpeciesName))
 which(duplicated(JanTree4$tip.label))
-
-# Sigesbeckia orientalis has no data in Flora Alpina, therefore needs to be dropped from the tree as well
-JanTree4_CC <- ape::drop.tip(JanTree4, setdiff(JanTree4$tip.label, DATA_CC_red$SpeciesName))
 
 rownames(DATA_CC_red) <- DATA_CC_red$SpeciesName
 geiger::name.check(JanTree4_CC, DATA_CC_red)
@@ -964,6 +993,28 @@ nrow(DATA_StrictlyAlps) # no missing values
 ### How many unique genera in the striclty alpne dataset? 
 unique(vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
 
+##### Prepare the tree for strictly Alps ##### 
+library(ape)
+JanTree4_StrictlyAlps <- drop.tip(JanTree4, setdiff(JanTree4$tip.label, DATA_StrictlyAlps$SpeciesName))
+plot(JanTree4_StrictlyAlps, cex = .25, no.margin = T)
+
+setdiff(DATA_StrictlyAlps$SpeciesName, JanTree4_StrictlyAlps$tip.label)
+setdiff(JanTree4_StrictlyAlps$tip.label, DATA_StrictlyAlps$SpeciesName)
+# length(DATA_StrictlyAlps$SpeciesName) == length(JanTree4_StrictlyAlps$tip.label)
+which(duplicated(DATA_StrictlyAlps$SpeciesName))
+which(duplicated(JanTree4_StrictlyAlps$tip.label))
+
+is.binary(JanTree4_StrictlyAlps)
+is.binary(JanTree4_StrictlyAlps)
+JanTree4_StrictlyAlps <- multi2di(JanTree4_StrictlyAlps, tol = 1)
+is.binary(JanTree4_StrictlyAlps)
+is.ultrametric(JanTree4_StrictlyAlps)
+JanTree4_StrictlyAlps$edge.length[JanTree4_StrictlyAlps$edge.length == 0] # are there branch lengths with value zero
+JanTree4_StrictlyAlps <- compute.brlen(JanTree4_StrictlyAlps, method = "Grafen")
+is.binary(JanTree4_StrictlyAlps)
+is.ultrametric(JanTree4_StrictlyAlps)
+JanTree4_StrictlyAlps$edge.length[JanTree4_StrictlyAlps$edge.length == 0] 
+
 
 
 ##### Summarize strictly Alps data #####
@@ -991,27 +1042,6 @@ DATA_StrictlyAlps_red[!complete.cases(DATA_StrictlyAlps_red[, c(2,5:6,9:11,14,28
 
 setdiff(DATA_StrictlyAlps_red$SpeciesName, JanTree4$tip.label)
 setdiff(JanTree4$tip.label, DATA_StrictlyAlps_red$SpeciesName) # these taxa need to be dropped from the tree
-
-##### Prepare the tree for strictly Alps ##### 
-library(ape)
-JanTree4_StrictlyAlps <- drop.tip(JanTree4, setdiff(JanTree4$tip.label, DATA_StrictlyAlps_red$SpeciesName))
-plot(JanTree4_StrictlyAlps, cex = .25, no.margin = T)
-
-setdiff(DATA_StrictlyAlps_red$SpeciesName, JanTree4_StrictlyAlps$tip.label)
-setdiff(JanTree4_StrictlyAlps$tip.label, DATA_StrictlyAlps_red$SpeciesName)
-length(DATA_StrictlyAlps_red$SpeciesName) == length(JanTree4_StrictlyAlps$tip.label)
-which(duplicated(DATA_StrictlyAlps_red$SpeciesName))
-which(duplicated(JanTree4_StrictlyAlps$tip.label))
-
-is.binary(JanTree4_StrictlyAlps)
-JanTree4_StrictlyAlps <- multi2di(JanTree4_StrictlyAlps, tol = 1)
-is.binary(JanTree4_StrictlyAlps)
-is.ultrametric(JanTree4_StrictlyAlps)
-JanTree4_StrictlyAlps$edge.length[JanTree4_StrictlyAlps$edge.length == 0] # are there branch lengths with value zero
-JanTree4_StrictlyAlps <- compute.brlen(JanTree4_StrictlyAlps, method = "Grafen")
-is.binary(JanTree4_StrictlyAlps)
-is.ultrametric(JanTree4_StrictlyAlps)
-JanTree4_StrictlyAlps$edge.length[JanTree4_StrictlyAlps$edge.length == 0] # are there branch lengths with value zero
 
 DATA_StrictlyAlps_red <- DATA_StrictlyAlps_red[order(match(DATA_StrictlyAlps_red$SpeciesName, JanTree4_StrictlyAlps$tip.label)), ]
 
