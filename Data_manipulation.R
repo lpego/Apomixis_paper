@@ -886,6 +886,8 @@ DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red[, c(1:2, 5, 13, 25)]), ] # no 
 rownames(DATA_CC_mean_red) <- DATA_CC_mean_red$SpeciesName
 geiger::name.check(JanTree4_CC, DATA_CC_mean_red)
 
+DATA_CC_mean_red <- DATA_CC_mean_red[match(JanTree4_CC$tip.label, DATA_CC_mean_red$SpeciesName), ]
+
 write.csv(DATA_CC_mean_red, file = "DATA_CC_mean_red.csv")
 
 
