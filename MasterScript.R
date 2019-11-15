@@ -427,38 +427,38 @@ ggJanTree4
 ggsave(filename = "ggJanTree4.png", device = "png", dpi = 300)
 
 ### Plotting traits on tree
-sum(is.na(DATA_red_ggtree$Altitude)) # no missing values
-DATA_red_ggtree[, c("SpeciesName", "GS")]
-DATA_red_ggtree[, c("SpeciesName", "Altitude")]
+sum(is.na(DATA_CC_red_ggtree$Altitude)) # no missing values
+DATA_CC_red_ggtree[, c("SpeciesName", "GS")]
+DATA_CC_red_ggtree[, c("SpeciesName", "Altitude")]
 
 ### Simple ggplot versions work properly
-ggplot(data = DATA_red_ggtree,
+ggplot(data = DATA_CC_red_ggtree,
        aes(x = 0, xend = Altitude,
-           y = 1:nrow(DATA_red_ggtree), yend = 1:nrow(DATA_red_ggtree)),
+           y = 1:nrow(DATA_CC_red_ggtree), yend = 1:nrow(DATA_CC_red_ggtree)),
        fill = Altitude) +
   geom_segment()
 
-ggplot(data = DATA_red_ggtree,
+ggplot(data = DATA_CC_red_ggtree,
        aes(x = Altitude, y = SpeciesName),
        fill = Altitude) +
   geom_barh(stat = "identity")
 
 ### with colour also working properly (using ggstance::geom_barh)
-ggplot(DATA_red_ggtree, aes(x = SpeciesName, y = Altitude, color = Altitude)) +
+ggplot(DATA_CC_red_ggtree, aes(x = SpeciesName, y = Altitude, color = Altitude)) +
   geom_bar(stat = "identity") +
   scale_color_continuous(low = "darkgreen", high = "saddlebrown") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 
-ggplot(DATA_red_ggtree, aes(y = SpeciesName, x = Altitude, color = Altitude)) +
+ggplot(DATA_CC_red_ggtree, aes(y = SpeciesName, x = Altitude, color = Altitude)) +
   geom_barh(stat = "identity") +
   scale_color_continuous(low = "darkgreen", high = "saddlebrown") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 
-ggplot(DATA_red_ggtree, aes(x = SpeciesName, y = GS, fill = Ploidy)) +
+ggplot(DATA_CC_red_ggtree, aes(x = SpeciesName, y = GS, fill = Ploidy)) +
   geom_bar(stat = "identity") + scale_colour_brewer(palette = "Dark2") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 
-ggplot(DATA_red_ggtree, aes(y = SpeciesName, x = GS, fill = Ploidy)) +
+ggplot(DATA_CC_red_ggtree, aes(y = SpeciesName, x = GS, fill = Ploidy)) +
   geom_barh(stat = "identity") + scale_colour_brewer(palette = "Dark2") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 
@@ -515,7 +515,7 @@ library(ggtree)
 library(RColorBrewer)
 
 ### Need to tweak the clade labels positioing after changing the underlying tree. Kept original nidge values (commented out)
-ggJanTree4_circular <- ggtree(JanTree4_CC, layout = "circular") %<+% DATA_red_ggtree +
+ggJanTree4_circular <- ggtree(JanTree4_CC, layout = "circular") %<+% DATA_CC_red_ggtree +
   geom_tiplab2(size = 1.5, offset = 0.1) +
   geom_hilight(mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
   geom_hilight(mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
