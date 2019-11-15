@@ -60,14 +60,14 @@ prior_V1fix1 <- list(R = list(V = 1, fix = 1))
 prior_V1fix1
 
 set.seed(111)
-ext_ext_mThre1_noPhy <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre1_noPhy <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
                         verbose = F, data = MCMC_DATA_CC_mean_red,
                         family = "threshold", trunc = T,
                         prior = prior_V1fix1,
                         nitt = 10^6, thin = 500, burnin = 25000)
-summary(ext_ext_mThre1_noPhy)
-print("DiagPlots_ext_ext_mThre1_noPhy%03d.png")
-png('DiagPlots_ext_ext_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+summary(ext_mThre1_noPhy)
+print("DiagPlots_ext_mThre1_noPhy%03d.png")
+png('DiagPlots_ext_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
   plot(ext_mThre1_noPhy, ask = F)
 dev.off()
 
