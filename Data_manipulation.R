@@ -692,6 +692,15 @@ unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a
 
 
 ##### Summarizing data: all accessions, missing values #####
+to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "CompleteName", 
+             "Repr_mode", "Repr_mode_summ", "GS", "1C", 
+             "Ploidy", "Ploidy_summ", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
+             "Altitude", "elevation_Ozenda", "Longevity", "BiologicalForm", 
+             "Endemic", "Indigenous", "Distribution", "Sect_Occ", 
+             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
+             "Init.month", "Tot.months", "End.month", 
+             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w")
+
 library(dplyr)
 DATA_red <- DATA %>% 
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
@@ -723,16 +732,50 @@ write.csv(DATA_red, file = "DATA_red.csv")
 
 
 
-##### Complete cases ##### 
-to_keep <- c("ID_FloraAlpina", "ID", "SpeciesName", "CompleteName", 
-             "Repr_mode", "Repr_mode_summ", "GS", "1C", 
-             "Ploidy", "Ploidy_summ", "PloidyEvenOdd", "Chr.number", "GS_per_chrm",  
-             "Altitude", "elevation_Ozenda", "Longevity", "BiologicalForm", 
-             "Endemic", "Indigenous", "Distribution", "Sect_Occ", 
-             "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
-             "Init.month", "Tot.months", "End.month", 
-             "Phytosociology", "Habitat", "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w")
+##### Summarizing data: all accessions, missing values, mean ##### 
+library(dplyr) 
+Temp1 <- DATA %>% 
+  select(ID_FloraAlpina, SpeciesName, 
+         GS, `1C`, Chr.number, GS_per_chrm, Altitude, elevation_Ozenda, Sect_Occ, 
+         Init.month, Tot.months, End.month) %>% 
+  group_by(ID_FloraAlpina, SpeciesName) %>% 
+  summarize_at(vars(GS, `1C`, Chr.number, GS_per_chrm, 
+                    Altitude, elevation_Ozenda, Sect_Occ, Init.month, Tot.months, End.month), 
+               list(mean), na.rm = T)
 
+Temp2 <- DATA %>% 
+  select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
+         Repr_mode, Repr_mode_summ, Ploidy, Ploidy_summ, PloidyEvenOdd, 
+         Longevity, BiologicalForm, 
+         Endemic, Indigenous, Distribution, 
+         Collinaire, Montane, Subalpine, Alpine, Nival, 
+         Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w) %>% 
+  group_by(ID_FloraAlpina, SpeciesName) %>% 
+  summarize_at(vars(ID, CompleteName,
+                    Repr_mode, Repr_mode_summ, Ploidy, Ploidy_summ, PloidyEvenOdd,
+                    Longevity, BiologicalForm,
+                    Endemic, Indigenous, Distribution, 
+                    Collinaire, Montane, Subalpine, Alpine, Nival,
+                    Phytosociology, Habitat, Ca, Ca.Si, Si, pH, N, Water, w),
+               list(first))
+
+DATA_mean_red <- merge(Temp1, Temp2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
+colnames(DATA_mean_red)
+nrow(DATA_mean_red)
+
+DATA_mean_red <- DATA_mean_red[, to_keep] # reorder columns
+colnames(DATA_mean_red)
+
+DATA_mean_red[!complete.cases(DATA_mean_red[, c(1:2, 5, 13, 25)]), ] # Sigesbeckia is not in Flora Alpina
+
+rownames(DATA_mean_red) <- DATA_mean_red$SpeciesName
+geiger::name.check(JanTree4, DATA_mean_red)
+
+write.csv(DATA_mean_red, file = "DATA_mean_red.csv")
+
+
+
+##### Complete cases ##### 
 DATA[!complete.cases(DATA[, to_keep]), ] # these are the 6 accessions that will be dropped
 DATA_CC <- DATA[complete.cases(DATA[, to_keep]), ]
 nrow(DATA) - nrow(DATA_CC) # 6 accessions dropped
@@ -745,7 +788,7 @@ DATA_CC_red <- DATA_CC %>%
   select(ID_FloraAlpina, ID, SpeciesName, CompleteName, 
          Repr_mode, Repr_mode_summ, GS, `1C`, 
          Ploidy, Ploidy_summ, PloidyEvenOdd, Chr.number, GS_per_chrm, 
-         Altitude, Longevity, BiologicalForm, 
+         Altitude, elevation_Ozenda, Longevity, BiologicalForm, 
          Endemic, Indigenous, Distribution, Sect_Occ, 
          Collinaire, Montane, Subalpine, Alpine, Nival, 
          Init.month, Tot.months, End.month, 
