@@ -24,10 +24,9 @@ MCMC_DATA_CC_mean_red$Repr_mode_summ <- factor(MCMC_DATA_CC_mean_red$Repr_mode_s
 MCMC_DATA_CC_mean_red$Ploidy <- factor(MCMC_DATA_CC_mean_red$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
 MCMC_DATA_CC_mean_red$Ploidy_summ <- factor(MCMC_DATA_CC_mean_red$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
 MCMC_DATA_CC_mean_red[!complete.cases(MCMC_DATA_CC_mean_red), ] # no missing values
-
-colnames(MCMC_DATA_CC_mean_red)[3] <- "animal"
-
 nrow(MCMC_DATA_CC_mean_red)
+
+colnames(MCMC_DATA_CC_mean_red)[3] <- "animal" # this is needed because of a MCMCglmm quirkiness
 
 ##### Load the tree #####
 library(ape)
