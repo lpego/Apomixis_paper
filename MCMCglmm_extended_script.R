@@ -1,6 +1,6 @@
 sink(file = "MCMC_mean_red_Echo.txt")
 
-##### HELLO! This is the beginning of the Apomixis_MCMCglmm_chains_reduced.R script! ##### 
+##### HELLO! This is the beginning of the MCMCglmm_extended_script.R ! ##### 
 path <- getwd()
 print(getwd())
 
@@ -244,6 +244,6 @@ gelman.diag(chainListTre1_Sol)
 gelman.diag(chainListTre2_Sol)
 gelman.diag(chainListTre2_Sol)
 
-##### GOODBYE! This is the end of the Apomixis_MCMCglmm_chains.R script! ##### 
+##### GOODBYE! This is the end of the MCMCglmm_extended_script.R ! ##### 
 
 sink() 
