@@ -60,27 +60,27 @@ prior_V1fix1 <- list(R = list(V = 1, fix = 1))
 prior_V1fix1
 
 set.seed(111)
-mThre1_noPhy <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_ext_mThre1_noPhy <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
                         verbose = F, data = MCMC_DATA_CC_mean_red,
                         family = "threshold", trunc = T,
                         prior = prior_V1fix1,
                         nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1_noPhy)
-print("DiagPlots_mThre1_noPhy%03d.png")
-png('DiagPlots_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre1_noPhy, ask = F)
+summary(ext_ext_mThre1_noPhy)
+print("DiagPlots_ext_ext_mThre1_noPhy%03d.png")
+png('DiagPlots_ext_ext_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre1_noPhy, ask = F)
 dev.off()
 
 ### No phylogeny included, response with 2 levels
-mThre1.1_noPhy <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre1.1_noPhy <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
                           verbose = F, data = MCMC_DATA_CC_mean_red,
                           family = "threshold", trunc = T,
                           prior = prior_V1fix1,
                           nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1.1_noPhy)
-print("DiagPlots_mThre1.1_noPhy%03d.png")
-  png('DiagPlots_mThre1.1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-plot(mThre1.1_noPhy, ask = F)
+summary(ext_mThre1.1_noPhy)
+print("DiagPlots_ext_mThre1.1_noPhy%03d.png")
+  png('DiagPlots_ext_mThre1.1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+plot(ext_mThre1.1_noPhy, ask = F)
 dev.off()
 
 ##### First batch: set.seed(111) #####
@@ -92,150 +92,150 @@ prior_nu1000_1
 
 set.seed(111)
 ### Repr_mode with 3 levels
-mThre1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
                   ginverse = list(animal = invJanTree4_CC_tips$Ainv),
                   random = ~ animal, verbose = F,
                   data = MCMC_DATA_CC_mean_red,
                   family = "threshold", trunc = T,
                   prior = prior_nu1000_1,
                   nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1)
-print("DiagPlots_mThre1.1%03d.png")
-png('DiagPlots_mThre1.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre1, ask = F)
+summary(ext_mThre1)
+print("DiagPlots_ext_mThre1.1%03d.png")
+png('DiagPlots_ext_mThre1.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre1, ask = F)
 dev.off()
 
-heidel.diag(mThre1$VCV)
-heidel.diag(mThre1$Sol)
-print("Geweke_mThre1%03d.png")
-png('Geweke_mThre1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  geweke.plot(mThre1$Sol, ask = F)
+heidel.diag(ext_mThre1$VCV)
+heidel.diag(ext_mThre1$Sol)
+print("Geweke_ext_mThre1%03d.png")
+png('Geweke_ext_mThre1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  geweke.plot(ext_mThre1$Sol, ask = F)
 dev.off()
-autocorr.diag(mThre1$Sol)
+autocorr.diag(ext_mThre1$Sol)
 
 ### Repr_mode with only 2 levels
-mThre1.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre1.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
                     ginverse = list(animal = invJanTree4_CC_tips$Ainv),
                     random = ~ animal, verbose = F,
                     data = MCMC_DATA_CC_mean_red,
                     family = "threshold", trunc = T,
                     prior = prior_nu1000_1,
                     nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1.1)
-print("DiagPlots_mThre1.1%03d.png")
-png('DiagPlots_mThre1.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre1.1, ask = F)
+summary(ext_mThre1.1)
+print("DiagPlots_ext_mThre1.1%03d.png")
+png('DiagPlots_ext_mThre1.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre1.1, ask = F)
 dev.off()
 
-heidel.diag(mThre1.1$VCV)
-heidel.diag(mThre1.1$Sol)
-print("Geweke_mThre1.1.png")
-png('Geweke_mThre1.1.png', width = 15, height = 15, units = 'cm', res = 300)
- geweke.plot(mThre1.1$Sol, ask = F)
+heidel.diag(ext_mThre1.1$VCV)
+heidel.diag(ext_mThre1.1$Sol)
+print("Geweke_ext_mThre1.1.png")
+png('Geweke_ext_mThre1.1.png', width = 15, height = 15, units = 'cm', res = 300)
+ geweke.plot(ext_mThre1.1$Sol, ask = F)
 dev.off()
-autocorr.diag(mThre1.1$Sol)
+autocorr.diag(ext_mThre1.1$Sol)
 
 ##### Second batch: set.seed(534) #####
 print("Second batch: set.seed(534)")
 set.seed(534)
 ### Repr_mode with 3 levels
-mThre2 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre2 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
                   ginverse = list(animal = invJanTree4_CC_tips$Ainv),
                   random = ~ animal, verbose = F,
                   data = MCMC_DATA_CC_mean_red,
                   family = "threshold", trunc = T,
                   prior = prior_nu1000_1,
                   nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre2)
-print("DiagPlots_mThre2.1%03d.png")
-png('DiagPlots_mThre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre2, ask = F)
+summary(ext_mThre2)
+print("DiagPlots_ext_mThre2.1%03d.png")
+png('DiagPlots_ext_mThre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre2, ask = F)
 dev.off()
 
-heidel.diag(mThre2$VCV)
-heidel.diag(mThre2$Sol)
-print("Geweke_mThre2%03d.png")
-png('Geweke_mThre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  geweke.plot(mThre2$Sol, ask = F)
+heidel.diag(ext_mThre2$VCV)
+heidel.diag(ext_mThre2$Sol)
+print("Geweke_ext_mThre2%03d.png")
+png('Geweke_ext_mThre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  geweke.plot(ext_mThre2$Sol, ask = F)
 
 dev.off()
-autocorr.diag(mThre2$Sol)
+autocorr.diag(ext_mThre2$Sol)
 
 ### Repr_mode with only 2 levels
-mThre2.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre2.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
                     ginverse = list(animal = invJanTree4_CC_tips$Ainv),
                     random = ~ animal, verbose = F,
                     data = MCMC_DATA_CC_mean_red,
                     family = "threshold", trunc = T,
                     prior = prior_nu1000_1,
                     nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre2.1)
-print("DiagPlots_mThre2.1%03d.png")
-png('DiagPlots_mThre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre2.1, ask = F)
+summary(ext_mThre2.1)
+print("DiagPlots_ext_mThre2.1%03d.png")
+png('DiagPlots_ext_mThre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre2.1, ask = F)
 dev.off()
 
-heidel.diag(mThre2.1$VCV)
-heidel.diag(mThre2.1$Sol)
-print("Geweke_mThre2.1.png")
-png('Geweke_mThre2.1.png', width = 15, height = 15, units = 'cm', res = 300)
-  geweke.plot(mThre2.1$Sol, ask = F)
+heidel.diag(ext_mThre2.1$VCV)
+heidel.diag(ext_mThre2.1$Sol)
+print("Geweke_ext_mThre2.1.png")
+png('Geweke_ext_mThre2.1.png', width = 15, height = 15, units = 'cm', res = 300)
+  geweke.plot(ext_mThre2.1$Sol, ask = F)
 dev.off()
-autocorr.diag(mThre2.1$Sol)
+autocorr.diag(ext_mThre2.1$Sol)
 
 ##### Third batch: set.seed(386) #####
 print("Third batch: set.seed(386)")
 set.seed(386)
 ### Repr_mode with 3 levels
-mThre3 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre3 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.month,
                   ginverse = list(animal = invJanTree4_CC_tips$Ainv),
                   random = ~ animal, verbose = F,
                   data = MCMC_DATA_CC_mean_red,
                   family = "threshold", trunc = T,
                   prior = prior_nu1000_1,
                   nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre3)
-print("DiagPlots_mThre3.1%03d.png")
-png('DiagPlots_mThre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre3, ask = F)
+summary(ext_mThre3)
+print("DiagPlots_ext_mThre3.1%03d.png")
+png('DiagPlots_ext_mThre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre3, ask = F)
 dev.off()
 
-heidel.diag(mThre3$VCV)
-heidel.diag(mThre3$Sol)
-print("Geweke_mThre3%03d.png")
-png('Geweke_mThre3%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  geweke.plot(mThre3$Sol, ask = F)
+heidel.diag(ext_mThre3$VCV)
+heidel.diag(ext_mThre3$Sol)
+print("Geweke_ext_mThre3%03d.png")
+png('Geweke_ext_mThre3%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  geweke.plot(ext_mThre3$Sol, ask = F)
 dev.off()
-autocorr.diag(mThre3$Sol)
+autocorr.diag(ext_mThre3$Sol)
 
 ### Repr_mode with only 2 levels
-mThre3.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
+ext_mThre3.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init.month,
                     ginverse = list(animal = invJanTree4_CC_tips$Ainv),
                     random = ~ animal, verbose = F,
                     data = MCMC_DATA_CC_mean_red,
                     family = "threshold", trunc = T,
                     prior = prior_nu1000_1,
                     nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre3.1)
-print("DiagPlots_mThre3.1%03d.png")
-png('DiagPlots_mThre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
-  plot(mThre3.1, ask = F)
+summary(ext_mThre3.1)
+print("DiagPlots_ext_mThre3.1%03d.png")
+png('DiagPlots_ext_mThre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+  plot(ext_mThre3.1, ask = F)
 dev.off()
 
-heidel.diag(mThre3.1$VCV)
-heidel.diag(mThre3.1$Sol)
-print("Geweke_mThre3.1.png")
-png('Geweke_mThre3.1.png', width = 15, height = 15, units = 'cm', res = 300)
-  geweke.plot(mThre3.1$Sol, ask = F)
+heidel.diag(ext_mThre3.1$VCV)
+heidel.diag(ext_mThre3.1$Sol)
+print("Geweke_ext_mThre3.1.png")
+png('Geweke_ext_mThre3.1.png', width = 15, height = 15, units = 'cm', res = 300)
+  geweke.plot(ext_mThre3.1$Sol, ask = F)
 dev.off()
-autocorr.diag(mThre3.1$Sol)
+autocorr.diag(ext_mThre3.1$Sol)
 
 ##### Multiple chains convergence diagnostics #####
-chainListTre1_Sol <- mcmc.list(mThre1$Sol, mThre2$Sol, mThre3$Sol)
-chainListTre1_VCV <- mcmc.list(mThre1$VCV, mThre2$VCV, mThre3$VCV)
+chainListTre1_Sol <- mcmc.list(ext_mThre1$Sol, ext_mThre2$Sol, ext_mThre3$Sol)
+chainListTre1_VCV <- mcmc.list(ext_mThre1$VCV, ext_mThre2$VCV, ext_mThre3$VCV)
 
-chainListTre2_Sol <- mcmc.list(mThre1.1$Sol, mThre2.1$Sol, mThre3.1$Sol)
-chainListTre2_VCV <- mcmc.list(mThre1.1$VCV, mThre2.1$VCV, mThre3.1$VCV)
+chainListTre2_Sol <- mcmc.list(ext_mThre1.1$Sol, ext_mThre2.1$Sol, ext_mThre3.1$Sol)
+chainListTre2_VCV <- mcmc.list(ext_mThre1.1$VCV, ext_mThre2.1$VCV, ext_mThre3.1$VCV)
 
 ### Gelman rubin diagnostic: should be close to 1
 gelman.diag(chainListTre1_Sol)
