@@ -286,19 +286,14 @@ TraitsNames <- colnames(DATA_red[,-c(1:3, 12)])
 boxplot(DATA_red[, "Altitude"])
 # boxplot(DATA_red[, "Phytosociology"])
 
-plot(GS ~ PloidyEvenOdd, DATA_red)
+plot(GS ~ Ploidy, DATA_red)
+plot(GS ~ Ploidy_summ, DATA_red)
 plot(GS ~ Chr.number, data = DATA_red)
+plot(GS ~ GS_per_chrm, data = DATA_red)
 plot(GS ~ Altitude, data = DATA_red)
 abline(lm(GS ~ Altitude, data = DATA_red), col = "red")
 plot(GS ~ Endemic, data = DATA_red)
 plot(GS ~ Distribution, data = DATA_red)
-plot(GS ~ Water, data = DATA_red)
-plot(GS ~ w, data = DATA_red)
-plot(GS ~ pH, data = DATA_red)
-plot(GS ~ N, data = DATA_red)
-plot(GS ~ Ca, data = DATA_red)
-plot(GS ~ Si, data = DATA_red)
-plot(GS ~ Ca.Si, data = DATA_red)
 
 par(mfrow=c(1,5))
 plot(GS ~ Collinaire, data = DATA_red)
@@ -327,31 +322,31 @@ wilcox.test(as.numeric(test1$Init.month), as.numeric(test2$Init.month)) # not si
 
 ### Phytools: plotting reproductive mode onto tree 
 library(phytools)
-plotTree(JanTree5, fsize = 0.25, lwd = 1, type = "fan")
+plotTree(JanTree4, fsize = 0.25, lwd = 1, type = "fan")
 
 Repr_mode_factor <- gsub('Sexual', '0', DATA_red$Repr_mode_summ)
 Repr_mode_factor <- as.factor(gsub('Apomictic', '1', Repr_mode_factor))
 Repr_mode_factor <- as.factor(gsub('Mixed', '2', Repr_mode_factor))
-Repr_mode_factor <- setNames(Repr_mode_factor, rownames(DATA_red))
+Repr_mode_factor <- setNames(Repr_mode_factor, DATA_red$SpeciesName)
 Repr_mode_colours <- gsub('0', 'black', Repr_mode_factor)
 Repr_mode_colours <- gsub('1', 'red', Repr_mode_colours)
 Repr_mode_colours <- gsub('2', 'orange', Repr_mode_colours)
-Repr_mode_colours <- setNames(Repr_mode_colours, rownames(DATA_red))
-length(Repr_mode_colours) == length(JanTree5$tip.label)
-match <- match(JanTree5$tip.label, names(Repr_mode_colours)) # need to reorder vecotr to match tree's labels
+Repr_mode_colours <- setNames(Repr_mode_colours, DATA_red$SpeciesName)
+length(Repr_mode_colours) == length(JanTree4$tip.label)
+match <- match(JanTree4$tip.label, names(Repr_mode_colours)) # need to reorder vecotr to match tree's labels
 Repr_mode_colours <- Repr_mode_colours[match]
 
 ### Regular plotting w/ character states at tips
 png(filename = "ApomixisTree_BlackBranches.png", width = 5000, height = 5000, units = "px", res = 600)
-plot(JanTree5, cex = .5, type = "fan", show.tip.label = F)
-tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 1) 
+plot(JanTree4, cex = .5, type = "fan", show.tip.label = F)
+tiplabels(pch = 19, cex = .5, col = Repr_mode_colours, offset = 0.025) 
 dev.off()
 
-### Plotting ancestral character state reconstruction
-JanTree5.simMap <- make.simmap(JanTree5, Repr_mode_factor, model = "ER", nsim = 10)
-JanTree5.simMap_summ <- summary(JanTree5.simMap, plots = F)
-plot(JanTree5.simMap_summ, type = "fan", fsize = .35, cex=c(0.3,0.3))
-plotSimmap(JanTree5.simMap, type = "fan", fsize = .25)
+# ### Plotting ancestral character state reconstruction
+JanTree4.simMap <- make.simmap(JanTree4, Repr_mode_factor, model = "ER", nsim = 10)
+JanTree4.simMap_summ <- summary(JanTree4.simMap, plots = F)
+plot(JanTree4.simMap_summ, type = "fan", fsize = .35, cex=c(0.3,0.3))
+plotSimmap(JanTree4.simMap, type = "fan", fsize = .25)
 
 
 
@@ -368,31 +363,30 @@ library(ggstance)
 # library(devtools)
 # install_github("GuangchuangYu/ggtree")
 
-ape::Ntip(JanTree5)
+ape::Ntip(JanTree4)
 
 ### IMPORTANT: data attached to the tree must have taxa name in first column! Order is irrelevant
-DATA_red_ggtree <- DATA_CC_mean_red
-rownames(DATA_red_ggtree) <- NULL
-DATA_red_ggtree <- DATA_red_ggtree[, c(2,1,3:ncol(DATA_red_ggtree))]
-# DATA_red_ggtree$SpeciesName <- as.character(DATA_red_ggtree$SpeciesName)
-# DATA_red_ggtree <- DATA_red_ggtree[match(JanTree5$tip.label, DATA_red_ggtree$SpeciesName), ]
-# JanTree5$tip.label == as.character(DATA_red_ggtree$SpeciesName)
-DATA_red_ggtree$Ploidy <- factor(DATA_red_ggtree$Ploidy, levels = c("2x","3x","4x","6x","8x","12x"))
-DATA_red_ggtree$Repr_mode_summ <- factor(DATA_red_ggtree$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
+DATA_CC_red_ggtree <- DATA_CC_mean_red
+str(DATA_CC_red_ggtree)
+rownames(DATA_CC_red_ggtree) <- NULL
+DATA_CC_red_ggtree <- DATA_CC_red_ggtree[, c(3,1,2,4:ncol(DATA_CC_red_ggtree))]
+DATA_CC_red_ggtree$SpeciesName <- as.character(DATA_CC_red_ggtree$SpeciesName)
+DATA_CC_red_ggtree$Ploidy
+DATA_CC_red_ggtree$Repr_mode_summ
 
-ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
-  geom_tiplab(size = 1, offset = .05) +
-  xlim(0 , 37.5) + # this is to give enough withespace to print longer taxa names
-  geom_hilight(mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
-  geom_hilight(mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
-  geom_hilight(mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
-  geom_hilight(mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
-  geom_hilight(mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
-  geom_hilight(mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
-  geom_hilight(mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
-  geom_hilight(mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
-  geom_hilight(mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
-  geom_hilight(mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
+ggJanTree4 <- ggtree(JanTree4_CC) %<+% DATA_CC_red_ggtree +
+  geom_tiplab(size = 1, offset = 0.01) +
+  xlim(0, 1.15) + # this is to give enough withespace to print longer taxa names
+  geom_hilight(mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
   # ### Tribe labels as clade labels
   # geom_cladelabel(node = c(295), label = "Anthemidae", offset = 3.5, color = brewer.pal(10, "Set3")[1]) +
   # geom_cladelabel(node = c(321), label = "Senecioneae", offset = 3.5, color = brewer.pal(10, "Set3")[2]) +
@@ -405,17 +399,17 @@ ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
   # geom_cladelabel(node = c(351), label = "Cichorieae", offset = 3.5, color = brewer.pal(10, "Set3")[8]) +
   # geom_cladelabel(node = c(424), label = "Cardueae", offset = 3.5, color = brewer.pal(10, "Set3")[9]) +
   ### Tribe labels on MRCA node
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1.1, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1.1, nudge_y = 2.5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1.1, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 2.75, nudge_y = -2.5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1.1, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1.1, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_y = -5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1.1, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1.1, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1.1, nudge_y = 5) +
-  geom_tippoint(aes(color = Repr_mode_summ, x = x + .1), size = .3, hjust = 0.025) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1.1, nudge_y = 2.5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 2.75, nudge_y = -2.5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_y = -5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1.1, nudge_y = 5) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1.1, nudge_y = 5) +
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + .0075), size = .3) +
   scale_color_manual(values = c("black", "orange", "red")) +
   # ### Adding points for discretized variables Altitude and Ploidy
   # geom_tippoint(aes(color = Ploidy, x = x + .3), size = .3) +
@@ -424,12 +418,13 @@ ggJanTree5 <- ggtree(JanTree5) %<+% DATA_red_ggtree +
   # scale_color_manual(values = brewer.pal(11, "PuOr")) +
   # ggplot2::xlim(0, 42.5) +
   # theme_tree2()
-  geom_treescale(x = 2.5, y = -.5, offset = 1.5, fontsize = 3) +
+  geom_treescale(x = 0, y = 0, offset = 0, fontsize = 3) +
   theme(legend.position = c(0.15,.85)) +
   guides(colour = guide_legend(override.aes = list(size = 3)))
 
-ggJanTree5
-ggsave(filename = "ggJanTree5.png", device = "png", dpi = 300)
+ggJanTree4
+
+ggsave(filename = "ggJanTree4.png", device = "png", dpi = 300)
 
 ### Plotting traits on tree
 sum(is.na(DATA_red_ggtree$Altitude)) # no missing values
@@ -467,49 +462,49 @@ ggplot(DATA_red_ggtree, aes(y = SpeciesName, x = GS, fill = Ploidy)) +
   geom_barh(stat = "identity") + scale_colour_brewer(palette = "Dark2") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 3), legend.position = "bottom")
 
-### IN DEBUGGING: Adding facetplot, one bargraph of continuous variable, no colour
-### The issue here is that the scale for the plots is not correctly estimated, and cuts off most datapoints
-### Moreover, xlim_tree and xlim_expand don't seem to work... 
-# ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree,
+# ### IN DEBUGGING: Adding facetplot, one bargraph of continuous variable, no colour
+# ### The issue here is that the scale for the plots is not correctly estimated, and cuts off most datapoints
+# ### Moreover, xlim_tree and xlim_expand don't seem to work... 
+# ggJanTree4_panel <- facet_plot(ggJanTree4, panel = 'Altitude', data = DATA_red_ggtree,
 #                                geom = geom_segment, # geom_segment variant is more complicated
 #                                mapping = aes(x = 0, xend = DATA_red_ggtree$Altitude, y = y, yend = y),
 #                                stat = "identity", size = .5) + xlim_expand(c(0,3000), panel = "Altitude")
-# ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2()
+# ggJanTree4_panel + theme(legend.position = "bottom") + theme_tree2()
+# 
+# ggJanTree4_panel <- facet_plot(ggJanTree4, panel = 'Altitude', data = DATA_red_ggtree,
+#                                geom = geom_barh, # geom_barh variant is straightforward
+#                                mapping = aes(x = DATA_red_ggtree$Altitude),
+#                                stat = "identity", size = .5)
+# ggJanTree4_panel + theme(legend.position = "bottom") + theme_tree2() + xlim_expand(c(0,3000), panel = 'Altitude')
+# 
+# ggJanTree4_panel2 <- facet_plot(ggJanTree4, panel = 'GS', data = DATA_red_ggtree,
+#                                 geom = geom_barh,
+#                                 aes(x =DATA_red_ggtree$GS),
+#                                 stat = "identity", size = .5)
+# ggJanTree4_panel2 + theme(legend.position = "bottom") + theme_tree2()
+# 
+# ggJanTree4_panel_facet2 <- facet_widths(ggJanTree4_panel2, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree4_panel_facet2 + theme(legend.position = "bottom")
 
-ggJanTree5_panel <- facet_plot(ggJanTree5, panel = 'Altitude', data = DATA_red_ggtree,
-                               geom = geom_barh, # geom_barh variant is straightforward
-                               mapping = aes(x = DATA_red_ggtree$Altitude),
-                               stat = "identity", size = .5)
-ggJanTree5_panel + theme(legend.position = "bottom") + theme_tree2() + xlim_expand(c(0,3000), panel = 'Altitude')
-
-ggJanTree5_panel2 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree,
-                                geom = geom_barh, 
-                                aes(x =DATA_red_ggtree$GS), 
-                                stat = "identity", size = .5)
-ggJanTree5_panel2 + theme(legend.position = "bottom") + theme_tree2()
-
-ggJanTree5_panel_facet2 <- facet_widths(ggJanTree5_panel2, 8) # this applies the multiplier to the first facet of the specified object
-ggJanTree5_panel_facet2 + theme(legend.position = "bottom")
-
-### IN DEBUGGING: Coloured by categories, using geom_barh
-### Complains about discrete value supplied to continuous scale? 
-ggJanTree5_panel_colours <- facet_plot(ggJanTree5_panel_colours, panel = 'Altitude', data = DATA_red_ggtree,
-                                       geom = geom_barh, 
-                                       mapping = aes(x = DATA_red_ggtree$Altitude, fill = DATA_red_ggtree$Altitude),
-                                       stat = "identity", size = .5) + 
-  scale_color_continuous(low = "darkgreen", high = "saddlebrown") 
-ggJanTree5_panel_colours + theme_tree2() + theme(legend.position = "bottom")
-
-ggJanTree5_panel_colours2 <- facet_plot(ggJanTree5, panel = 'GS', data = DATA_red_ggtree,
-                                        geom = geom_barh, mapping = aes(x = DATA_red_ggtree$GS, fill = DATA_red_ggtree$Ploidy),
-                                        stat = "identity", size = 1) + scale_fill_brewer(palette = "Dark2") +
-  theme_tree2() + theme(legend.position = "bottom")
-ggJanTree5_panel_colours2
-
-ggJanTree5_panel_facet_ploidycolours <- facet_widths(ggJanTree5_panel_colours, 8) # this applies the multiplier to the first facet of the specified object
-ggJanTree5_panel_facet_ploidycolours + theme(legend.position = "bottom")
-ggJanTree5_panel_facet_ploidycolours2 <- facet_widths(ggJanTree5_panel_colours2, 8) # this applies the multiplier to the first facet of the specified object
-ggJanTree5_panel_facet_ploidycolours2 + theme(legend.position = "bottom")
+# ### IN DEBUGGING: Coloured by categories, using geom_barh
+# ### Complains about discrete value supplied to continuous scale?
+# ggJanTree4_panel_colours <- facet_plot(ggJanTree4_panel_colours, panel = 'Altitude', data = DATA_red_ggtree,
+#                                        geom = geom_barh, 
+#                                        mapping = aes(x = DATA_red_ggtree$Altitude, fill = DATA_red_ggtree$Altitude),
+#                                        stat = "identity", size = .5) + 
+#   scale_color_continuous(low = "darkgreen", high = "saddlebrown") 
+# ggJanTree4_panel_colours + theme_tree2() + theme(legend.position = "bottom")
+# 
+# ggJanTree4_panel_colours2 <- facet_plot(ggJanTree4, panel = 'GS', data = DATA_red_ggtree,
+#                                         geom = geom_barh, mapping = aes(x = DATA_red_ggtree$GS, fill = DATA_red_ggtree$Ploidy),
+#                                         stat = "identity", size = 1) + scale_fill_brewer(palette = "Dark2") +
+#   theme_tree2() + theme(legend.position = "bottom")
+# ggJanTree4_panel_colours2
+# 
+# ggJanTree4_panel_facet_ploidycolours <- facet_widths(ggJanTree4_panel_colours, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree4_panel_facet_ploidycolours + theme(legend.position = "bottom")
+# ggJanTree4_panel_facet_ploidycolours2 <- facet_widths(ggJanTree4_panel_colours2, 8) # this applies the multiplier to the first facet of the specified object
+# ggJanTree4_panel_facet_ploidycolours2 + theme(legend.position = "bottom")
 
 
 
@@ -517,45 +512,55 @@ ggJanTree5_panel_facet_ploidycolours2 + theme(legend.position = "bottom")
 library(ape)
 library(ggplot2)
 library(ggtree)
-# library(treeio)
-# library(ggplotify)
 library(RColorBrewer)
 
-ggJanTree5_circular <- ggtree(JanTree5, layout = "circular") %<+% DATA_red_ggtree +
-  geom_tiplab2(size = 1.5, offset = 2) +
-  geom_hilight(mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
-  geom_hilight(mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
-  geom_hilight(mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
-  geom_hilight(mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
-  geom_hilight(mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
-  geom_hilight(mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
-  geom_hilight(mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
-  geom_hilight(mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
-  geom_hilight(mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
-  geom_hilight(mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
-  geom_tippoint(aes(color = Repr_mode_summ, x = x + 1), size = .5) +
+ggJanTree4_circular <- ggtree(JanTree4_CC, layout = "circular") %<+% DATA_red_ggtree +
+  geom_tiplab2(size = 1.5, offset = 0.1) +
+  geom_hilight(mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + .05), size = .5) +
   # scale_color_manual(values = c("red", "black", "orange")) +
   # scale_colour_brewer(palette = "Set1") +
   scale_colour_manual(values = c(brewer.pal(name = "Set1", 3)[2],
                                brewer.pal(name = "Set1", 3)[3],
                                brewer.pal(name = "Set1", 3)[1])) +
+  # ### Tribe labels on MRCA nodes
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -2.5, nudge_y = 10) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 0, nudge_y = 10) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = .5, nudge_x = -2.5, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -6, nudge_y = 20) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_x = 0, nudge_y = -5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -4, nudge_y = 9) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -2.5, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -1, nudge_y = 3) +
   ### Tribe labels on MRCA nodes
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -2.5, nudge_y = 10) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 0, nudge_y = 10) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = .5, nudge_x = -2.5, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -6, nudge_y = 20) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_x = 0, nudge_y = -5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -4, nudge_y = 9) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -2.5, nudge_y = 5) +
-  geom_text2(aes(subset = node %in% mrca(JanTree5)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -1, nudge_y = 3) +
-  # geom_treescale(x = 5, y = 0, offset = 1.5, fontsize = 3) +
-  theme(legend.position = c(-.2,0.1)) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 1, nudge_y = -0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = 1, nudge_x = 0, nudge_y = -0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -0, nudge_y = 0) +  
+  geom_treescale(x = 1, y = 0, offset = 0, fontsize = 3) +
+  theme(legend.position = c(0.1,0.1)) +
   guides(colour = guide_legend(override.aes = list(size = 3)))
 
-ggJanTree5_circular
-ggsave(ggJanTree5_circular, filename = "ggJanTree5_circular.png", 
+ggJanTree4_circular
+
+ggsave(ggJanTree4_circular, filename = "ggJanTree4_circular.png", 
        device = "png", dpi = 300, scale = 1.5)
 
 
@@ -799,21 +804,22 @@ summary(glm1.2)
 plot(glm1.2)
 
 ### Using only an apomictic clade, Hieracium + Pilosella: 
-caper::clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T)
-with(DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], table(Repr_mode))
+library(caper)
+clade.members(mrca(JanTree4_CC)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T)
+with(DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ], table(Repr_mode))
 
 glm2 <- glm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
-            data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4, tip.labels = T), ], 
+            data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ], 
             family = "binomial") # too few datapoints probably...  
 summary(glm2)
 plot(glm2)
 
 ### Using only an apomictic clade, extended: Cichorieae tribe
-caper::clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T)
-with(DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], table(Repr_mode))
+clade.members(mrca(JanTree4_CC)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4_CC, tip.labels = T)
+with(DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4_CC, tip.labels = T), ], table(Repr_mode))
 
 glm3 <- glm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months,
-            data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4, tip.labels = T), ], 
+            data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4_CC, tip.labels = T), ], 
             family = "binomial")
 summary(glm3)
 plot(glm3)
@@ -848,80 +854,80 @@ JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0]
 
 ##### Binomial (categorical) distribution - weak priors #####
 library(MCMCglmm)
-### Set prior(s)
-# prior <- list(R = list(V = 1, nu = 0.002)) # Maite's prior, weak
-# prior <- list(R = list(V = 1, nu = 0.002, fix = 1))
-# prior <- list(R = list(V = 1, nu = 0.002),
-#               G = list(G1 = list(V = 1, nu = 0.002))
-#               )
-# a = 1000
-# prior <- list(R = list(V = diag(3), nu = 0.002),
-#               G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a))) # strong prior
-# prior <- list(R = list(V = diag(3), nu = 0.002),
-#                G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
-#                         G2 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
-#                         G3 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a)))
-# prior = list(R = list(V = diag(2), fix = 1),
-#              G = list(G1 = list(V = diag(2), nu = 1, alpha.mu = c(0, 0), alpha.V = diag(2) * 100))
-#              )
-# prior <- list(V = diag(2), nu = 2, alpha.mu = c(0,0), alpha.V = diag(2)*a)
-# prior <- list(R = list(fix = 1, V = diag(2), nu = 0.002),
-#               B = list(mu = rep(0, 5), V = diag(5)*1e4))
-prior <- list(R = list(V = diag(2), nu = 2))
-
-### Run models
-set.seed(111)
-mBin1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
-                  pedigree = JanTree4_CC, verbose = T, data = MCMC_DATA_CC_mean_red,
-                  family = "categorical", rcov = ~us(trait):units,
-                  prior = prior, nitt = 10^6, thin = 1000, burnin = 25000)
-summary(mBin1)
-plot(mBin1)
-
-set.seed(111)
-mBin1_noGS <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months,
-                       pedigree = JanTree4_CC, verbose = T, data = MCMC_DATA_CC_mean_red,
-                       family = "categorical", rcov = ~us(trait):units,
-                       prior = prior, nitt = 10^6, thin = 1000, burnin = 25000)
-summary(mBin1_noGS)
-plot(mBin1_noGS)
-
-mBin1_evenodd <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + PloidyEvenOdd + GS + Init.month + Tot.months, 
-                          pedigree = JanTree4_CC, verbose = T, data = MCMC_DATA_CC_mean_red,
-                          family = "categorical", rcov = ~us(trait):units, 
-                          prior = prior, nitt = 10^6, thin = 1000, burnin = 25000)
-summary(mBin1_evenodd)
-plot(mBin1_evenodd)
-
-### Ideally, eff. samp should be close to the sample size given, if there's a big difference the model is not sampling properly (ie: results are invalid)
-plot(mBin1$VCV) # If you can see one particularly high peak at the start, increase burnin parameter so that sampling will start after trace has evened out
-plot(mBin1$Sol) # Want traces to be relatively even and compacted, resembling an "hairy caterpillar"
-
-mean(mBin1$Sol[,"elevation_Ozenda"]) # this gives the coefficient printed by summary(mBin1)
-
-### Odds ratio, or the increase (or decrease) in the chance of apomixis per unit increase in elevation
-mean(exp(mBin1$Sol[,"elevation_Ozenda"]))
-mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))
-mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))
-mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))
-mean(exp(mBin1$Sol[,"GS"]))
-mean(exp(mBin1$Sol[,"Init.month"]))
-mean(exp(mBin1$Sol[,"Tot.months"]))
-
-### % change in the chance of being sexual per unit of elevation
-(mean(exp(mBin1$Sol[,"elevaion_Ozenda"]))-1)*100 
-(mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))-1)*100
-(mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))-1)*100
-(mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))-1)*100
-(mean(exp(mBin1$Sol[,"GS"]))-1)*100
-(mean(exp(mBin1$Sol[,"Init.month"]))-1)*100
-(mean(exp(mBin1$Sol[,"Tot.months"]))-1)*100
-
-mean(exp(mBin1$Sol[,"elevaion_Ozenda"]))/(1+mean(exp(mBin1$Sol[,"elevaion_Ozenda"]))) # probability of being sexual having elevation at its mean (?)
-mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))) # probability of being sexual being 3x
-mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))) # probability of being sexual being 4x
-mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))/(1+mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))) # probability of being sexual being 4x
-mean(exp(mBin1$Sol[,"Init.month"]))/(1+mean(exp(mBin1$Sol[,"Init.month"]))) # probability of being sexual having Init.month at its mean (?)
+# ### Set prior(s)
+# # prior <- list(R = list(V = 1, nu = 0.002)) # Maite's prior, weak
+# # prior <- list(R = list(V = 1, nu = 0.002, fix = 1))
+# # prior <- list(R = list(V = 1, nu = 0.002),
+# #               G = list(G1 = list(V = 1, nu = 0.002))
+# #               )
+# # a = 1000
+# # prior <- list(R = list(V = diag(3), nu = 0.002),
+# #               G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a))) # strong prior
+# # prior <- list(R = list(V = diag(3), nu = 0.002),
+# #                G = list(G1 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
+# #                         G2 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a),
+# #                         G3 = list(V = diag(3), nu = 1, alpha.mu = 0, alpha.V = diag(3)*a)))
+# # prior = list(R = list(V = diag(2), fix = 1),
+# #              G = list(G1 = list(V = diag(2), nu = 1, alpha.mu = c(0, 0), alpha.V = diag(2) * 100))
+# #              )
+# # prior <- list(V = diag(2), nu = 2, alpha.mu = c(0,0), alpha.V = diag(2)*a)
+# # prior <- list(R = list(fix = 1, V = diag(2), nu = 0.002),
+# #               B = list(mu = rep(0, 5), V = diag(5)*1e4))
+# prior <- list(R = list(V = diag(2), nu = 2))
+# 
+# ### Run models
+# set.seed(111)
+# mBin1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
+#                   pedigree = JanTree4_CC, verbose = T, data = MCMC_DATA_CC_mean_red,
+#                   family = "categorical", rcov = ~us(trait):units,
+#                   prior = prior, nitt = 10^6, thin = 1000, burnin = 25000)
+# summary(mBin1)
+# plot(mBin1)
+# 
+# set.seed(111)
+# mBin1_noGS <- MCMCglmm(Repr_mode_summ ~ Altitude + Ploidy + Init.month + Tot.months,
+#                        pedigree = JanTree4_CC, verbose = T, data = MCMC_DATA_CC_mean_red,
+#                        family = "categorical", rcov = ~us(trait):units,
+#                        prior = prior, nitt = 10^6, thin = 1000, burnin = 25000)
+# summary(mBin1_noGS)
+# plot(mBin1_noGS)
+# 
+# mBin1_evenodd <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + PloidyEvenOdd + GS + Init.month + Tot.months, 
+#                           pedigree = JanTree4_CC, verbose = T, data = MCMC_DATA_CC_mean_red,
+#                           family = "categorical", rcov = ~us(trait):units, 
+#                           prior = prior, nitt = 10^6, thin = 1000, burnin = 25000)
+# summary(mBin1_evenodd)
+# plot(mBin1_evenodd)
+# 
+# ### Ideally, eff. samp should be close to the sample size given, if there's a big difference the model is not sampling properly (ie: results are invalid)
+# plot(mBin1$VCV) # If you can see one particularly high peak at the start, increase burnin parameter so that sampling will start after trace has evened out
+# plot(mBin1$Sol) # Want traces to be relatively even and compacted, resembling an "hairy caterpillar"
+# 
+# mean(mBin1$Sol[,"elevation_Ozenda"]) # this gives the coefficient printed by summary(mBin1)
+# 
+# ### Odds ratio, or the increase (or decrease) in the chance of apomixis per unit increase in elevation
+# mean(exp(mBin1$Sol[,"elevation_Ozenda"]))
+# mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))
+# mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))
+# mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))
+# mean(exp(mBin1$Sol[,"GS"]))
+# mean(exp(mBin1$Sol[,"Init.month"]))
+# mean(exp(mBin1$Sol[,"Tot.months"]))
+# 
+# ### % change in the chance of being sexual per unit of elevation
+# (mean(exp(mBin1$Sol[,"elevaion_Ozenda"]))-1)*100 
+# (mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))-1)*100
+# (mean(exp(mBin1$Sol[,"GS"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Init.month"]))-1)*100
+# (mean(exp(mBin1$Sol[,"Tot.months"]))-1)*100
+# 
+# mean(exp(mBin1$Sol[,"elevaion_Ozenda"]))/(1+mean(exp(mBin1$Sol[,"elevaion_Ozenda"]))) # probability of being sexual having elevation at its mean (?)
+# mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy_summ3x"]))) # probability of being sexual being 3x
+# mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))/(1+mean(exp(mBin1$Sol[,"Ploidy_summ4x"]))) # probability of being sexual being 4x
+# mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))/(1+mean(exp(mBin1$Sol[,"Ploidy_summPoly"]))) # probability of being sexual being 4x
+# mean(exp(mBin1$Sol[,"Init.month"]))/(1+mean(exp(mBin1$Sol[,"Init.month"]))) # probability of being sexual having Init.month at its mean (?)
 
 
 
@@ -932,116 +938,116 @@ library(MCMCglmm)
 MCMC_DATA_CC_mean_red$Repr_mode # 2 levels
 MCMC_DATA_CC_mean_red$Repr_mode_summ # 3 levels
 
-### No phylogeny included
-mThre1_noPhy <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
-                         verbose = T, data = MCMC_DATA_CC_mean_red,
-                         family = "threshold",
-                         trunc = T,
-                         prior = list(R = list(V = 1, fix = 1)), 
-                         nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1_noPhy)
-plot(mThre1_noPhy)
-
-### Phylogeny black magic...
-invJanTree4_CC <- inverseA(JanTree4_CC, nodes = "ALL", scale = TRUE) # ALL is better for large phylogenies
-invJanTree4_CC_tips <- inverseA(JanTree4_CC, nodes = "TIPS", scale = TRUE)
-
-### Set prior(s)
-prior_nu1000_1 <- list(R = list(V = 1, fix = 1),
-                       G = list(G1 = list(V = 1, nu = 1000, alpha.mu = 0, alpha.V = 1))
-                       )
-
-set.seed(111)
-mThre1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
-                  ginverse = list(animal = invJanTree4_CC_tips$Ainv),
-                  random = ~animal,
-                  verbose = T,
-                  data = MCMC_DATA_CC_mean_red,
-                  family = "threshold",
-                  trunc = T,
-                  prior = prior_nu1000_1,
-                  nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1)
-plot(mThre1)
-
-heidel.diag(mThre1$VCV)
-heidel.diag(mThre1$Sol)
-geweke.plot(mThre1$Sol)
-autocorr.diag(mThre1$Sol)
-
-### Repr_mode with only 2 levels
-mThre1.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
-                    ginverse = list(animal = invJanTree4_CC_tips$Ainv),
-                    random = ~animal,
-                    verbose = T,
-                    data = MCMC_DATA_CC_mean_red,
-                    family = "threshold",
-                    trunc = T,
-                    prior = prior_nu1000_1,
-                    nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre1.1)
-plot(mThre1.1)
-
-heidel.diag(mThre1.1$VCV)
-heidel.diag(mThre1.1$Sol)
-geweke.plot(mThre1.1$Sol)
-autocorr.diag(mThre1.1$Sol)
-
-### Different prior(s)
-library(MCMCglmm)
-prior_G.V1000_nu.0002_1 <- list(R = list(V = 1000, fix = 1000),
-                                G = list(G1 = list(V = 1000, nu = 200, alpha.mu = 1000, alpha.V = 10000))
-                                )
-
-set.seed(111)
-mThre4 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
-                  ginverse = list(animal = invJanTree4_CC_tips$Ainv),
-                  random = ~animal,
-                  verbose = T,
-                  data = MCMC_DATA_CC_mean_red,
-                  family = "threshold",
-                  trunc = T,
-                  prior = prior_nu.0002_1,
-                  nitt = 10^6, thin = 500, burnin = 25000)
-summary(mThre4)
-plot(mThre4)
+# ### No phylogeny included
+# mThre1_noPhy <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
+#                          verbose = T, data = MCMC_DATA_CC_mean_red,
+#                          family = "threshold",
+#                          trunc = T,
+#                          prior = list(R = list(V = 1, fix = 1)), 
+#                          nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mThre1_noPhy)
+# plot(mThre1_noPhy)
+# 
+# ### Phylogeny black magic...
+# invJanTree4_CC <- inverseA(JanTree4_CC, nodes = "ALL", scale = TRUE) # ALL is better for large phylogenies
+# invJanTree4_CC_tips <- inverseA(JanTree4_CC, nodes = "TIPS", scale = TRUE)
+# 
+# ### Set prior(s)
+# prior_nu1000_1 <- list(R = list(V = 1, fix = 1),
+#                        G = list(G1 = list(V = 1, nu = 1000, alpha.mu = 0, alpha.V = 1))
+#                        )
+# 
+# set.seed(111)
+# mThre1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
+#                   ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+#                   random = ~animal,
+#                   verbose = T,
+#                   data = MCMC_DATA_CC_mean_red,
+#                   family = "threshold",
+#                   trunc = T,
+#                   prior = prior_nu1000_1,
+#                   nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mThre1)
+# plot(mThre1)
+# 
+# heidel.diag(mThre1$VCV)
+# heidel.diag(mThre1$Sol)
+# geweke.plot(mThre1$Sol)
+# autocorr.diag(mThre1$Sol)
+# 
+# ### Repr_mode with only 2 levels
+# mThre1.1 <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
+#                     ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+#                     random = ~animal,
+#                     verbose = T,
+#                     data = MCMC_DATA_CC_mean_red,
+#                     family = "threshold",
+#                     trunc = T,
+#                     prior = prior_nu1000_1,
+#                     nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mThre1.1)
+# plot(mThre1.1)
+# 
+# heidel.diag(mThre1.1$VCV)
+# heidel.diag(mThre1.1$Sol)
+# geweke.plot(mThre1.1$Sol)
+# autocorr.diag(mThre1.1$Sol)
+# 
+# ### Different prior(s)
+# library(MCMCglmm)
+# prior_G.V1000_nu.0002_1 <- list(R = list(V = 1000, fix = 1000),
+#                                 G = list(G1 = list(V = 1000, nu = 200, alpha.mu = 1000, alpha.V = 10000))
+#                                 )
+# 
+# set.seed(111)
+# mThre4 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + GS + Init.month + Tot.months,
+#                   ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+#                   random = ~animal,
+#                   verbose = T,
+#                   data = MCMC_DATA_CC_mean_red,
+#                   family = "threshold",
+#                   trunc = T,
+#                   prior = prior_nu.0002_1,
+#                   nitt = 10^6, thin = 500, burnin = 25000)
+# summary(mThre4)
+# plot(mThre4)
 
 
 
 ##### MCMCglmm on subsets of species, no phylogeny included #####
 library(MCMCglmm)
 library(caper)
-mHieraciumSS <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
-                         data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
-                         family = "threshold", trunc = T,
-                         prior = list(R = list(V = diag(1), nu = 2)),
-                         nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-)
-summary(mHieraciumSS)
-plot(mHieraciumSS)
+# mHieraciumSS <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+#                          data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Hieracium_froelichianum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
+#                          family = "threshold", trunc = T,
+#                          prior = list(R = list(V = diag(1), nu = 2)),
+#                          nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+# )
+# summary(mHieraciumSS)
+# plot(mHieraciumSS)
+# 
+# mHieracium <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+#                        data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
+#                        family = "threshold", trunc = T,
+#                        prior = list(R = list(V = diag(1), nu = 2)),
+#                        nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+# )
+# summary(mHieracium)
+# plot(mHieracium)
+# 
+# mCichorieae <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
+#                         data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4_CC, tip.labels = T), ],
+#                         family = "threshold", trunc = T,
+#                         prior = list(R = list(V = diag(1), nu = 2)),
+#                         nitt = 10^6, thin = 500, burnin = 2500, verbose = T
+# )
+# summary(mCichorieae)
+# plot(mCichorieae)
+# ### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
-mHieracium <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
-                       data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Pilosella_officinarum", "Hieracium_tomentosum"], JanTree4_CC, tip.labels = T), ],
-                       family = "threshold", trunc = T,
-                       prior = list(R = list(V = diag(1), nu = 2)),
-                       nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-)
-summary(mHieracium)
-plot(mHieracium)
-
-mCichorieae <- MCMCglmm(Repr_mode ~ Altitude + Ploidy + Init.month + Tot.months,
-                        data = DATA_CC_mean_red[DATA_CC_mean_red$SpeciesName %in% clade.members(mrca(JanTree4_CC)["Tolpis_staticifolia", "Crepis_pygmaea"], JanTree4_CC, tip.labels = T), ],
-                        family = "threshold", trunc = T,
-                        prior = list(R = list(V = diag(1), nu = 2)),
-                        nitt = 10^6, thin = 500, burnin = 2500, verbose = T
-)
-summary(mCichorieae)
-plot(mCichorieae)
-### There's no evidence that apomictic species flower earlier in the year than sexual ones. Not even in subsets of species with high proportions of apomicts.
 
 
-
-##### Phylosig #####
+##### Phylosig: extended dataset #####
 ### phylosig takes a named numerical vector as input; use SetNames
 library(phytools)
 DATA_CC_mean_red
@@ -1051,27 +1057,55 @@ rownames(DATA_CC_mean_red)
 geiger::name.check(JanTree4_CC, DATA_CC_mean_red)
 
 i = 5
-K_lambda_table <- data.frame("Variable" = character(),
+K_lambda_table_ext <- data.frame("Variable" = character(),
                              "K" = double(), "p_K" = double(), "p_k-stars" = character(),
                              "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
                              stringsAsFactors = F)
 while (i %in% 5:ncol(DATA_CC_mean_red)) {
   obj1 <- phylosig(tree = JanTree4_CC, x = setNames(as.numeric(unlist(DATA_CC_mean_red[,i])), rownames(DATA_CC_mean_red)), method = "K", test = T)
   obj2 <- phylosig(tree = JanTree4_CC, x = setNames(as.numeric(unlist(DATA_CC_mean_red[,i])), rownames(DATA_CC_mean_red)), method = "lambda", test = T)
-  K_lambda_table[i-4,] <- cbind(colnames(DATA_CC_mean_red[i]),
+  K_lambda_table_ext[i-4,] <- cbind(colnames(DATA_CC_mean_red[i]),
                                 obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
                                 obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
   )
   i = i + 1
 }
-K_lambda_table
+K_lambda_table_ext
 
 ### lambda tells about the distribution of the traits in relation to evolution by brownian motion;
 ### lambda close to 0: completely uncorrelated species; lambda close to 1: brownian motion
 ### K tells about the ripartition of variance between clades;
 ### K < 1: variance mainly within clades; K > 1: variance mainly among clades.
 
-write.csv(K_lambda_table, file = "Phylosig_K_lambda_table.csv")
+write.csv(K_lambda_table_ext, file = "Phylosig_K_lambda_table_extended.csv")
+
+
+
+##### Phylosig: strictly alpine dataset #####
+library(phytools)
+DATA_StrictlyAlps_mean_red
+str(DATA_StrictlyAlps_mean_red)
+colnames(DATA_StrictlyAlps_mean_red)
+rownames(DATA_StrictlyAlps_mean_red)
+geiger::name.check(JanTree4_StrictlyAlps, DATA_StrictlyAlps_mean_red)
+
+i = 5
+K_Lambda_table_strictlyAlps <- data.frame("Variable" = character(),
+                             "K" = double(), "p_K" = double(), "p_k-stars" = character(),
+                             "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
+                             stringsAsFactors = F)
+while (i %in% 5:ncol(DATA_StrictlyAlps_mean_red)) {
+  obj1 <- phylosig(tree = JanTree4_StrictlyAlps, x = setNames(as.numeric(unlist(DATA_StrictlyAlps_mean_red[,i])), rownames(DATA_StrictlyAlps_mean_red)), method = "K", test = T)
+  obj2 <- phylosig(tree = JanTree4_StrictlyAlps, x = setNames(as.numeric(unlist(DATA_StrictlyAlps_mean_red[,i])), rownames(DATA_StrictlyAlps_mean_red)), method = "lambda", test = T)
+  K_Lambda_table_strictlyAlps[i-4,] <- cbind(colnames(DATA_StrictlyAlps_mean_red[i]),
+                                obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
+                                obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
+  )
+  i = i + 1
+}
+K_Lambda_table_strictlyAlps
+
+write.csv(K_Lambda_table_strictlyAlps, file = "Phylosig_K_lambda_table_strictlyAlps.csv")
 
 
 

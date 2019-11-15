@@ -810,7 +810,7 @@ is.ultrametric(JanTree4_CC)
 is.binary(JanTree4_CC)
 JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0]
 
-ape::write.tree(JanTree4_CC, file = "JanTree4_CC.tree")
+ape::write.tree(JanTree4_CC, file = "JanTree4_CC.tre")
 
 
 
