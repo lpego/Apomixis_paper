@@ -187,416 +187,18 @@ setdiff(unique(vapply(strsplit(as.character(supptable), '(?<=[a-z])\\s(?=[a-z])'
 
 
 
-##### Phylosig - ALL accessions ##### 
 
-### All Accessions: prepare data
-data_lambda_k <- read.csv(file = "DATA_CC_red.csv", header = T)
-colnames(data_lambda_k)
-colnames(data_lambda_k)[3] <- "animal"
-
-### Make sure factor levels are correct
-data_lambda_k$Repr_mode_summ <- factor(data_lambda_k$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-data_lambda_k$Repr_mode_summ # 3 levels
-data_lambda_k$Repr_mode <- gsub('Mixed', 'Apomictic', data_lambda_k$Repr_mode_summ)
-data_lambda_k$Repr_mode <- factor(data_lambda_k$Repr_mode, levels = c("Sexual", "Apomictic"))
-data_lambda_k$Repr_mode # 2 levels
-data_lambda_k$Ploidy <- factor(data_lambda_k$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-data_lambda_k$Ploidy
-table(data_lambda_k$Ploidy)
-
-data_lambda_k$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_lambda_k$Ploidy)
-data_lambda_k$Ploidy_summ <- factor(data_lambda_k$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
-table(data_lambda_k$Ploidy_summ)
-
-str(data_lambda_k[, "GS"])
-class(data_lambda_k$GS)
-
-str(data_lambda_k)
-nrow(data_lambda_k)
-ncol(data_lambda_k)
-
-### Grab data from similar species to fill missing values
-data_lambda_k[data_lambda_k$animal == "Hieracium_valdepilosum", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 11:31]
-data_lambda_k[data_lambda_k$animal == "Hieracium_glaucopsis", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 11:31]
-data_lambda_k[data_lambda_k$animal == "Hieracium_cydoniifolium", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 11:31]
-data_lambda_k[data_lambda_k$animal == "Hieracium_ramosissimums_subsp._lactucifolium", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_amplexicaule", 11:31]
-data_lambda_k[data_lambda_k$animal == "Schlagintweitia_huteri_subsp._lantoscana", 11:31] <- data_lambda_k[data_lambda_k$animal == "Schlagintweitia_intybacea", 11:31]
-# data_lambda_k[data_lambda_k$animal == "Aremisia_nitida", 11:31] <- data_lambda_k[data_lambda_k$animal == "Artemisia_glacialis", 11:31] # doesn't have altitude in any case
-data_lambda_k[data_lambda_k$animal == "Sonchus_tenerrimus", 11:31] <- data_lambda_k[data_lambda_k$animal == "Sonchus_oleraceus", 11:31]
-data_lambda_k[data_lambda_k$animal == "Calendula_tripterocarpa", 11:31] <- data_lambda_k[data_lambda_k$animal == "Calendula_arvensis", 11:31]
-
-### Add elevation data calculated from Ozenda (1985)
-elevation_Ozenda <- data_lambda_k[, c(3, 15:19)]
-nrow(elevation_Ozenda)
-colnames(elevation_Ozenda)
-elevation_Ozenda$sum <- rowSums(elevation_Ozenda[, 2:6])
-elevation_Ozenda[, 2] <- elevation_Ozenda[, 2]*350 # collineen
-elevation_Ozenda[, 3] <- elevation_Ozenda[, 3]*1050 # montagnard
-elevation_Ozenda[, 4] <- elevation_Ozenda[, 4]*1750 # subalpin
-elevation_Ozenda[, 5] <- elevation_Ozenda[, 5]*2450 # alpin
-elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
-
-elevation_Ozenda$avg <- sapply(1:nrow(elevation_Ozenda), function(x) sum(elevation_Ozenda[x,2:6])/elevation_Ozenda[x,"sum"])
-
-(data_lambda_k$animal == elevation_Ozenda$animal) # are they in the same order still? 
-data_lambda_k$elevation <- elevation_Ozenda$avg
-
-colnames(data_lambda_k[, c(3,5,7:8,20:21,32,33,34)]) # columns necessary for analysis
-data_lambda_k[!complete.cases(data_lambda_k[,c(3,5,7:8,20:21,32,33,34)]), ]
-data_lambda_k <- data_lambda_k[complete.cases(data_lambda_k[,c(3,5,7:8,20:21,32,33,34)]), ]
-complete.cases(data_lambda_k[,c(3,5,7:8,20:21,32,33,34)])
-nrow(data_lambda_k)
-
-### Load the tree 
-library(ape)
-JanTree4_red <- read.tree(file = "JanTree4.tre")
-
-setdiff(JanTree4_red$tip.label, data_lambda_k$animal)
-setdiff(data_lambda_k$animal, JanTree4_red$tip.label)
-
-JanTree4_red <- drop.tip(JanTree4_red, setdiff(JanTree4_red$tip.label, data_lambda_k$animal))
-setdiff(JanTree4_red$tip.label, data_lambda_k$animal)
-setdiff(data_lambda_k$animal, JanTree4_red$tip.label)
-
-is.binary(JanTree4_red)
-JanTree4_red <- multi2di(JanTree4_red, tol = 1)
-is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen")
-is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-
-library(phytools)
-data_lambda_k
-class(data_lambda_k) <- "data.frame"
-str(data_lambda_k)
-colnames(data_lambda_k)
-colnames(data_lambda_k[, c(3,5,7,8,20,32,33,34)])
-data_lambda_k <- data_lambda_k[, c(3,5,7,8,20,32,33,34)]
-rownames(data_lambda_k) <- data_lambda_k$animal
-complete.cases(data_lambda_k)
-
-i = 1
-K_lambda_table <- data.frame("Variable" = character(),
-                             "K" = double(), "p_K" = double(), "p_k-stars" = character(),
-                             "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
-                             stringsAsFactors = F)
-while (i %in% 1:ncol(data_lambda_k)) {
-  obj1 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "K", test = T)
-  obj2 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "lambda", test = T)
-  K_lambda_table[i-4,] <- cbind(colnames(data_lambda_k[i]),
-                                obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
-                                obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
-  )
-  i = i + 1
-}
-K_lambda_table
-# write.csv(K_lambda_table, file = "Phylosig_K_lambda.csv")
-
-
-
-##### Phylosig - ONLY Alps ##### 
-
-### ONLY Alps: prepare data
-data_lambda_k <- read.csv(file = "DATA_StrictlyAlps_red_man_elevation_Ozenda.csv", header = T)
-data_lambda_k$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_lambda_k$Ploidy)
-colnames(data_lambda_k)[2] <- "animal"
-colnames(data_lambda_k)
-# data_lambda_k <- cbind(data_lambda_k[, -c(5, 7:8, 11:13, 14:32)], 
-#                   sapply(data_lambda_k[, c(5, 7:8, 11:13, 14:32)], as.factor)
-#                   )
-# colnames(data_lambda_k[, c(7:9, 1:6, 10:31)]) # reorder columns
-
-### Make sure factor levels are correct
-data_lambda_k$Repr_mode_summ <- factor(data_lambda_k$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-data_lambda_k$Repr_mode_summ # 3 levels
-data_lambda_k$Repr_mode <- factor(gsub('Mixed', 'Apomictic', data_lambda_k$Repr_mode), levels = c("Sexual", "Apomictic"))
-data_lambda_k$Repr_mode # 2 levels
-data_lambda_k$Ploidy <- factor(data_lambda_k$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-data_lambda_k$Ploidy
-data_lambda_k$Ploidy_summ <- gsub("6x|8x|12x", "Poly", data_lambda_k$Ploidy)
-data_lambda_k$Ploidy_summ <- factor(data_lambda_k$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
-table(data_lambda_k$Ploidy_summ)
-
-nrow(data_lambda_k)
-nrow(data_lambda_k[complete.cases(data_lambda_k),])
-nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,6,8:9,21,34:35)]), ])
-nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,6,8:9,21,34:35)]), ]) == nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,6,8:9,10,21,34:35)]), ])
-
-### Grab data from similar species to fill missing values
-data_lambda_k[data_lambda_k$animal == "Hieracium_valdepilosum", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 12:32]
-data_lambda_k[data_lambda_k$animal == "Hieracium_glaucopsis", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Hieracium_cydoniifolium", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Hieracium_ramosissimums_subsp._lactucifolium", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_amplexicaule", 12:32]
-data_lambda_k[data_lambda_k$animal == "Schlagintweitia_huteri_subsp._lantoscana", 12:32] <- data_lambda_k[data_lambda_k$animal == "Schlagintweitia_intybacea", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Aremisia_nitida", 12:32] <- data_lambda_k[data_lambda_k$animal == "Artemisia_glacialis", 12:32] # doesn't have altitude in any case
-# data_lambda_k[data_lambda_k$animal == "Sonchus_tenerrimus", 12:32] <- data_lambda_k[data_lambda_k$animal == "Sonchus_oleraceus", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Calendula_tripterocarpa", 12:32] <- data_lambda_k[data_lambda_k$animal == "Calendula_arvensis", 12:32]
-
-nrow(data_lambda_k)
-nrow(data_lambda_k[complete.cases(data_lambda_k), ])
-nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,6,8:9,21,34:35)]), ])
-data_lambda_k <- data_lambda_k[complete.cases(data_lambda_k[, c(2,6,8:9,21,34:35)]), ]
-
-### Load the tree
-library(ape)
-JanTree4_red <- read.tree(file = "JanTree4_StrictlyAlps.tre")
-
-setdiff(JanTree4_red$tip.label, data_lambda_k$animal)
-setdiff(data_lambda_k$animal, JanTree4_red$tip.label)
-JanTree4_red <- drop.tip(JanTree4_red, setdiff(JanTree4_red$tip.label, data_lambda_k$animal))
-
-is.binary(JanTree4_red)
-JanTree4_red <- multi2di(JanTree4_red, tol = 1)
-is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen")
-is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-
-### Phylosig
-library(phytools)
-data_lambda_k
-class(data_lambda_k) <- "data.frame"
-str(data_lambda_k)
-colnames(data_lambda_k)
-colnames(data_lambda_k[, c(2,6,8,9,10,21,34,35)])
-data_lambda_k <- data_lambda_k[, c(2,6,8,9,10,21,34,35)]
-rownames(data_lambda_k) <- data_lambda_k$animal
-complete.cases(data_lambda_k)
-
-i = 1
-K_lambda_table <- data.frame("Variable" = character(),
-                             "K" = double(), "p_K" = double(), "p_k-stars" = character(),
-                             "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
-                             stringsAsFactors = F)
-while (i %in% 1:ncol(data_lambda_k)) {
-  obj1 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "K", test = T)
-  obj2 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "lambda", test = T)
-  K_lambda_table[i-4,] <- cbind(colnames(data_lambda_k[i]),
-                                obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
-                                obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
-  )
-  i = i + 1
-}
-K_lambda_table
-# write.csv(K_lambda_table, file = "Phylosig_K_lambda.csv")
-
-
-### ~~~ ###
-
-##### Phylosig - ALL accessions - mean ##### 
-
-### All Accessions: prepare data
-data_lambda_k <- read.csv(file = "DATA_CC_mean_red.csv", header = T)
-colnames(data_lambda_k)
-colnames(data_lambda_k)[3] <- "animal"
-
-### Make sure factor levels are correct
-data_lambda_k$Repr_mode_summ <- factor(data_lambda_k$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-data_lambda_k$Repr_mode_summ # 3 levels
-data_lambda_k$Repr_mode <- gsub('Mixed', 'Apomictic', data_lambda_k$Repr_mode_summ)
-data_lambda_k$Repr_mode <- factor(data_lambda_k$Repr_mode, levels = c("Sexual", "Apomictic"))
-data_lambda_k$Repr_mode # 2 levels
-data_lambda_k$Ploidy <- factor(data_lambda_k$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-data_lambda_k$Ploidy
-table(data_lambda_k$Ploidy)
-
-data_lambda_k$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_lambda_k$Ploidy)
-data_lambda_k$Ploidy_summ <- factor(data_lambda_k$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
-table(data_lambda_k$Ploidy_summ)
-
-str(data_lambda_k[, "GS"])
-class(data_lambda_k$GS)
-
-str(data_lambda_k)
-nrow(data_lambda_k)
-ncol(data_lambda_k)
-
-### Grab data from similar species to fill missing values
-data_lambda_k[data_lambda_k$animal == "Hieracium_valdepilosum", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 11:31]
-data_lambda_k[data_lambda_k$animal == "Hieracium_glaucopsis", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 11:31]
-data_lambda_k[data_lambda_k$animal == "Hieracium_cydoniifolium", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 11:31]
-data_lambda_k[data_lambda_k$animal == "Hieracium_ramosissimums_subsp._lactucifolium", 11:31] <- data_lambda_k[data_lambda_k$animal == "Hieracium_amplexicaule", 11:31]
-data_lambda_k[data_lambda_k$animal == "Schlagintweitia_huteri_subsp._lantoscana", 11:31] <- data_lambda_k[data_lambda_k$animal == "Schlagintweitia_intybacea", 11:31]
-# data_lambda_k[data_lambda_k$animal == "Aremisia_nitida", 11:31] <- data_lambda_k[data_lambda_k$animal == "Artemisia_glacialis", 11:31] # doesn't have altitude in any case
-data_lambda_k[data_lambda_k$animal == "Sonchus_tenerrimus", 11:31] <- data_lambda_k[data_lambda_k$animal == "Sonchus_oleraceus", 11:31]
-data_lambda_k[data_lambda_k$animal == "Calendula_tripterocarpa", 11:31] <- data_lambda_k[data_lambda_k$animal == "Calendula_arvensis", 11:31]
-
-### Add elevation data calculated from Ozenda (1985)
-elevation_Ozenda <- data_lambda_k[, c(3, 15:19)]
-nrow(elevation_Ozenda)
-colnames(elevation_Ozenda)
-elevation_Ozenda$sum <- rowSums(elevation_Ozenda[, 2:6])
-elevation_Ozenda[, 2] <- elevation_Ozenda[, 2]*350 # collineen
-elevation_Ozenda[, 3] <- elevation_Ozenda[, 3]*1050 # montagnard
-elevation_Ozenda[, 4] <- elevation_Ozenda[, 4]*1750 # subalpin
-elevation_Ozenda[, 5] <- elevation_Ozenda[, 5]*2450 # alpin
-elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
-
-elevation_Ozenda$avg <- sapply(1:nrow(elevation_Ozenda), function(x) sum(elevation_Ozenda[x,2:6])/elevation_Ozenda[x,"sum"])
-
-(data_lambda_k$animal == elevation_Ozenda$animal) # are they in the same order still? 
-data_lambda_k$elevation <- elevation_Ozenda$avg
-
-colnames(data_lambda_k[, c(3,5,7:8,20:21,32,33,34)]) # columns necessary for analysis
-data_lambda_k[!complete.cases(data_lambda_k[,c(3,5,7:8,20:21,32,33,34)]), ]
-data_lambda_k <- data_lambda_k[complete.cases(data_lambda_k[,c(3,5,7:8,20:21,32,33,34)]), ]
-complete.cases(data_lambda_k[,c(3,5,7:8,20:21,32,33,34)])
-nrow(data_lambda_k)
-
-### Load the tree 
-library(ape)
-JanTree4_red <- read.tree(file = "JanTree4.tre")
-
-setdiff(JanTree4_red$tip.label, data_lambda_k$animal)
-setdiff(data_lambda_k$animal, JanTree4_red$tip.label)
-
-JanTree4_red <- drop.tip(JanTree4_red, setdiff(JanTree4_red$tip.label, data_lambda_k$animal))
-setdiff(JanTree4_red$tip.label, data_lambda_k$animal)
-setdiff(data_lambda_k$animal, JanTree4_red$tip.label)
-
-is.binary(JanTree4_red)
-JanTree4_red <- multi2di(JanTree4_red, tol = 1)
-is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen")
-is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-
-library(phytools)
-data_lambda_k
-class(data_lambda_k) <- "data.frame"
-str(data_lambda_k)
-colnames(data_lambda_k)
-colnames(data_lambda_k[, c(3,5:12,20:21,24:34)])
-data_lambda_k <- data_lambda_k[, c(3,5:12,20:21,24:34)]
-rownames(data_lambda_k) <- data_lambda_k$animal
-complete.cases(data_lambda_k)
-
-i = 1
-K_lambda_table <- data.frame("Variable" = character(),
-                             "K" = double(), "p_K" = double(), "p_k-stars" = character(),
-                             "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
-                             stringsAsFactors = F)
-while (i %in% 1:ncol(data_lambda_k)) {
-  obj1 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "K", test = T)
-  obj2 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "lambda", test = T)
-  K_lambda_table[i-4,] <- cbind(colnames(data_lambda_k[i]),
-                                obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
-                                obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
-  )
-  i = i + 1
-}
-K_lambda_table
-# write.csv(K_lambda_table, file = "Phylosig_K_lambda.csv")
-
-
-
-##### Phylosig - ONLY Alps - mean ##### 
-
-### ONLY Alps: prepare data
-data_lambda_k <- read.csv(file = "DATA_StrictlyAlps_mean_red.csv", header = T)[, -1]
-data_lambda_k$Ploidy_summ <- gsub('6x|8x|12x', 'Poly', data_lambda_k$Ploidy)
-colnames(data_lambda_k)[2] <- "animal"
-colnames(data_lambda_k)
-
-### Make sure factor levels are correct
-data_lambda_k$Repr_mode_summ <- factor(data_lambda_k$Repr_mode_summ, levels = c("Sexual", "Mixed", "Apomictic"))
-data_lambda_k$Repr_mode_summ # 3 levels
-data_lambda_k$Repr_mode <- factor(gsub('Mixed', 'Apomictic', data_lambda_k$Repr_mode), levels = c("Sexual", "Apomictic"))
-data_lambda_k$Repr_mode # 2 levels
-data_lambda_k$Ploidy <- factor(data_lambda_k$Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
-data_lambda_k$Ploidy
-data_lambda_k$Ploidy_summ <- gsub("6x|8x|12x", "Poly", data_lambda_k$Ploidy)
-data_lambda_k$Ploidy_summ <- factor(data_lambda_k$Ploidy_summ, levels = c("2x", "3x", "4x", "Poly"))
-table(data_lambda_k$Ploidy_summ)
-
-colnames(data_lambda_k)
-
-nrow(data_lambda_k)
-nrow(data_lambda_k[complete.cases(data_lambda_k),])
-nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,4:9,19:20,23:32)]), ])
-nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,4:9,19:20,23:32)]), ]) == nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,4:9,19:20,23:32)]), ])
-
-### Grab data from similar species to fill missing values
-# data_lambda_k[data_lambda_k$animal == "Hieracium_valdepilosum", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Hieracium_glaucopsis", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Hieracium_cydoniifolium", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_villosum", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Hieracium_ramosissimums_subsp._lactucifolium", 12:32] <- data_lambda_k[data_lambda_k$animal == "Hieracium_amplexicaule", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Schlagintweitia_huteri_subsp._lantoscana", 12:32] <- data_lambda_k[data_lambda_k$animal == "Schlagintweitia_intybacea", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Aremisia_nitida", 12:32] <- data_lambda_k[data_lambda_k$animal == "Artemisia_glacialis", 12:32] # doesn't have altitude in any case
-# data_lambda_k[data_lambda_k$animal == "Sonchus_tenerrimus", 12:32] <- data_lambda_k[data_lambda_k$animal == "Sonchus_oleraceus", 12:32]
-# data_lambda_k[data_lambda_k$animal == "Calendula_tripterocarpa", 12:32] <- data_lambda_k[data_lambda_k$animal == "Calendula_arvensis", 12:32]
-
-nrow(data_lambda_k)
-nrow(data_lambda_k[complete.cases(data_lambda_k), ])
-nrow(data_lambda_k[complete.cases(data_lambda_k[, c(2,4:9,19:20,23:32)]), ])
-data_lambda_k <- data_lambda_k[complete.cases(data_lambda_k[, c(2,4:9,19:20,23:32)]), ]
-
-### Load the tree
-library(ape)
-JanTree4_red <- read.tree(file = "JanTree4_StrictlyAlps.tre")
-
-setdiff(JanTree4_red$tip.label, data_lambda_k$animal)
-setdiff(data_lambda_k$animal, JanTree4_red$tip.label)
-# JanTree4_red <- drop.tip(JanTree4_red, setdiff(JanTree4_red$tip.label, data_lambda_k$animal))
-
-is.binary(JanTree4_red)
-# JanTree4_red <- multi2di(JanTree4_red, tol = 1)
-# is.binary(JanTree4_red)
-is.ultrametric(JanTree4_red)
-JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-# JanTree4_red <- compute.brlen(JanTree4_red, method = "Grafen")
-# is.binary(JanTree4_red)
-# is.ultrametric(JanTree4_red)
-# JanTree4_red$edge.length[JanTree4_red$edge.length == 0] # are there branch lengths with value zero
-
-### Phylosig
-library(phytools)
-data_lambda_k
-class(data_lambda_k) <- "data.frame"
-str(data_lambda_k)
-colnames(data_lambda_k)
-rownames(data_lambda_k) <- data_lambda_k$animal
-complete.cases(data_lambda_k)
-
-i = 1
-K_lambda_table <- data.frame("Variable" = character(),
-                             "K" = double(), "p_K" = double(), "p_k-stars" = character(),
-                             "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
-                             stringsAsFactors = F)
-while (i %in% 1:ncol(data_lambda_k)) {
-  obj1 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "K", test = T)
-  obj2 <- phylosig(tree = JanTree4_red, x = setNames(as.numeric(unlist(data_lambda_k[,i])), rownames(data_lambda_k)), method = "lambda", test = T)
-  K_lambda_table[i-4,] <- cbind(colnames(data_lambda_k[i]),
-                                obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
-                                obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
-  )
-  i = i + 1
-}
-K_lambda_table
-# write.csv(K_lambda_table, file = "Phylosig_K_lambda.csv")
-
-
-##### CHECKING TAXA NUMBERS BETWEEN DATASETS ##### 
-
-### ALL accessions
+##### Checking taxa numbers across different versions of the dataset ##### 
+### Extended dataset
 vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
 genera_all <- unique(vapply(strsplit(as.character(unique(DATA$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
 genera_all
-### Only Alps
+### Srictly Alps
 vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
 genera_alps <- unique(vapply(strsplit(as.character(unique(DATA_StrictlyAlps$SpeciesName)), '(?<=[a-z])_(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
 genera_alps
-### Table v5
-test <- c("Achillea clavennae", "Achillea erba-rotta", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", 
+### Apomixis paper Supplementary Table v5
+table_v5 <- c("Achillea clavennae", "Achillea erba-rotta", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", 
           "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea millefolium", "Achillea nana", "Achillea nana", "Achillea nana", 
           "Achillea nana", "Achillea nobilis", "Achillea oxyloba", "Adenostyles alliariae", "Adenostyles alliariae", "Adenostyles alliariae", "Adenostyles alpina", 
           "Adenostyles leucophylla", "Adenostyles leucophylla", "Adenostyles leucophylla", "Adenostyles leucophylla", "Andryala integrifolia", 
@@ -672,20 +274,19 @@ test <- c("Achillea clavennae", "Achillea erba-rotta", "Achillea millefolium", "
           "Tripleurospermum inodorum", "Tussilago farfara", "Urospermum dalechampii", "Urospermum dalechampii", "Urospermum picroides", 
           "Xanthium orientale subsp. italicum ", "Xanthium orientale subsp. italicum", "Xeranthemum annuum", "Xerolekia speciosissima"
           )
-test
-vapply(strsplit(test, '(?<=[a-z])\\s+(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
-genera_test <-unique(vapply(strsplit(test, '(?<=[a-z])\\s+(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
-genera_test
+table_v5
+vapply(strsplit(table_v5, '(?<=[a-z])\\s+(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1))
+genera_table_v5 <- unique(vapply(strsplit(table_v5, '(?<=[a-z])\\s+(?=[a-z])', perl = T), `[`, 1, FUN.VALUE = character(1)))
+genera_table_v5
 
-setdiff(genera_test, genera_all)
-setdiff(genera_all, genera_test)
+setdiff(genera_table_v5, genera_all)
+setdiff(genera_all, genera_table_v5)
 
-setdiff(genera_test, genera_alps)
-setdiff(genera_alps, genera_test)
+setdiff(genera_table_v5, genera_alps)
+setdiff(genera_alps, genera_table_v5)
 
 #### How many apomictic taxa? ####
-
-### ALL accessions
+### Extended dataset
 DATA_CC_mean_red
 table(DATA_CC_mean_red$Repr_mode_summ)
 
@@ -695,7 +296,7 @@ DATA_CC_mean_red[DATA_CC_mean_red$Repr_mode_summ == "Apomictic",
 DATA_CC_mean_red[DATA_CC_mean_red$Repr_mode_summ == "Mixed", 
                  "SpeciesName"]
 
-### ONLY Alps
+### Strictly Alps
 DATA_StrictlyAlps_mean_red
 table(DATA_StrictlyAlps_mean_red$Repr_mode_summ)
 
@@ -706,23 +307,24 @@ DATA_StrictlyAlps_mean_red[DATA_StrictlyAlps_mean_red$Repr_mode_summ == "Mixed",
                            "SpeciesName"]
 
 ##### How many apomictic taxa per ploidy level? ##### 
-
-### ALL accessions
+### Extended dataset
 with(DATA, table(Ploidy, Repr_mode))
 sum(with(DATA, table(Ploidy, Repr_mode))) == nrow(DATA) # sanity check
 
-### ONLY Alps
-### ALL accessions
+### Strictly Alps
 with(DATA_StrictlyAlps, table(Ploidy, Repr_mode))
 sum(with(DATA_StrictlyAlps, table(Ploidy, Repr_mode))) == nrow(DATA_StrictlyAlps) # sanity check
 
 ##### Elevation range? #### 
+### Extended dataset
 DATA$Altitude
 
 min(DATA$Altitude, na.rm = T)
 max(DATA$Altitude, na.rm = T)
 mean(DATA$Altitude, na.rm = T)
 boxplot(DATA$Altitude)
+
+
 
 ##### Checking Online Resource 2 species names ##### 
 online <- read.csv(file = "Pegoraro_et_al_Apomixis-Online_Resource-03-10-2019.csv")
@@ -784,7 +386,7 @@ DATA_online$Endemic.y
 
 DATA_online <- DATA_online[, -c(13:128)]
 
-### Frickin colmun names...
+### Frickin column names...
 colnames(DATA_online) <- gsub('\\.y$', '', colnames(DATA_online))
 
 ### Use data for similar species
