@@ -157,7 +157,6 @@ heidel.diag(ext_mThre2$Sol)
 print("Geweke_ext_mThre2%03d.png")
 png('Geweke_ext_mThre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
   geweke.plot(ext_mThre2$Sol, ask = F)
-
 dev.off()
 autocorr.diag(ext_mThre2$Sol)
 
