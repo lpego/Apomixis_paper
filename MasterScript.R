@@ -6,16 +6,71 @@
 # getwd()
 
 ##### Load data ##### 
-DATA_red
-str(DATA_red)
-ToBeFactors <- c("ID_FloraAlpina", "ID", "Repr_mode_summ", "Chr.number", "PloidyEvenOdd", 
-                 "Endemic", "Indigenous", "Distribution", "CompleteName", 
-                 "Collinaire", "Montane", "Subalpine", "Alpine", "Nival", 
-                 "Init.month", "Tot.months", "Phytosociology", "Habitat", 
-                 "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w", "Sect_Occ")
-DATA_red[ToBeFactors] <- lapply(DATA_red[ToBeFactors], factor)
-str(DATA_red)
-names(DATA_red)
+### Extended dataset, summarized data with missing values, mean
+DATA_mean_red
+str(DATA_mean_red)
+ToBeFactors <- c("ID_FloraAlpina", "ID", "Repr_mode", "Repr_mode_summ",
+                 "Ploidy", "Ploidy_summ", "PloidyEvenOdd",
+                 "Longevity", "BiologicalForm", "Endemic", "Indigenous", "Distribution",
+                 "Collinaire", "Montane", "Subalpine", "Alpine", "Nival",
+                 "Phytosociology", "Habitat",
+                 "Ca", "Ca.Si", "Si", "pH", "N", "Water", "w")
+DATA_mean_red[ToBeFactors] <- lapply(DATA_mean_red[ToBeFactors], factor)
+str(DATA_mean_red)
+DATA_mean_red$Repr_mode
+DATA_mean_red$Repr_mode_summ
+DATA_mean_red$Ploidy
+DATA_mean_red$Ploidy_summ
+DATA_mean_red[!complete.cases(DATA_mean_red), ] # Sigesbeckia is not in Flora Alpina
+
+### Extended dataset, summarized data complete no missing values, mean
+DATA_CC_mean_red
+str(DATA_CC_mean_red)
+DATA_CC_mean_red[ToBeFactors] <- lapply(DATA_CC_mean_red[ToBeFactors], factor)
+str(DATA_CC_mean_red)
+DATA_CC_mean_red[!complete.cases(DATA_CC_mean_red), ] # no missing values
+
+### Strictly alpine dataset, summarized data, mean (there ano missing values in strictly alpine dataset)
+DATA_StrictlyAlps_mean_red
+str(DATA_StrictlyAlps_mean_red)
+DATA_StrictlyAlps_mean_red[ToBeFactors] <- lapply(DATA_StrictlyAlps_mean_red[ToBeFactors], factor)
+str(DATA_StrictlyAlps_mean_red)
+DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red), ] # no missing values
+
+
+
+##### Phylogenetic tree #####
+### Load the tree
+library(ape)
+library(geiger)
+library(phytools)
+
+### Extended dataset, missing values
+JanTree4
+plot(JanTree4, cex = .5, no.margin = T)
+str(JanTree4)
+is.rooted(JanTree4)
+is.ultrametric(JanTree4)
+is.binary(JanTree4)
+JanTree4$edge.length[JanTree4$edge.length == 0]
+
+name.check(JanTree4, DATA_mean_red)
+
+### Extended dataset, no missing values
+JanTree4_CC
+plot(JanTree5_CC, cex = .5, no.margin = T)
+str(JanTree4_CC)
+is.rooted(JanTree4_CC)
+is.ultrametric(JanTree4_CC)
+is.binary(JanTree4_CC)
+JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0]
+
+name.check(JanTree4_CC, DATA_mean_red)
+
+
+
+
+##### ~ ##### 
 
 
 
@@ -43,8 +98,6 @@ DATA_red[((DATA_red[,"Altitude"]<1000) & (DATA_red[,"Repr_mode_summ"]=="Mixed"))
 # max(DATA_red$GS, na.rm = T)
 # min(DATA_red$GS, na.rm = T)
 # boxplot(DATA_red$GS)
-
-
 
 ##### How many "unexpected" reproductive modes in the accessions? #####
 nrow(DATA[DATA$Ploidy == "2x", 1:3]) # 258 total diploids
@@ -77,8 +130,6 @@ while (x %in% 1:length(rownames(table))) {
   sum = 0
 }
 MultiplePloidy$MultiplePloidy
-
-
 
 ##### Checking taxa numbers across different versions of the dataset ##### 
 ### Extended dataset
@@ -177,8 +228,6 @@ setdiff(genera_all, genera_table_v5)
 setdiff(genera_table_v5, genera_alps)
 setdiff(genera_alps, genera_table_v5)
 
-
-
 #### How many apomictic taxa? ####
 ### Extended dataset
 DATA_CC_mean_red
@@ -200,8 +249,6 @@ DATA_StrictlyAlps_mean_red[DATA_StrictlyAlps_mean_red$Repr_mode_summ == "Apomict
 DATA_StrictlyAlps_mean_red[DATA_StrictlyAlps_mean_red$Repr_mode_summ == "Mixed", 
                            "SpeciesName"]
 
-
-
 ##### How many apomictic taxa per ploidy level? ##### 
 ### Extended dataset
 with(DATA, table(Ploidy, Repr_mode))
@@ -210,8 +257,6 @@ sum(with(DATA, table(Ploidy, Repr_mode))) == nrow(DATA) # sanity check
 ### Strictly Alps
 with(DATA_StrictlyAlps, table(Ploidy, Repr_mode))
 sum(with(DATA_StrictlyAlps, table(Ploidy, Repr_mode))) == nrow(DATA_StrictlyAlps) # sanity check
-
-
 
 ##### Elevation range? #### 
 ### Extended dataset
@@ -252,7 +297,7 @@ plot(GS ~ Alpine, data = DATA_red)
 plot(GS ~ Nival, data = DATA_red)
 par(mfrow=c(1,1))
 
-### Is Init.month different between Sexual and Apomictic species? 
+##### Is flowering time different between Sexual and Apomictic species? #####
 class(DATA_red)
 test1 <- as.vector(DATA_red[DATA_red$Repr_mode_summ == "Sexual" & !is.na(DATA_red$Init.month), "Init.month"])
 class(test1) <- "data.frame"
@@ -260,36 +305,6 @@ test2 <- as.vector(DATA_red[DATA_red$Repr_mode_summ == "Apomictic" | DATA_red$Re
 class(test2) <- "data.frame"
 
 wilcox.test(as.numeric(test1$Init.month), as.numeric(test2$Init.month)) # not significantly different
-
-
-
-
-
-##### Phylogenetic tree #####
-### Load the tree
-library(ape)
-library(geiger)
-library(phytools)
-
-JanTree4
-str(JanTree4)
-plot(JanTree4, cex = .5, no.margin = T)
-is.ultrametric(JanTree4)
-is.binary(JanTree4)
-JanTree5 <- force.ultrametric(JanTree4)
-is.ultrametric(JanTree5)
-# dev.off()
-plot(JanTree5, cex = .5, no.margin = T)
-JanTree5 <- multi2di(JanTree5, random = TRUE)
-# JanTree5$edge.length <- NULL
-is.rooted(JanTree5)
-is.binary(JanTree5)
-is.ultrametric(JanTree5)
-plot(JanTree5, cex = .5, no.margin = T)
-plotTree(JanTree5, type = "fan", ftype="i", fsize = 0.25, lwd=1)
-# Checking correspondence between data and tree
-geiger::name.check(JanTree4, DATA_red)
-geiger::name.check(JanTree5, DATA_red)
 
 
 
