@@ -514,6 +514,7 @@ library(ggplot2)
 library(ggtree)
 library(RColorBrewer)
 
+### Need to tweak the clade labels positioing after changing the underlying tree. Kept original nidge values (commented out)
 ggJanTree4_circular <- ggtree(JanTree4_CC, layout = "circular") %<+% DATA_red_ggtree +
   geom_tiplab2(size = 1.5, offset = 0.1) +
   geom_hilight(mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
