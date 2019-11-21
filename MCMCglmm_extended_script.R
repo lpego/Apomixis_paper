@@ -78,8 +78,8 @@ ext_mThre1.1_noPhy <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init
                           prior = prior_V1fix1,
                           nitt = 10^6, thin = 500, burnin = 25000)
 summary(ext_mThre1.1_noPhy)
-print("DiagPlots_ext_mThre1.1_noPhy%03d.png")
-  png('DiagPlots_ext_mThre1.1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+print("DiagPlots_ext_mThre1_noPhy%03d.png")
+  png('DiagPlots_ext_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
 plot(ext_mThre1.1_noPhy, ask = F)
 dev.off()
 
@@ -100,8 +100,8 @@ ext_mThre1 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.mo
                   prior = prior_nu1000_1,
                   nitt = 10^6, thin = 500, burnin = 25000)
 summary(ext_mThre1)
-print("DiagPlots_ext_mThre1.1%03d.png")
-png('DiagPlots_ext_mThre1.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+print("DiagPlots_ext_mThre1%03d.png")
+png('DiagPlots_ext_mThre1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
   plot(ext_mThre1, ask = F)
 dev.off()
 
@@ -147,8 +147,8 @@ ext_mThre2 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.mo
                   prior = prior_nu1000_1,
                   nitt = 10^6, thin = 500, burnin = 25000)
 summary(ext_mThre2)
-print("DiagPlots_ext_mThre2.1%03d.png")
-png('DiagPlots_ext_mThre2.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+print("DiagPlots_ext_mThre2%03d.png")
+png('DiagPlots_ext_mThre2%03d.png', width = 15, height = 15, units = 'cm', res = 300)
   plot(ext_mThre2, ask = F)
 dev.off()
 
@@ -194,8 +194,8 @@ ext_mThre3 <- MCMCglmm(Repr_mode_summ ~ elevation_Ozenda + Ploidy_summ + Init.mo
                   prior = prior_nu1000_1,
                   nitt = 10^6, thin = 500, burnin = 25000)
 summary(ext_mThre3)
-print("DiagPlots_ext_mThre3.1%03d.png")
-png('DiagPlots_ext_mThre3.1%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+print("DiagPlots_ext_mThre3%03d.png")
+png('DiagPlots_ext_mThre3%03d.png', width = 15, height = 15, units = 'cm', res = 300)
   plot(ext_mThre3, ask = F)
 dev.off()
 
