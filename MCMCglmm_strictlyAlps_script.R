@@ -77,8 +77,8 @@ str_mThre1.1_noPhy <- MCMCglmm(Repr_mode ~ Altitude + Ploidy_summ + Init.month,
                                prior = prior_V1fix1,
                                nitt = 10^6, thin = 500, burnin = 25000)
 summary(str_mThre1.1_noPhy)
-print("DiagPlots_str_mThre1_noPhy%03d.png")
-png('DiagPlots_str_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+print("DiagPlots_str_mThre1.1_noPhy%03d.png")
+png('DiagPlots_str_mThre1.1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
   plot(str_mThre1.1_noPhy, ask = F)
 dev.off()
 

@@ -78,8 +78,8 @@ ext_mThre1.1_noPhy <- MCMCglmm(Repr_mode ~ elevation_Ozenda + Ploidy_summ + Init
                           prior = prior_V1fix1,
                           nitt = 10^6, thin = 500, burnin = 25000)
 summary(ext_mThre1.1_noPhy)
-print("DiagPlots_ext_mThre1_noPhy%03d.png")
-  png('DiagPlots_ext_mThre1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
+print("DiagPlots_ext_mThre1.1_noPhy%03d.png")
+  png('DiagPlots_ext_mThre1.1_noPhy%03d.png', width = 15, height = 15, units = 'cm', res = 300)
 plot(ext_mThre1.1_noPhy, ask = F)
 dev.off()
 
