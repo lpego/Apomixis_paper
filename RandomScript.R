@@ -517,3 +517,63 @@ DATA_online <- DATA_online[as.numeric(match(as.character(online$ID_FloraAlpina),
 
 Online <- cbind(online, DATA_online)
 write.csv(Online, file = "Online.csv")
+
+
+
+##### Checking AGAIN for potential messups in the Online resource table... ##### 
+Online_v7 <- read.csv(file = "Pegoraro_et_al_Apomixis-Online_Resource_1-v7 -JP_LP_OH2_LP.csv")
+DATA
+
+nrow(Online_v7)
+nrow(DATA)
+
+DATA[is.na(match(DATA$ID_FloraAlpina, Online_v7$ID_FloraAlpina)), 1:3]
+Online_v7[is.na(match(Online_v7$ID_FloraAlpina, DATA$ID_FloraAlpina)), 1:3]
+### It's intended that there are no more "unspecified subspecies" Flora Alpina IDs:
+### I selected manually the most representative subspecies for each species to be able to use Flora Alpina data. 
+### Changing the IDs locally for Online resource table to check correspondences
+
+setdiff(DATA$ID_FloraAlpina, Online_v7$ID_FloraAlpina)
+setdiff(Online_v7$ID_FloraAlpina, DATA$ID_FloraAlpina)
+
+Online_v7$ID_FloraAlpina <- gsub('124\\.31\\.2\\.0', '124\\.31\\.2\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.31\\.19\\.0', '124\\.31\\.19\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.56\\.3\\.0', '124\\.56\\.3\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.60\\.9\\.0', '124\\.60\\.9\\.3', Online_v7$ID_FloraAlpina) # this is Carduus defloratus, chose subsp carlinifolius, 124.60.9.3
+Online_v7$ID_FloraAlpina <- gsub('124\\.60\\.4\\.0', '124\\.60\\.4\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.68\\.25\\.0', '124\\.68\\.25\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.61\\.3\\.0', '124\\.61\\.3\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.46\\.8\\.0', '124\\.46\\.8\\.2', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.6\\.1\\.0', '124\\.6\\.1\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.96\\.1\\.0', '124\\.96\\.1\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.39\\.2\\.0', '124\\.39\\.2\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.39\\.8\\.0', '124\\.39\\.8\\.3', Online_v7$ID_FloraAlpina) # this is Leucanthemum atratum, chose subsp coronopifolium, 124.39.8.3
+Online_v7$ID_FloraAlpina <- gsub('124\\.67\\.1\\.0', '124\\.67\\.1\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.48\\.14\\.0', '124\\.48\\.14\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.65\\.1\\.0', '124\\.65\\.1\\.2', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.2\\.1\\.0', '124\\.2\\.1\\.2', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.35\\.2\\.0', '124\\.35\\.2\\.1', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.86\\.4\\.0', '124\\.86\\.4\\.3', Online_v7$ID_FloraAlpina)
+Online_v7$ID_FloraAlpina <- gsub('124\\.31\\.11\\.0', '124\\.31\\.11\\.1', Online_v7$ID_FloraAlpina)
+
+setdiff(DATA$ID_FloraAlpina, Online_v7$ID_FloraAlpina)
+setdiff(Online_v7$ID_FloraAlpina, DATA$ID_FloraAlpina)
+### It's fine that Sigesbeckia is not in Online resource, as we decided to drop it
+
+# Online_v7 <- merge(DATA, Online_v7, by = "ID_FloraAlpina", all.x = T)
+# colnames(Online_v7)
+# 
+# Online_v7[, c(1:3, 14:16)]
+
+library(rowr)
+cbind.fill(Online_v7$ID_FloraAlpina, DATA$ID_FloraAlpina, fill = NA)
+
+cbind(as.character(Online_v7$ID_FloraAlpina), as.character(sort(Online_v7$ID_FloraAlpina)))
+cbind.fill(as.character(sort(Online_v7$ID_FloraAlpina)), as.character(sort(DATA$ID_FloraAlpina)), fill = NA)
+
+Online_v7 <- cbind.fill(DATA[order(DATA$ID_FloraAlpina), c(1:18, 117:129)], 
+                        Online_v7[order(Online_v7$ID_FloraAlpina), ], 
+                        fill = NA)
+Online_v7
+colnames(Online_v7)
+Online_v7[, c(2,32)]
