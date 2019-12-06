@@ -53,7 +53,7 @@ setdiff(NewApoData1[,c("ID")], NewApoData2[,c("ID")])
 
 NewApoData <- rbind(NewApoData1, NewApoData2)
 NewApoData <- unique(NewApoData)
-NewApoData <- NewApoData[, c(2,1,3:10)]
+NewApoData <- NewApoData[, c(2,1,3:11)]
 
 nrow(NewApomixisData) - nrow(NewApoData)
 
@@ -74,6 +74,9 @@ nrow(NewApomixisData_FloraAlpinaID) == nrow(NewApomixisData)
 write.csv(NewApomixisData_FloraAlpinaID, file ="NewApomixisData_FloraAlpinaID.csv")
 
 ### Need to resolve manually double IDs! See file FloraAlpina_Asteraceae_OriginalData.csv 
+
+##### Manually removing uncertain accessions and correcting #####
+
 
 
 
@@ -935,7 +938,7 @@ OutsideAlps <- c("FR42","FR60","FR61","FR62","FR63","FR64","FR65","FR66","FR67",
                   "FR68","FR69","FR70","FR71","FR72","FR73","FR74","FR75a","FR75b","FR75c",
                   "FR300","FRR1","FRR10","FRR11","FRR2","FRR3","FRR4","FRR6","FRR7","FRR8",
                   "FRR9","FR411","FR477","FR487","FR488","FR544","FR560","FR561","FR562",
-                  "FR563","FR564","FR565","FR566","FR612","FR619","FR623","FR641","FR656",
+                  "FR563","FR564","FR565","FR566", "FR582","FR612","FR619","FR623","FR641","FR656",
                   "FR675","FR676","FR683","IT18","IT19","IT20","IT21","IT22","IT37","IT38",
                   "IT39","IT40","IT41","IT42","IT43","IT72","IT73","IT76","IT77","FR710",
                   "A1","A2","A3","A4","A30","A31","A32","A41","A42","A43","A44","A45","A46",
