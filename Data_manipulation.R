@@ -73,10 +73,34 @@ nrow(NewApomixisData_FloraAlpinaID) == nrow(NewApomixisData)
 
 write.csv(NewApomixisData_FloraAlpinaID, file ="NewApomixisData_FloraAlpinaID.csv")
 
-### Need to resolve manually double IDs! See file FloraAlpina_Asteraceae_OriginalData.csv 
+
 
 ##### Manually removing uncertain accessions and correcting #####
 
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID[-grep(' IT3', NewApomixisData_FloraAlpinaID$ID), ]
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('IT7$', NewApomixisData_FloraAlpinaID_manual$ID), ]
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('A102', NewApomixisData_FloraAlpinaID_manual$ID), ]
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('CH60', NewApomixisData_FloraAlpinaID_manual$ID), ]
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('FR582', NewApomixisData_FloraAlpinaID_manual$ID), ]
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('OH261', NewApomixisData_FloraAlpinaID_manual$ID), ]
+
+NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('Scorzonera hispanica', NewApomixisData_FloraAlpinaID_manual$SpeciesName), ]
+
+nrow(NewApomixisData_FloraAlpinaID_manual)
+
+setdiff(NewApomixisData_FloraAlpinaID$ID, NewApomixisData_FloraAlpinaID_manual$ID)
+
+# ### Legacy table, kept for comparison: 
+# NewApomixisData_FloraAlpinaID_manual_Jaume <- read.csv(file="NewApomixisData_FloraAlpinaID_manual_Jaume.csv")
+# 
+# setdiff(NewApomixisData_FloraAlpinaID_manual_Jaume$ID, NewApomixisData_FloraAlpinaID$ID)
+# setdiff(NewApomixisData_FloraAlpinaID$ID, NewApomixisData_FloraAlpinaID_manual_Jaume$ID)
+# 
+# setdiff(NewApomixisData_FloraAlpinaID_manual_Jaume$SpeciesName, NewApomixisData_FloraAlpinaID$SpeciesName)
+# setdiff(NewApomixisData_FloraAlpinaID$SpeciesName, NewApomixisData_FloraAlpinaID_manual_Jaume$SpeciesName)
+# 
+# nrow(NewApomixisData_FloraAlpinaID_manual_Jaume)
+# nrow(NewApomixisData_FloraAlpinaID)
 
 
 
@@ -203,9 +227,8 @@ setdiff(new_names, JanTree3$tip.label)
 
 
 ##### Check that names on tree correspond to names on dataset #####
-NewApomixisData_FloraAlpinaID_manual <- read.csv(file = "NewApomixisData_FloraAlpinaID_manual_Jaume.csv")
+NewApomixisData_FloraAlpinaID_manual
 NewApomixisData_FloraAlpinaID_manual$X <- NULL
-NewApomixisData_FloraAlpinaID_manual$X.1 <- NULL
 NewApomixisData_FloraAlpinaID_manual$SpeciesName <- gsub(' $', '', NewApomixisData_FloraAlpinaID_manual$SpeciesName)
 NewApomixisData_FloraAlpinaID_manual$SpeciesName <- gsub(' ', '_', NewApomixisData_FloraAlpinaID_manual$SpeciesName)
 NewApomixisData_FloraAlpinaID_manual$SpeciesName <- gsub('__', '_', NewApomixisData_FloraAlpinaID_manual$SpeciesName)
@@ -258,6 +281,9 @@ par(mfrow=c(1,1))
 ape::write.tree(JanTree4, file = "JanTree4.tre")
 
 ##### ~ ##### 
+
+
+### UP TO HERE IT SHOULD BE WORKING OKAY. CHECK IF THE CODE AFTER BREAKS ### 
 
 
 
