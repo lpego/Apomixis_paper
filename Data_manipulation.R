@@ -29,11 +29,6 @@ write.csv(GSheet, file="GSheet_mod.csv")
 ### Matching using species names
 NewApomixisData <- read.csv("NewApomixis_Table_2018.csv")
 
-### Correct Chondrilla juncea reproductive mode to apomictic, all accessions: 
-NewApomixisData$Repr_mode
-NewApomixisData[grep('Chondrilla', NewApomixisData$Species), ]
-NewApomixisData[grep('Chondrilla', NewApomixisData$Species), "Repr_mode"] <- c("Apomictic", "Apomictic")
-
 GSheet$SpeciesName <- paste(GSheet$Genus, GSheet$species, sep = " ")
 GSheet$SpeciesName <- paste(GSheet$SpeciesName, GSheet$subsp, sep = " subsp. ")
 GSheet$SpeciesName <- gsub(' subsp.[ ]$','', GSheet$SpeciesName)
