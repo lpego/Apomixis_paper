@@ -61,14 +61,10 @@ setdiff(Online_v7$SpeciesName, DATA$SpeciesName)
 setdiff(DATA$SpeciesName, Online_v7$SpeciesName)
 ### all looks good
 
-### Checking tree
-setdiff(Online_v7$SpeciesName, JanTree4$tip.label)
-setdiff(JanTree4$tip.label, Online_v7$SpeciesName)
-### all looks good 
-
 
 
 ##### ~ #####
+
 
 
 ##### Summarizing extended #####
@@ -98,14 +94,24 @@ nrow(DATA_CC_mean_red)
 
 write.csv(Online_v7_mean, file = "Online_v7_mean.csv")
 
-### Checking tree for summarized extended: 
-setdiff(JanTree4_CC$tip.label, Online_v7_mean$SpeciesName)
-setdiff(Online_v7_mean$SpeciesName, JanTree4_CC$tip.label)
+### Checking tree
+library(ape)
+
+setdiff(Online_v7_mean$SpeciesName, JanTree4$tip.label)
+setdiff(JanTree4$tip.label, Online_v7_mean$SpeciesName)
+
+JanTree4_CC_online <- drop.tip(JanTree4_CC, setdiff(JanTree4$tip.label, Online_v7$SpeciesName))
+JanTree4_CC_online
+
+setdiff(Online_v7_mean$SpeciesName, JanTree4_CC_online$tip.label)
+setdiff(JanTree4_CC_online$tip.label, Online_v7_mean$SpeciesName)
+
+is.binary(JanTree4_CC_online)
+is.ultrametric(JanTree4_CC_online)
+JanTree4_CC_online$edge.length[JanTree4_CC_online$edge.length == 0] 
 ### all good
 
-is.binary(JanTree4_CC)
-is.ultrametric(JanTree4_CC)
-JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0] # are there branch lengths with value zero
+write.tree(JanTree4_CC_online, file = "JanTree4_CC_online.tre")
 
 
 
@@ -227,7 +233,6 @@ write.csv(Online_v7_StrictlyAlps_mean, file = "Online_v7_StrictlyAlps_mean.csv")
 ##### Prepare the tree for strictly Alps ##### 
 library(ape)
 JanTree4_StrictlyAlps_online <- drop.tip(JanTree4, setdiff(JanTree4$tip.label, Online_v7_StrictlyAlps_mean$SpeciesName))
-plot(JanTree4_StrictlyAlps_online, cex = .25, no.margin = T)
 
 setdiff(Online_v7_StrictlyAlps_mean$SpeciesName, JanTree4_StrictlyAlps_online$tip.label)
 setdiff(JanTree4_StrictlyAlps_online$tip.label, Online_v7_StrictlyAlps_mean$SpeciesName)
@@ -241,6 +246,9 @@ JanTree4_StrictlyAlps_online$edge.length[JanTree4_StrictlyAlps_online$edge.lengt
 ### all good
 
 write.tree(JanTree4_StrictlyAlps_online, file = "JanTree4_StrictlyAlps_online.tre")
+
+
+##### ~ ##### 
 
 
 
@@ -258,8 +266,8 @@ K_lambda_table_ext_online <- data.frame("Variable" = character(),
                                         "lambda" = double(), "p_lambda" = double(), "p_lambda-stars" = character(),
                                         stringsAsFactors = F)
 while (i %in% 3:ncol(Online_v7_mean)) {
-  obj1 <- phylosig(tree = JanTree4_CC, x = setNames(as.numeric(unlist(Online_v7_mean[,i])), Online_v7_mean$SpeciesName), method = "K", test = T)
-  obj2 <- phylosig(tree = JanTree4_CC, x = setNames(as.numeric(unlist(Online_v7_mean[,i])), Online_v7_mean$SpeciesName), method = "lambda", test = T)
+  obj1 <- phylosig(tree = JanTree4_CC_online, x = setNames(as.numeric(unlist(Online_v7_mean[,i])), Online_v7_mean$SpeciesName), method = "K", test = T)
+  obj2 <- phylosig(tree = JanTree4_CC_online, x = setNames(as.numeric(unlist(Online_v7_mean[,i])), Online_v7_mean$SpeciesName), method = "lambda", test = T)
   K_lambda_table_ext_online[i-2,] <- cbind(colnames(Online_v7_mean[i]),
                                     obj1$K, obj1$P, symnum(obj1$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," ")),
                                     obj2$lambda, obj2$P, symnum(obj2$P, corr = FALSE, cutpoints = c(0,  .001,.01,.05, .1, 1), symbols = c("***","**","*","."," "))
@@ -269,10 +277,6 @@ while (i %in% 3:ncol(Online_v7_mean)) {
 rm(obj1)
 rm(obj2)
 K_lambda_table_ext_online
-
-
-
-##### ~ ##### 
 
 
 

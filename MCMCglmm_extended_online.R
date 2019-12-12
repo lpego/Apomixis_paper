@@ -20,30 +20,30 @@ colnames(Online_v7_mean)[2] <- "animal" # this is needed because of a MCMCglmm q
 
 ##### Load the tree #####
 library(ape)
-JanTree4_CC <- read.tree(file = "JanTree4_CC.tre")
+JanTree4_CC_online <- read.tree(file = "JanTree4_CC_online.tre")
 
-setdiff(JanTree4_CC$tip.label, Online_v7_mean$animal)
-setdiff(Online_v7_mean$animal, JanTree4_CC$tip.label)
+setdiff(JanTree4_CC_online$tip.label, Online_v7_mean$animal)
+setdiff(Online_v7_mean$animal, JanTree4_CC_online$tip.label)
 
 print("is rooted?")
-is.rooted(JanTree4_CC)
+is.rooted(JanTree4_CC_online)
 print("is binary?")
-is.binary(JanTree4_CC)
+is.binary(JanTree4_CC_online)
 print("is ultrametric?")
-is.ultrametric(JanTree4_CC)
+is.ultrametric(JanTree4_CC_online)
 print("are branches of length zero?")
-JanTree4_CC$edge.length[JanTree4_CC$edge.length == 0] 
-print("JanTree4_CC.png")
-png('JanTree4_CC.png', width = 20, height = 30, units = 'cm', res=300)
-plot(JanTree4_CC, cex = .3)
+JanTree4_CC_online$edge.length[JanTree4_CC_online$edge.length == 0] 
+print("JanTree4_CC_online.png")
+png('JanTree4_CC_online.png', width = 20, height = 30, units = 'cm', res=300)
+plot(JanTree4_CC_online, cex = .3)
 dev.off()
 
 ##### MCMC chains #####
 library(MCMCglmm)
 
 ### Phylogeny black magic
-invJanTree4_CC <- inverseA(JanTree4_CC, nodes = "ALL", scale = TRUE)
-invJanTree4_CC_tips <- inverseA(JanTree4_CC, nodes = "TIPS", scale = TRUE)
+invJanTree4_CC_online <- inverseA(JanTree4_CC_online, nodes = "ALL", scale = TRUE)
+invJanTree4_CC_online_tips <- inverseA(JanTree4_CC_online, nodes = "TIPS", scale = TRUE)
 
 ### No phylogeny included, response with 3 levels
 prior_V1fix1 <- list(R = list(V = 1, fix = 1))
@@ -83,7 +83,7 @@ prior_nu1000_1
 set.seed(111)
 ### Reproductive.mode with 3 levels
 # ext_mThre1 <- MCMCglmm(Repr_mode_summ ~ Average.elevation + Embryo.Ploidy.summ + Flowering.time..initiation.month.,
-#                        ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+#                        ginverse = list(animal = invJanTree4_CC_online_tips$Ainv),
 #                        random = ~ animal, verbose = F,
 #                        data = Online_v7_mean,
 #                        family = "threshold", trunc = T,
@@ -105,7 +105,7 @@ set.seed(111)
 
 ### Reproductive.mode with only 2 levels
 ext_mThre1.1 <- MCMCglmm(Reproductive.mode ~ Average.elevation + Embryo.Ploidy.summ + Flowering.time..initiation.month.,
-                         ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+                         ginverse = list(animal = invJanTree4_CC_online_tips$Ainv),
                          random = ~ animal, verbose = F,
                          data = Online_v7_mean,
                          family = "threshold", trunc = T,
@@ -130,7 +130,7 @@ print("Second batch: set.seed(534)")
 set.seed(534)
 ### Reproductive.mode with 3 levels
 # ext_mThre2 <- MCMCglmm(Repr_mode_summ ~ Average.elevation + Embryo.Ploidy.summ + Flowering.time..initiation.month.,
-#                        ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+#                        ginverse = list(animal = invJanTree4_CC_online_tips$Ainv),
 #                        random = ~ animal, verbose = F,
 #                        data = Online_v7_mean,
 #                        family = "threshold", trunc = T,
@@ -152,7 +152,7 @@ set.seed(534)
 
 ### Reproductive.mode with only 2 levels
 ext_mThre2.1 <- MCMCglmm(Reproductive.mode ~ Average.elevation + Embryo.Ploidy.summ + Flowering.time..initiation.month.,
-                         ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+                         ginverse = list(animal = invJanTree4_CC_online_tips$Ainv),
                          random = ~ animal, verbose = F,
                          data = Online_v7_mean,
                          family = "threshold", trunc = T,
@@ -177,7 +177,7 @@ print("Third batch: set.seed(386)")
 set.seed(386)
 ### Reproductive.mode with 3 levels
 # ext_mThre3 <- MCMCglmm(Repr_mode_summ ~ Average.elevation + Embryo.Ploidy.summ + Flowering.time..initiation.month.,
-#                        ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+#                        ginverse = list(animal = invJanTree4_CC_online_tips$Ainv),
 #                        random = ~ animal, verbose = F,
 #                        data = Online_v7_mean,
 #                        family = "threshold", trunc = T,
@@ -199,7 +199,7 @@ set.seed(386)
 
 ### Reproductive.mode with only 2 levels
 ext_mThre3.1 <- MCMCglmm(Reproductive.mode ~ Average.elevation + Embryo.Ploidy.summ + Flowering.time..initiation.month.,
-                         ginverse = list(animal = invJanTree4_CC_tips$Ainv),
+                         ginverse = list(animal = invJanTree4_CC_online_tips$Ainv),
                          random = ~ animal, verbose = F,
                          data = Online_v7_mean,
                          family = "threshold", trunc = T,
@@ -220,18 +220,18 @@ dev.off()
 autocorr.diag(ext_mThre3.1$Sol)
 
 ##### Multiple chains convergence diagnostics #####
-chainListTre1_Sol <- mcmc.list(ext_mThre1$Sol, ext_mThre2$Sol, ext_mThre3$Sol)
-chainListTre1_VCV <- mcmc.list(ext_mThre1$VCV, ext_mThre2$VCV, ext_mThre3$VCV)
+# chainListTre1_Sol <- mcmc.list(ext_mThre1$Sol, ext_mThre2$Sol, ext_mThre3$Sol)
+# chainListTre1_VCV <- mcmc.list(ext_mThre1$VCV, ext_mThre2$VCV, ext_mThre3$VCV)
 
-# chainListTre2_Sol <- mcmc.list(ext_mThre1.1$Sol, ext_mThre2.1$Sol, ext_mThre3.1$Sol)
-# chainListTre2_VCV <- mcmc.list(ext_mThre1.1$VCV, ext_mThre2.1$VCV, ext_mThre3.1$VCV)
+chainListTre2_Sol <- mcmc.list(ext_mThre1.1$Sol, ext_mThre2.1$Sol, ext_mThre3.1$Sol)
+chainListTre2_VCV <- mcmc.list(ext_mThre1.1$VCV, ext_mThre2.1$VCV, ext_mThre3.1$VCV)
 
 ### Gelman rubin diagnostic: should be close to 1
-gelman.diag(chainListTre1_Sol)
-gelman.diag(chainListTre1_Sol)
+# gelman.diag(chainListTre1_Sol)
+# gelman.diag(chainListTre1_Sol)
 
-# gelman.diag(chainListTre2_Sol)
-# gelman.diag(chainListTre2_Sol)
+gelman.diag(chainListTre2_Sol)
+gelman.diag(chainListTre2_Sol)
 
 ##### GOODBYE! This is the end of the MCMCglmm_extended_online.R ! ##### 
 
