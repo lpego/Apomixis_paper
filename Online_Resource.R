@@ -278,8 +278,6 @@ rm(obj1)
 rm(obj2)
 K_lambda_table_ext_online
 
-
-
 ### Strictly Alpine
 library(phytools)
 Online_v7_StrictlyAlps_mean
@@ -304,3 +302,48 @@ while (i %in% 3:ncol(Online_v7_StrictlyAlps_mean)) {
 rm(obj1)
 rm(obj2)
 K_lambda_table_str_online
+
+
+
+##### ~ ##### 
+
+
+
+##### Extended database taxa counts #####
+unique(gsub('_.*', '', Online_v7$SpeciesName)) # list of unique genera
+length(unique(gsub('_.*', '', Online_v7$SpeciesName))) # number of unique genera
+
+unique(gsub('_subsp.*', '', Online_v7$SpeciesName)) # list of unique species (no subspecies)
+length(unique(gsub('_subsp.*', '', Online_v7$SpeciesName))) # number of unique species (no subspecies)
+
+Online_v7$SpeciesName
+length(unique(Online_v7$SpeciesName)) # number of unique taxa (also subspecies)
+
+table(Online_v7$Reproductive.mode) # number of sexual and apomictic taxa
+with(Online_v7, table(Reproductive.mode, Embryo.Ploidy.summ)) # per ploidy
+
+max(Online_v7$Average.elevation, na.rm = T)
+min(Online_v7$Average.elevation, na.rm = T)
+mean(Online_v7$Average.elevation, na.rm = T)
+
+##### Strictly Alps database taxa counts #####
+unique(gsub('_.*', '', Online_v7_StrictlyAlps$SpeciesName)) # list of unique genera
+length(unique(gsub('_.*', '', Online_v7_StrictlyAlps$SpeciesName))) # number of unique genera
+
+unique(gsub('_subsp.*', '', Online_v7_StrictlyAlps$SpeciesName)) # list of unique species (no subspecies)
+length(unique(gsub('_subsp.*', '', Online_v7_StrictlyAlps$SpeciesName))) # number of unique species (no subspecies)
+
+Online_v7_StrictlyAlps$SpeciesName
+length(unique(Online_v7_StrictlyAlps$SpeciesName)) # number of unique taxa (also subspecies)
+
+table(Online_v7_StrictlyAlps$Reproductive.mode) # number of sexual and apomictic taxa
+with(Online_v7_StrictlyAlps, table(Reproductive.mode, Embryo.Ploidy.summ)) # per ploidy
+
+max(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
+min(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
+mean(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
+
+
+
+
+### 
