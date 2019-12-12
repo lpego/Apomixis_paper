@@ -12,6 +12,22 @@ Online_v7$Flowering.time..initiation.month.
 
 str(Online_v7)
 
+### Adding a level for "mixed" reproductive mode
+i = 1
+Repr_mode_summ <- factor(rep(1, length(unique(Online_v7$SpeciesName))))
+levels(Repr_mode_summ) <- c("Sexual", "Mixed", "Apomictic")
+Repr_mode_summ <- data.frame(Repr_mode_summ, "SpeciesName" = unique(Online_v7$SpeciesName))
+while (i <= length(unique(Online_v7$SpeciesName))) {
+  if (length(levels(droplevels(Online_v7[which(unique(Online_v7$SpeciesName)[i] == Online_v7$SpeciesName), "Reproductive.mode"]))) >= 2) {
+    Repr_mode_summ$Repr_mode_summ[i] <- "Mixed"} else {
+      Repr_mode_summ$Repr_mode_summ[i] <- as.character(first(Online_v7[which(unique(Online_v7$SpeciesName)[i] == Online_v7$SpeciesName), "Reproductive.mode"]))
+    }
+  i = i + 1
+}
+Repr_mode_summ
+
+Online_v7 <- merge(Online_v7, Repr_mode_summ, by = "SpeciesName", all.x = T)
+
 
 
 ##### Changing names of species back to those used on the tree ##### 
@@ -71,16 +87,16 @@ setdiff(DATA$SpeciesName, Online_v7$SpeciesName)
 library(dplyr) 
 Online_v7_ext_mean1 <- Online_v7 %>% 
   select(ID_FloraAlpina, SpeciesName, 
-         Average.elevation, Embryo.Ploidy.summ, Reproductive.mode, Flowering.time..initiation.month.) %>% 
+         Average.elevation, Flowering.time..initiation.month.) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
   summarize_at(vars(Average.elevation, Flowering.time..initiation.month.), 
                list(mean), na.rm = T)
 
 Online_v7_ext_mean2 <- Online_v7 %>% 
   select(ID_FloraAlpina, SpeciesName, 
-         Embryo.Ploidy.summ, Reproductive.mode) %>% 
+         Embryo.Ploidy.summ, Repr_mode_summ, Reproductive.mode) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_at(vars(Embryo.Ploidy.summ, Reproductive.mode),
+  summarize_at(vars(Embryo.Ploidy.summ, Reproductive.mode, Repr_mode_summ),
                list(first))
 
 Online_v7_mean <- merge(Online_v7_ext_mean1, Online_v7_ext_mean2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
@@ -195,7 +211,6 @@ nrow(Online_v7_StrictlyAlps)
 
 str(Online_v7_StrictlyAlps)
 Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection
-as.integer(as.character(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection))
 Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection <- as.integer(as.character(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection))
 
 ##### Summarizing strictly alpine #####
@@ -209,9 +224,9 @@ Online_v7_str_mean1 <- Online_v7_StrictlyAlps %>%
 
 Online_v7_str_mean2 <- Online_v7_StrictlyAlps %>% 
   select(ID_FloraAlpina, SpeciesName, 
-         Embryo.Ploidy.summ, Reproductive.mode) %>% 
+         Embryo.Ploidy.summ, Reproductive.mode, Repr_mode_summ) %>% 
   group_by(ID_FloraAlpina, SpeciesName) %>% 
-  summarize_at(vars(Embryo.Ploidy.summ, Reproductive.mode),
+  summarize_at(vars(Embryo.Ploidy.summ, Reproductive.mode, Repr_mode_summ),
                list(first))
 
 Online_v7_StrictlyAlps_mean <- merge(Online_v7_str_mean1, Online_v7_str_mean2, by = c("ID_FloraAlpina", "SpeciesName"), all.x = T)
@@ -278,6 +293,8 @@ rm(obj1)
 rm(obj2)
 K_lambda_table_ext_online
 
+write.table(K_lambda_table_ext_online, file = "K_lambda_table_ext_online.txt")
+
 ### Strictly Alpine
 library(phytools)
 Online_v7_StrictlyAlps_mean
@@ -303,6 +320,7 @@ rm(obj1)
 rm(obj2)
 K_lambda_table_str_online
 
+write.table(K_lambda_table_str_online, file = "K_lambda_table_str_online.txt")
 
 
 ##### ~ ##### 
@@ -344,6 +362,177 @@ min(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, 
 mean(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
 
 
+##### ~ ##### 
 
 
-### 
+
+##### Plots: extended dataset #####
+### Data prep
+library(dplyr)
+Asteraceae_barplot <- Online_v7_mean %>%
+  group_by(Embryo.Ploidy.summ, Repr_mode_summ) %>%
+  count()
+str(Asteraceae_barplot)
+
+with(Online_v7, table(Repr_mode_summ, Embryo.Ploidy.summ)) # per ploidy
+
+### Barplot
+library(ggplot2)
+library(RColorBrewer)
+bargraph_ext <- ggplot(Asteraceae_barplot,
+                       aes(factor(Embryo.Ploidy.summ),
+                           n,
+                           fill = Repr_mode_summ)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.6) +
+  # theme_bw(base_size = 14) +
+  labs(x = "Ploidy level") +
+  labs(y = "Number of species") +
+  theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "gray50"),
+        plot.title = element_text(size = 24, hjust = 0.5),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        axis.title.x = element_blank()
+  ) +
+  # theme(axis.title = element_text(size=18),
+  #       axis.text = element_text(size=18, colour = "gray50"),
+  #       plot.title = element_text(size = 24, hjust = 0.5),
+  #       legend.text = element_text(size = 16),
+  #       legend.title = element_blank()
+  #       ) +
+  theme(aspect.ratio = 3/2) +
+  # scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = 0) +
+  scale_fill_manual(values = c(brewer.pal(name = "Set1", 3)[2],
+                               brewer.pal(name = "Set1", 3)[3],
+                               brewer.pal(name = "Set1", 3)[1])) +
+  theme(legend.position = c(.7425,.80))
+# ggtitle("Apomixis and ploidy")
+bargraph_ext
+ggsave(plot = bargraph_ext, filename = "ApomixisVSPloidy_ext_online.pdf", dpi = 150, device = "pdf", scale = 1)
+
+### Boxplot
+boxplot_ext <- ggplot(data = Online_v7_mean,
+                      aes(x = Reproductive.mode,
+                          y = as.numeric(Flowering.time..initiation.month.),
+                          fill = Reproductive.mode)) +
+  stat_boxplot(geom = "errorbar", width = 0.4, lwd = 0.5) +
+  geom_boxplot(lwd = 0.1, fatten = 10, outlier.size = 1.5) +
+  scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = -1) +
+  # labs(x = "Reproduction mode") +
+  labs(y = "Flowering initiation (month)") +
+  scale_y_continuous(limits = c(1, 10), breaks = c(1, 3, 5, 7, 9)) +
+  # scale_y_discrete(name = "Flowering initiation (month)",
+  #                    labels = c("January", "February", "March", "April",
+  #                               "May", "June", "July", "August",
+  #                               "September", "October", "November", "December"),
+  #                  limits = c("Februrary", "November")) + # can't get it to work...
+  # ggtitle("Apomixis and phenology") +
+  theme(legend.position = "none") +
+  theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "gray50"),
+        plot.title = element_text(size = 24, hjust = 0.5),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        axis.title.x = element_blank()
+  ) +
+  theme(aspect.ratio = 3/2) +
+  stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = .75, linetype = "dashed") +
+  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -12.5)
+# geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") +
+# scale_colour_brewer(palette = "Set1", direction = -1)
+boxplot_ext
+ggsave(plot = boxplot_ext, filename= "ApomixisVSPhenology_ext_online.pdf", dpi = 150, device = "pdf", scale = 1)
+
+ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1)
+ggsave(ggpubr::ggarrange(bargraph_ext, boxplot_ext, ncol = 2, nrow = 1), 
+       filename = "Barplot_Boxplot_ext_online.pdf", device = "pdf", dpi = 150)
+
+dev.off() # reset graphics device
+
+
+
+##### Other plots: strictly Alps #####
+### Data prep
+library(dplyr)
+Asteraceae_barplot <- Online_v7_StrictlyAlps %>%
+  group_by(Embryo.Ploidy.summ, Repr_mode_summ) %>%
+  count()
+str(Asteraceae_barplot)
+
+with(Online_v7_StrictlyAlps, table(Repr_mode_summ, Embryo.Ploidy.summ)) # per ploidy
+
+### Barplot
+library(ggplot2)
+library(RColorBrewer)
+bargraph_str <- ggplot(Asteraceae_barplot,
+                       aes(factor(Embryo.Ploidy.summ),
+                           n,
+                           fill = Repr_mode_summ)) +
+  geom_bar(stat = "identity", position = "stack", width = 0.6) +
+  # theme_bw(base_size = 14) +
+  labs(x = "Ploidy level") +
+  labs(y = "Number of species") +
+  theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "gray50"),
+        plot.title = element_text(size = 24, hjust = 0.5),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        axis.title.x = element_blank()
+  ) +
+  # theme(axis.title = element_text(size=18),
+  #       axis.text = element_text(size=18, colour = "gray50"),
+  #       plot.title = element_text(size = 24, hjust = 0.5),
+  #       legend.text = element_text(size = 16),
+  #       legend.title = element_blank()
+  #       ) +
+  theme(aspect.ratio = 3/2) +
+  # scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = 0) +
+  scale_fill_manual(values = c(brewer.pal(name = "Set1", 3)[2],
+                               brewer.pal(name = "Set1", 3)[3],
+                               brewer.pal(name = "Set1", 3)[1])) +
+  theme(legend.position = c(.7425,.80))
+# ggtitle("Apomixis and ploidy")
+bargraph_str
+ggsave(plot = bargraph, filename = "ApomixisVSPloidy_str_online.pdf", dpi = 150, device = "pdf", scale = 1)
+
+### Boxplot
+boxplot_str <- ggplot(data = Online_v7_StrictlyAlps,
+                      aes(x = Reproductive.mode,
+                          y = as.numeric(Flowering.time..initiation.month.),
+                          fill = Reproductive.mode)) +
+  stat_boxplot(geom = "errorbar", width = 0.4, lwd = 0.5) +
+  geom_boxplot(lwd = 0.1, fatten = 10, outlier.size = 1.5) +
+  scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = -1) +
+  # labs(x = "Reproduction mode") +
+  labs(y = "Flowering initiation (month)") +
+  scale_y_continuous(limits = c(1, 10), breaks = c(1, 3, 5, 7, 9)) +
+  # scale_y_discrete(name = "Flowering initiation (month)",
+  #                    labels = c("January", "February", "March", "April",
+  #                               "May", "June", "July", "August",
+  #                               "September", "October", "November", "December"),
+  #                  limits = c("Februrary", "November")) + # can't get it to work...
+  # ggtitle("Apomixis and phenology") +
+  theme(legend.position = "none") +
+  theme(axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, colour = "gray50"),
+        plot.title = element_text(size = 24, hjust = 0.5),
+        legend.text = element_text(size = 14),
+        legend.title = element_blank(),
+        axis.title.x = element_blank()
+  ) +
+  theme(aspect.ratio = 3/2) +
+  stat_summary(fun.y = mean, geom = "errorbar", aes(ymax = ..y.., ymin = ..y..), width = .75, linetype = "dashed") +
+  stat_summary(fun.y = median, fun.ymax = length, geom = "text", aes(label = paste("n = ", ..ymax..)), vjust = -12.5)
+# geom_jitter(width = 0.05, show.legend = F, aes(colour = Repr_mode_summ), alpha = 0.5, position = "dodge") +
+# scale_colour_brewer(palette = "Set1", direction = -1)
+boxplot_str
+ggsave(plot = boxplot_str, filename= "ApomixisVSPhenology_str_online.pdf", dpi = 150, device = "pdf", scale = 1)
+
+ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1)
+ggsave(ggpubr::ggarrange(bargraph_str, boxplot_str, ncol = 2, nrow = 1), 
+       filename = "Barplot_Boxplot_str_online.pdf", device = "pdf", dpi = 150)
+
+dev.off() # reset graphics device 
+
+
+###
