@@ -2,7 +2,7 @@
 Online_v7 <- read.csv(file = "/home/luca/Dropbox/Royal Botanic Gardens of Kew/ApomixisPaper/Apomixis_v7/Pegoraro_et_al_Apomixis-Online_Resource_1-v7 -JP_LP_OH2_LP.csv")
 str(Online_v7)
 
-Online_v7$SpeciesName <- as.character(Online_v7$SpeciesName)
+Online_v7$SpeciesName <- gsub('\\s$', '', Online_v7$SpeciesName)
 Online_v7$Reproductive.mode <- factor(Online_v7$Reproductive.mode, levels = c("Sexual", "Apomictic"))
 Online_v7$Embryo.Ploidy <- factor(Online_v7$Embryo.Ploidy, levels = c("2x", "3x", "4x", "6x", "8x", "12x"))
 Online_v7$Embryo.Ploidy.summ <- gsub('6x|8x|12x', 'Poly', Online_v7$Embryo.Ploidy)
@@ -13,6 +13,7 @@ Online_v7$Flowering.time..initiation.month.
 str(Online_v7)
 
 ### Adding a level for "mixed" reproductive mode
+library(dplyr)
 i = 1
 Repr_mode_summ <- factor(rep(1, length(unique(Online_v7$SpeciesName))))
 levels(Repr_mode_summ) <- c("Sexual", "Mixed", "Apomictic")
@@ -28,10 +29,25 @@ Repr_mode_summ
 
 Online_v7 <- merge(Online_v7, Repr_mode_summ, by = "SpeciesName", all.x = T)
 
+##### How many genera and species? - Extended ######
+unique(gsub('\\s.*', '', Online_v7$SpeciesName)) # list of unique genera
+length(unique(gsub('\\s.*', '', Online_v7$SpeciesName))) # number of unique genera
+unique(Online_v7$SpeciesName) # number of taxa (included subspecies)
 
+unique(gsub('subsp.*', '', Online_v7$SpeciesName)) # list of unique species (no subspecies)
+length(unique(gsub('subsp.*', '', Online_v7$SpeciesName))) # number of unique species (no subspecies)
+
+table(Online_v7$Repr_mode_summ) # number of sexual and apomictic taxa
+
+##### Average elevation ##### 
+as.numeric(gsub('—', 'NA', Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection))
+
+min(as.numeric(gsub('—', 'NA', Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+mean(as.numeric(gsub('—', 'NA', Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+max(as.numeric(gsub('—', 'NA', Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
 
 ##### Changing names of species back to those used on the tree ##### 
-JanTree4$tip.label
+sort(JanTree4$tip.label) == levels(DATA$SpeciesName)
 
 Online_v7$SpeciesName <- gsub('\\s$', '', Online_v7$SpeciesName)
 Online_v7$SpeciesName <- gsub('\\s', '_', Online_v7$SpeciesName)
@@ -110,7 +126,11 @@ nrow(DATA_CC_mean_red)
 
 write.csv(Online_v7_mean, file = "Online_v7_mean.csv")
 
-### Checking tree
+table(Online_v7_mean$Repr_mode_summ)
+Online_v7_mean[Online_v7_mean$Repr_mode_summ == "Mixed", ]
+with(Online_v7, table(Reproductive.mode, Embryo.Ploidy.summ))
+
+  ### Checking tree
 library(ape)
 
 setdiff(Online_v7_mean$SpeciesName, JanTree4$tip.label)
@@ -206,12 +226,22 @@ write.tree(JanTree4_CC_online, file = "JanTree4_CC_online.tre")
 
 ##### Easier to just exclude accessions with "—" #####
 Online_v7_StrictlyAlps <- Online_v7[Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection != "—" & !is.na(Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection), ]
-Online_v7_StrictlyAlps[Online_v7_StrictlyAlps$Lat_N == "—", "Collection_ID"]
+Online_v7_StrictlyAlps[Online_v7_StrictlyAlps$Lat_N == "—", ]
 nrow(Online_v7_StrictlyAlps)
 
 str(Online_v7_StrictlyAlps)
 Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection
 Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection <- as.integer(as.character(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection))
+
+##### How many genera and species? - Strictly Alps ######
+unique(gsub('\\s.*', '', Online_v7_StrictlyAlps$SpeciesName)) # list of unique genera
+length(unique(gsub('\\s.*', '', Online_v7_StrictlyAlps$SpeciesName))) # number of unique genera
+unique(Online_v7_StrictlyAlps$SpeciesName) # number of taxa (included subspecies)
+
+unique(gsub('subsp.*', '', Online_v7_StrictlyAlps$SpeciesName)) # list of unique species (no subspecies)
+length(unique(gsub('subsp.*', '', Online_v7_StrictlyAlps$SpeciesName))) # number of unique species (no subspecies)
+
+table(Online_v7_StrictlyAlps$Repr_mode_summ) # number of sexual and apomictic taxa
 
 ##### Summarizing strictly alpine #####
 library(dplyr) 
@@ -449,6 +479,61 @@ ggsave(ggpubr::ggarrange(bargraph_ext, boxplot_ext, ncol = 2, nrow = 1),
 
 dev.off() # reset graphics device
 
+###  ggTree circular 
+library(ape)
+library(ggplot2)
+library(ggtree)
+library(RColorBrewer)
+
+### Need to tweak the clade labels positioing after changing the underlying tree. Kept original nidge values (commented out)
+ggJanTree4_CC_online_circular <- ggtree(JanTree4_CC_online, layout = "circular") %<+% DATA_CC_red_ggtree +
+  geom_tiplab2(size = 1.5, offset = 0.1) +
+  geom_hilight(mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + .05), size = .5) +
+  # scale_color_manual(values = c("red", "black", "orange")) +
+  # scale_colour_brewer(palette = "Set1") +
+  scale_colour_manual(values = c(brewer.pal(name = "Set1", 3)[2],
+                                 brewer.pal(name = "Set1", 3)[3],
+                                 brewer.pal(name = "Set1", 3)[1])) +
+  # ### Tribe labels on MRCA nodes
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -2.5, nudge_y = 10) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 0, nudge_y = 10) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = .5, nudge_x = -2.5, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -6, nudge_y = 20) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_x = 0, nudge_y = -5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -4, nudge_y = 9) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -2.5, nudge_y = 5) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -1, nudge_y = 3) +
+  # ### Tribe labels on MRCA nodes
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 1, nudge_y = -0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = 1, nudge_x = 0, nudge_y = -0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -0, nudge_y = 0) +  
+  geom_treescale(x = 1, y = 0, offset = 0, fontsize = 3) +
+  theme(legend.position = c(0.1,0.1)) +
+  guides(colour = guide_legend(override.aes = list(size = 3)))
+
+ggJanTree4_CC_online_circular
+
+ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular", 
+       device = "png", dpi = 300, scale = 1.5)
 
 
 ##### Other plots: strictly Alps #####
@@ -536,3 +621,6 @@ dev.off() # reset graphics device
 
 
 ###
+
+
+
