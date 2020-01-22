@@ -577,3 +577,27 @@ Online_v7 <- cbind.fill(DATA[order(DATA$ID_FloraAlpina), c(1:18, 117:129)],
 Online_v7
 colnames(Online_v7)
 Online_v7[, c(2,32)]
+write.csv(Online_v7, file = "Online_v7_manual.csv")
+
+
+# check <- read.csv(file ="NewApomixisData_FloraAlpinaID.csv")
+# check$SpeciesName
+# NewApomixisData_FloraAlpinaID$SpeciesName
+# intersect(check$SpeciesName, NewApomixisData_FloraAlpinaID$SpeciesName)
+# setdiff(NewApomixisData_FloraAlpinaID$SpeciesName, check$SpeciesName)
+# 
+# check$ID
+# NewApomixisData_FloraAlpinaID$ID
+# intersect(check$ID, NewApomixisData_FloraAlpinaID$ID)
+# setdiff(NewApomixisData_FloraAlpinaID$ID, check$ID)
+# setdiff(check$ID, NewApomixisData_FloraAlpinaID$ID)
+
+
+
+#### checking
+testDATA <- DATA[order(DATA$ID_FloraAlpina), ]
+nrow(testDATA)
+
+testNewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[order(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina), ]
+nrow(testNewApomixisData_FloraAlpinaID_manual)
+
