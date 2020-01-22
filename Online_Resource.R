@@ -549,15 +549,15 @@ ggJanTree4_CC_online_circular <- ggtree(JanTree4_CC_online_ggtree, layout = "cir
   # geom_treescale(x = .5, y = 0, offset = 0, fontsize = 3) +
   theme(legend.position = c(0.05, 0.05)) +
   guides(colour = guide_legend(override.aes = list(size = 5))) +  
-  xlim(0, 20)
+  xlim(0, 1.1)
 
 ggJanTree4_CC_online_circular
 
-ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular_cladogram.png", 
+ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular.png", 
        device = "png", dpi = 300, scale = 1, 
        width = 30, height = 30, units = "cm")
 
-ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular_cladogram.pdf", 
+ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular.pdf", 
        device = "pdf", dpi = 300, scale = 1, 
        width = 30, height = 30, units = "cm")
 
