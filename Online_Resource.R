@@ -80,18 +80,29 @@ DATA[DATA$SpeciesName %in% name.changes$SpeciesName.y, "SpeciesName"]
 name.changes$SpeciesName.y
 
 ### Substitute names
+# x = 1
+# while (x <= nrow(Online_v7)) {
+#   if (Online_v7$SpeciesName[x] %in% name.changes$SpeciesName.x) {
+#     Online_v7$SpeciesName[x] <- as.character(name.changes[match(Online_v7$SpeciesName[x], name.changes$SpeciesName.x), "SpeciesName.y"])
+#   }
+#   x = x + 1
+# }
+# Online_v7$SpeciesName
+
+JanTree4_CC_online <- JanTree4
+
 x = 1
-while (x <= nrow(Online_v7)) {
-  if (Online_v7$SpeciesName[x] %in% name.changes$SpeciesName.x) {
-    Online_v7$SpeciesName[x] <- as.character(name.changes[match(Online_v7$SpeciesName[x], name.changes$SpeciesName.x), "SpeciesName.y"])
+while (x <= length(JanTree4_CC_online$tip.label)) {
+  if (JanTree4_CC_online$tip.label[x] %in% name.changes$SpeciesName.y) {
+    JanTree4_CC_online$tip.label[x] <- as.character(name.changes[match(JanTree4_CC_online$tip.label[x], name.changes$SpeciesName.y), "SpeciesName.x"])
   }
   x = x + 1
 }
-Online_v7$SpeciesName
+JanTree4_CC_online$tip.label
   
-setdiff(Online_v7$SpeciesName, DATA$SpeciesName)
-setdiff(DATA$SpeciesName, Online_v7$SpeciesName)
-### all looks good
+setdiff(Online_v7$SpeciesName, item)
+setdiff(item, Online_v7$SpeciesName)
+### all looks good, going to drop the two species later
 
 
 
@@ -130,13 +141,13 @@ table(Online_v7_mean$Repr_mode_summ)
 Online_v7_mean[Online_v7_mean$Repr_mode_summ == "Mixed", ]
 with(Online_v7, table(Reproductive.mode, Embryo.Ploidy.summ))
 
-  ### Checking tree
+### Checking tree
 library(ape)
 
-setdiff(Online_v7_mean$SpeciesName, JanTree4$tip.label)
-setdiff(JanTree4$tip.label, Online_v7_mean$SpeciesName)
+setdiff(Online_v7_mean$SpeciesName, JanTree4_CC_online$tip.label)
+setdiff(JanTree4_CC_online$tip.label, Online_v7_mean$SpeciesName)
 
-JanTree4_CC_online <- drop.tip(JanTree4_CC, setdiff(JanTree4$tip.label, Online_v7$SpeciesName))
+JanTree4_CC_online <- drop.tip(JanTree4_CC_online, setdiff(JanTree4_CC_online$tip.label, Online_v7_mean$SpeciesName))
 JanTree4_CC_online
 
 setdiff(Online_v7_mean$SpeciesName, JanTree4_CC_online$tip.label)
@@ -405,6 +416,7 @@ Asteraceae_barplot <- Online_v7_mean %>%
 str(Asteraceae_barplot)
 
 with(Online_v7, table(Repr_mode_summ, Embryo.Ploidy.summ)) # per ploidy
+Online_v7_mean[Online_v7_mean$Repr_mode_summ == "Mixed", c("SpeciesName", "Embryo.Ploidy.summ", "Repr_mode_summ")]
 
 ### Barplot
 library(ggplot2)
@@ -432,10 +444,10 @@ bargraph_ext <- ggplot(Asteraceae_barplot,
   #       ) +
   theme(aspect.ratio = 3/2) +
   # scale_fill_brewer(palette = "Set1", name = "Reproduction mode", direction = 0) +
-  scale_fill_manual(values = c(brewer.pal(name = "Set1", 3)[2],
-                               brewer.pal(name = "Set1", 3)[3],
-                               brewer.pal(name = "Set1", 3)[1])) +
-  theme(legend.position = c(.7425,.80))
+  scale_fill_manual(values = c(brewer.pal(name = "Set1", 5)[2],
+                               brewer.pal(name = "Set1", 5)[5],
+                               brewer.pal(name = "Set1", 5)[1])) +
+  theme(legend.position = c(.7,.8))
 # ggtitle("Apomixis and ploidy")
 bargraph_ext
 ggsave(plot = bargraph_ext, filename = "ApomixisVSPloidy_ext_online.pdf", dpi = 150, device = "pdf", scale = 1)
@@ -473,67 +485,81 @@ boxplot_ext <- ggplot(data = Online_v7_mean,
 boxplot_ext
 ggsave(plot = boxplot_ext, filename= "ApomixisVSPhenology_ext_online.pdf", dpi = 150, device = "pdf", scale = 1)
 
-ggpubr::ggarrange(bargraph, boxplot, ncol = 2, nrow = 1)
+ggpubr::ggarrange(bargraph_ext, boxplot_ext, ncol = 2, nrow = 1)
 ggsave(ggpubr::ggarrange(bargraph_ext, boxplot_ext, ncol = 2, nrow = 1), 
        filename = "Barplot_Boxplot_ext_online.pdf", device = "pdf", dpi = 150)
 
 dev.off() # reset graphics device
 
-###  ggTree circular 
+#####  ggTree circular #####
 library(ape)
 library(ggplot2)
 library(ggtree)
 library(RColorBrewer)
 
-### Need to tweak the clade labels positioing after changing the underlying tree. Kept original nidge values (commented out)
-ggJanTree4_CC_online_circular <- ggtree(JanTree4_CC_online, layout = "circular") %<+% DATA_CC_red_ggtree +
-  geom_tiplab2(size = 1.5, offset = 0.1) +
-  geom_hilight(mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
-  geom_hilight(mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
-  geom_hilight(mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
-  geom_hilight(mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
-  geom_hilight(mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
-  geom_hilight(mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
-  geom_hilight(mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], fill = brewer.pal(10, "Set3")[6]) +
-  geom_hilight(mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
-  geom_hilight(mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
-  geom_hilight(mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
-  geom_tippoint(aes(color = Repr_mode_summ, x = x + .05), size = .5) +
-  # scale_color_manual(values = c("red", "black", "orange")) +
-  # scale_colour_brewer(palette = "Set1") +
-  scale_colour_manual(values = c(brewer.pal(name = "Set1", 3)[2],
-                                 brewer.pal(name = "Set1", 3)[3],
-                                 brewer.pal(name = "Set1", 3)[1])) +
+library(geiger)
+library(phytools)
+
+JanTree4_CC_online_ggtree <- JanTree4_CC_online
+JanTree4_CC_online_ggtree$tip.label <- gsub('_', ' ', JanTree4_CC_online_ggtree$tip.label)
+
+plotTree(JanTree4_CC_online_ggtree, fsize = .35)
+# JanTree4_CC_online_ggtree$edge.length <- NULL
+# JanTree4_CC_online_ggtree$edge.length <- JanTree4_CC_online_ggtree$edge.length*2
+# JanTree4_CC_online_ggtree <- rescale(JanTree4_CC_online_ggtree, model = "BM")
+# plotTree(JanTree4_CC_online_ggtree, fsize = .35)
+
+### Make ad-hoc table for Repr_mode to be plotted: 
+Online_v7_mean[match(JanTree4_CC_online$tip.label, Online_v7_mean$SpeciesName), "SpeciesName"] == JanTree4_CC_online$tip.label
+Online_v7_ggplot <- Online_v7_mean[match(JanTree4_CC_online$tip.label, Online_v7_mean$SpeciesName), c("SpeciesName", "Repr_mode_summ")]
+Online_v7_ggplot$SpeciesName <- gsub('_', ' ', Online_v7_ggplot$SpeciesName)
+Online_v7_ggplot$Repr_mode_summ
+
+setdiff(Online_v7_ggplot$SpeciesName, JanTree4_CC_online_ggtree$tip.label)
+setdiff(JanTree4_CC_online_ggtree$tip.label, Online_v7_ggplot$SpeciesName)
+
+# use ggtree(..., branch.length = "none")
+ggJanTree4_CC_online_circular <- ggtree(JanTree4_CC_online_ggtree, layout = "circular", size = 1) %<+% Online_v7_ggplot +
+  geom_tiplab2(size = 2, offset = 0.025, fontface = "italic") +
+  geom_hilight(mrca(JanTree4_CC_online)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Symphyotrichum_squamatum", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Galinsoga_quadriradiata", "Bidens_bipinnatus"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
+  geom_tippoint(aes(color = Repr_mode_summ, x = x + .0125), size = 3) +
+  scale_colour_manual(name = "Reproductive mode", values = c(brewer.pal(name = "Set1", 5)[2],
+                                 brewer.pal(name = "Set1", 5)[5],
+                                 brewer.pal(name = "Set1", 5)[1]),) +
   # ### Tribe labels on MRCA nodes
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -2.5, nudge_y = 10) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 0, nudge_y = 10) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 5) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = .5, nudge_x = -2.5, nudge_y = 5) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -6, nudge_y = 20) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = .75, nudge_x = 0, nudge_y = -5) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -4, nudge_y = 9) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -2.5, nudge_y = 5) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -1, nudge_y = 3) +
-  # ### Tribe labels on MRCA nodes
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Aster_squamatus", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 1, nudge_y = -0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Galinsoga_quadriradiata", "Bidens_bipinnata"], label = "Heliantheae"), hjust = 1, nudge_x = 0, nudge_y = -0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
-  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -0, nudge_y = 0) +  
-  geom_treescale(x = 1, y = 0, offset = 0, fontsize = 3) +
-  theme(legend.position = c(0.1,0.1)) +
-  guides(colour = guide_legend(override.aes = list(size = 3)))
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Symphyotrichum_squamatum", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 1, nudge_y = -0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Galinsoga_quadriradiata", "Bidens_bipinnatus"], label = "Heliantheae"), hjust = 1, nudge_x = 0, nudge_y = -0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_treescale(x = .5, y = 0, offset = 0, fontsize = 3) +
+  theme(legend.position = c(0.05, 0.05)) +
+  guides(colour = guide_legend(override.aes = list(size = 5))) +  
+  xlim(0, 20)
 
 ggJanTree4_CC_online_circular
 
-ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular", 
-       device = "png", dpi = 300, scale = 1.5)
+ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular_cladogram.png", 
+       device = "png", dpi = 300, scale = 1, 
+       width = 30, height = 30, units = "cm")
+
+ggsave(ggJanTree4_CC_online_circular, filename = "ggJanTree4_CC_online_circular_cladogram.pdf", 
+       device = "pdf", dpi = 300, scale = 1, 
+       width = 30, height = 30, units = "cm")
 
 
 ##### Other plots: strictly Alps #####
