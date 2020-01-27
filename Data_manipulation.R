@@ -13,14 +13,14 @@ sub <- as.character(GSheet$Flora.Alpina.ID)
 index <- grep('124\\.[0-9]+\\.[0-9]+$', sub) # grab the positions of the values matched by the RegEx
 sub[index] # these are the actual values that I want to change
 
-sub[index] <- paste(sub[index], ".0", sep="") # paste DIRECTLY onto the grabbed positions 
+sub[index] <- paste(sub[index], ".0", sep = "") # paste DIRECTLY onto the grabbed positions 
 sub
 length(sub)
 length(GSheet$Flora.Alpina.ID)
 cbind(sub, as.vector(GSheet[,1])) # sanity check to see if all went well
 
 GSheet[,1] <- sub
-write.csv(GSheet, file="GSheet_mod.csv")
+write.csv(GSheet, file = "GSheet_mod.csv")
 # View(GSheet)
 
 
@@ -56,14 +56,15 @@ NewApoData <- unique(NewApoData)
 NewApoData <- NewApoData[, c(2,1,3:11)]
 
 nrow(NewApomixisData) - nrow(NewApoData)
+setdiff(NewApomixisData$ID, NewApoData$ID)
 
 write.csv(NewApoData, file = "NewApoData.csv")
 
-NewApomixisData[,c("Flora.Alpina.ID")] <- 0
+# NewApomixisData[,c("Flora.Alpina.ID")] <- NULL
 length(intersect(NewApomixisData[,"ID"], NewApoData[,"ID"]))
 
 colnames(NewApomixisData)[2] <- "SpeciesName"
-NewApomixisData_FloraAlpinaID <- rbind(NewApoData, NewApomixisData)
+NewApomixisData_FloraAlpinaID <- rbind(NewApoData[, 1:9], NewApomixisData[, 1:9])
 nrow(NewApomixisData_FloraAlpinaID)
 NewApomixisData_FloraAlpinaID$SpeciesName <- gsub(' $','',NewApomixisData_FloraAlpinaID$SpeciesName)
 NewApomixisData_FloraAlpinaID <- NewApomixisData_FloraAlpinaID[!duplicated(NewApomixisData_FloraAlpinaID[, c("ID", "SpeciesName","GS","Altitude")]),]
@@ -75,32 +76,30 @@ write.csv(NewApomixisData_FloraAlpinaID, file ="NewApomixisData_FloraAlpinaID.cs
 
 
 
-##### Manually removing uncertain accessions and correcting #####
+##### Manually removing uncertain accessions and correcting data #####
+# ### These are accessions with doubtful data, to be dropped - DONE MANUALLY OUTSIDE OF R
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID[-grep(' IT3', NewApomixisData_FloraAlpinaID$ID), ]
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('IT7$', NewApomixisData_FloraAlpinaID_manual$ID), ]
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('A102', NewApomixisData_FloraAlpinaID_manual$ID), ]
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('CH60', NewApomixisData_FloraAlpinaID_manual$ID), ]
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('FR582', NewApomixisData_FloraAlpinaID_manual$ID), ]
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('OH261', NewApomixisData_FloraAlpinaID_manual$ID), ]
+# 
+# NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('Scorzonera hispanica', NewApomixisData_FloraAlpinaID_manual$SpeciesName), ]
+# nrow(NewApomixisData_FloraAlpinaID_manual)
+# setdiff(NewApomixisData_FloraAlpinaID$ID, NewApomixisData_FloraAlpinaID_manual$ID)
 
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID[-grep(' IT3', NewApomixisData_FloraAlpinaID$ID), ]
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('IT7$', NewApomixisData_FloraAlpinaID_manual$ID), ]
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('A102', NewApomixisData_FloraAlpinaID_manual$ID), ]
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('CH60', NewApomixisData_FloraAlpinaID_manual$ID), ]
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('FR582', NewApomixisData_FloraAlpinaID_manual$ID), ]
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('OH261', NewApomixisData_FloraAlpinaID_manual$ID), ]
+### Manual check outside R... 
+NewApomixisData_FloraAlpinaID_manual <- read.csv(file = "NewApomixisData_FloraAlpinaID_manual_Jaume2.csv")
 
-NewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[-grep('Scorzonera hispanica', NewApomixisData_FloraAlpinaID_manual$SpeciesName), ]
-
-nrow(NewApomixisData_FloraAlpinaID_manual)
-
+setdiff(NewApomixisData_FloraAlpinaID_manual$ID, NewApomixisData_FloraAlpinaID$ID)
 setdiff(NewApomixisData_FloraAlpinaID$ID, NewApomixisData_FloraAlpinaID_manual$ID)
 
-# ### Legacy table, kept for comparison: 
-# NewApomixisData_FloraAlpinaID_manual_Jaume <- read.csv(file="NewApomixisData_FloraAlpinaID_manual_Jaume.csv")
-# 
-# setdiff(NewApomixisData_FloraAlpinaID_manual_Jaume$ID, NewApomixisData_FloraAlpinaID$ID)
-# setdiff(NewApomixisData_FloraAlpinaID$ID, NewApomixisData_FloraAlpinaID_manual_Jaume$ID)
-# 
-# setdiff(NewApomixisData_FloraAlpinaID_manual_Jaume$SpeciesName, NewApomixisData_FloraAlpinaID$SpeciesName)
-# setdiff(NewApomixisData_FloraAlpinaID$SpeciesName, NewApomixisData_FloraAlpinaID_manual_Jaume$SpeciesName)
-# 
-# nrow(NewApomixisData_FloraAlpinaID_manual_Jaume)
-# nrow(NewApomixisData_FloraAlpinaID)
+setdiff(NewApomixisData_FloraAlpinaID_manual$SpeciesName, NewApomixisData_FloraAlpinaID$SpeciesName)
+setdiff(NewApomixisData_FloraAlpinaID$SpeciesName, NewApomixisData_FloraAlpinaID_manual$SpeciesName)
+
+nrow(NewApomixisData_FloraAlpinaID_manual)
+nrow(NewApomixisData_FloraAlpinaID)
 
 
 
@@ -122,6 +121,7 @@ JanTree2$tip.label
 
 ##### Checking names and tree tip labels #####
 names_correspondences <- read.csv(file = "Apomixis_asteraceae_cbind.csv")
+names_correspondences <- names_correspondences[order(names_correspondences$Name.on.tree), c("Name.on.tree", "Name.on.original.table")]
 
 is.nothing <- function(x) {
   if (x==""){
@@ -134,14 +134,14 @@ is.nothing <- function(x) {
 
 pos <- unlist(lapply(names_correspondences$Name.on.original.table, is.nothing))
 
-count=1
+count = 1
 while (count <= nrow(names_correspondences)){
   if (pos[count]) {
     names_correspondences$newcolumn[count] <- as.character(names_correspondences$Name.on.tree[count])
   } else {
     names_correspondences$newcolumn[count] <- as.character(names_correspondences$Name.on.original.table[count])
   }
-  count<-count+1
+  count <- count + 1
 }
 
 old_names <- as.character(names_correspondences$Name.on.tree)
@@ -149,9 +149,16 @@ old_names <- gsub(' ', '_', old_names)
 old_names <- gsub('subs._', 'subsp._', old_names)
 new_names <- names_correspondences$newcolumn
 
-setdiff(JanTree$tip.label, old_names)
-setdiff(old_names, JanTree$tip.label)
-intersect(JanTree$tip.label, old_names)
+intersect(old_names, new_names)
+setdiff(old_names, new_names)
+setdiff(new_names, old_names)
+
+length(names_correspondences$newcolumn) 
+length(JanTree2$tip.label)
+
+setdiff(JanTree2$tip.label, old_names)
+setdiff(old_names, JanTree2$tip.label)
+intersect(JanTree2$tip.label, old_names)
 
 duplicated(old_names)
 old_names[which(duplicated(old_names))]
@@ -161,13 +168,11 @@ is.ultrametric(JanTree2)
 JanTree2 <- phytools::force.ultrametric(JanTree2)
 ape::is.binary(JanTree2)
 
-new <- names_correspondences[order(names_correspondences$Name.on.tree),]
-
 
 
 ##### Adding tips to tree #####
 library(phytools)
-### make sure that tree is read as ultrametric before modiying tips! Otherwise some functions may toss branch legnths. 
+### make sure that tree is read as ultrametric before modifying tips! Otherwise some functions may break branch legnths. 
 
 #### Alternative function that could be used to add tips; it doesn't let you decide specifically where inside the genus it'll put the new tip though. 
 # par(mfrow=c(1,2))
@@ -199,9 +204,11 @@ JanTree2 <- bind.tip(JanTree2, "Leucanthemum_halleri", where = 318)
 mrca(JanTree2)["Senecio_doronicum", "Senecio_doria"]
 JanTree2 <- bind.tip(JanTree2, "Senecio_nemorensis_subsp._jacquinianus", where = 333)
 
-is.ultrametric(JanTree2)
-JanTree2$edge.length
+is.binary(JanTree)
+is.ultrametric(JanTree)
+JanTree$edge.length[JanTree$edge.length == 0]
 
+length(JanTree2$tip.label)
 JanTree2$tip.label[order(JanTree2$tip.label)]
 JanTree2$tip.label[which(duplicated(JanTree2$tip.label))]
 
@@ -229,6 +236,8 @@ setdiff(new_names, JanTree3$tip.label)
 ##### Check that names on tree correspond to names on dataset #####
 NewApomixisData_FloraAlpinaID_manual
 NewApomixisData_FloraAlpinaID_manual$X <- NULL
+NewApomixisData_FloraAlpinaID_manual$X.1 <- NULL
+NewApomixisData_FloraAlpinaID_manual$X.2 <- NULL
 NewApomixisData_FloraAlpinaID_manual$SpeciesName <- gsub(' $', '', NewApomixisData_FloraAlpinaID_manual$SpeciesName)
 NewApomixisData_FloraAlpinaID_manual$SpeciesName <- gsub(' ', '_', NewApomixisData_FloraAlpinaID_manual$SpeciesName)
 NewApomixisData_FloraAlpinaID_manual$SpeciesName <- gsub('__', '_', NewApomixisData_FloraAlpinaID_manual$SpeciesName)
@@ -266,24 +275,23 @@ JanTree4$edge.length[JanTree4$edge.length == 0]
 plot(JanTree4, cex = .5, no.margin = T)
 plotTree(JanTree4, type = "fan", ftype="i", fsize = 0.25, lwd=1)
 
-### Visual check of differences betweeen trees
-library(phytools)
-facetoface1 <- cophylo(JanTree, JanTree2) # original VS added tips
-plot(facetoface1, fsize = .3, pts = F)
-facetoface2 <- cophylo(JanTree2, JanTree4) # added tips VS renamed & dropped tips
-plot(facetoface2, fsize = .3, pts = F)
-
-par(mfrow=c(1,2))
-plot(JanTree2, cex = .25, tip.color = ifelse(JanTree2$tip.label %in% setdiff(JanTree2$tip.label, JanTree$tip.label), "red","black"))
-plot(JanTree4, cex = .25, tip.color = ifelse(JanTree4$tip.label %in% setdiff(JanTree4$tip.label, JanTree2$tip.label), "red","black"))
-par(mfrow=c(1,1))
+# ### Visual check of differences betweeen trees
+# library(phytools)
+# facetoface1 <- cophylo(JanTree, JanTree2) # original VS added tips
+# plot(facetoface1, fsize = .3, pts = F)
+# facetoface2 <- cophylo(JanTree2, JanTree4) # added tips VS renamed & dropped tips
+# plot(facetoface2, fsize = .3, pts = F)
+# 
+# par(mfrow=c(1,2))
+# plot(JanTree2, cex = .25, tip.color = ifelse(JanTree2$tip.label %in% setdiff(JanTree2$tip.label, JanTree$tip.label), "red","black"))
+# plot(JanTree4, cex = .25, tip.color = ifelse(JanTree4$tip.label %in% setdiff(JanTree4$tip.label, JanTree2$tip.label), "red","black"))
+# par(mfrow=c(1,1))
 
 ape::write.tree(JanTree4, file = "JanTree4.tre")
 
+
+
 ##### ~ ##### 
-
-
-### UP TO HERE IT SHOULD BE WORKING OKAY. CHECK IF THE CODE AFTER BREAKS ### 
 
 
 
@@ -307,7 +315,10 @@ FloraAlpina$ID_FloraAlpina <- sub1
 ### Merge NewApomixisData_manual with Flora Alpina original data using FloraAlpina ID as key
 colnames(NewApomixisData_FloraAlpinaID_manual)[10] <- "ID_FloraAlpina"
 DATA <- merge(NewApomixisData_FloraAlpinaID_manual, FloraAlpina, by = "ID_FloraAlpina", all.x = T)
-setdiff(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina)
+setdiff(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina) 
+setdiff(DATA$ID_FloraAlpina, NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina)
+setdiff(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina, DATA$ID_FloraAlpina)
+NewApomixisData_FloraAlpinaID_manual[NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina %in% setdiff(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina, FloraAlpina$ID_FloraAlpina), ]
 colnames(DATA)[9] <- "Chr.number"
 # View(DATA)
 
@@ -441,7 +452,10 @@ DATA[DATA$SpeciesName == "Aremisia_nitida", 11:116] <- DATA[DATA$SpeciesName == 
 DATA[DATA$SpeciesName == "Sonchus_tenerrimus", 11:116] <- DATA[DATA$SpeciesName == "Sonchus_oleraceus", 11:116][1,]
 DATA[DATA$SpeciesName == "Calendula_tripterocarpa", 11:116] <- FloraAlpina[grep('Calendula arvensis', FloraAlpina$CompleteName), 2:107]
 
-
+write.csv(
+  cbind(c("Hieracium_valdepilosum", "Hieracium_glaucopsis", "Hieracium_cydoniifolium", "Hieracium_froelichianum", "Hieracium_ramosissimums_subsp._lactucifolium", "Schlagintweitia_huteri_subsp._lantoscana", "Aremisia_nitida", "Calendula_tripterocarpa"), 
+        c("Hieracium_villosum", "Hieracium_villosum", "Hieracium_villosum", "Hieracium bifidum", "Hieracium_amplexicaule", "Schlagintweitia_intybacea", "Artemisia_glacialis", "Calendula arvensis")
+        ), file = "Species_data_substitution_table.csv")
 
 ##### Factorization of variables ##### 
 ### Phytosociology 
@@ -678,13 +692,15 @@ DATA$Repr_mode_summ <- Repr_mode_summ_ext$Repr_mode_summ
 str(DATA)
 colnames(DATA)
 
-##### Calculate mean elevation from Flora Alpina data and Ozenda 1985 #####
-### From Ozenda 1985: cutpoints between vegtation belts for the Alps
+##### Calculate mean elevation from Flora Alpina data and Ozenda (1985) #####
+### From Ozenda (1985): cutpoints between vegetation belts for the Alps, Southern and Nothern
+
 mean(c(600,800)) # collineen
 mean(c(1300,1500)) # montagnarde
 mean(c(2000,2200)) # subalpin
 mean(c(2000,2200)) # alpin
 mean(c(2700,2900)) # nival
+
 ### Mean elevation of vegetation belts
 mean(c(0, 
        mean(c(600,800))
@@ -702,19 +718,25 @@ mean(c(mean(c(2700,2900)),
        4500
 )) # nival
 
+### Append Flora Alpina elevation preference data
 elevation_Ozenda <- DATA[, c("SpeciesName", "Collinaire", "Montane", "Subalpine", "Alpine", "Nival")]
 nrow(elevation_Ozenda)
 elevation_Ozenda <- elevation_Ozenda[!duplicated(elevation_Ozenda$SpeciesName), ]
 nrow(elevation_Ozenda)
-colnames(elevation_Ozenda)
 elevation_Ozenda$sum <- rowSums(elevation_Ozenda[, 2:6])
+head(elevation_Ozenda)
+
+### Multiply elevation preference and average elevation
 elevation_Ozenda[, 2] <- elevation_Ozenda[, 2]*350 # collineen
 elevation_Ozenda[, 3] <- elevation_Ozenda[, 3]*1050 # montagnard
 elevation_Ozenda[, 4] <- elevation_Ozenda[, 4]*1750 # subalpin
 elevation_Ozenda[, 5] <- elevation_Ozenda[, 5]*2450 # alpin
 elevation_Ozenda[, 6] <- elevation_Ozenda[, 6]*3650 # nival
+head(elevation_Ozenda)
 
+### Average using weighted mean
 elevation_Ozenda$avg <- sapply(1:nrow(elevation_Ozenda), function(x) sum(elevation_Ozenda[x,2:6])/elevation_Ozenda[x,"sum"])
+head(elevation_Ozenda)
 
 DATA <- merge(DATA, elevation_Ozenda[, c("SpeciesName", "avg")], by = "SpeciesName", all.x = T)
 colnames(DATA)[129] <- "elevation_Ozenda"
@@ -1122,7 +1144,8 @@ geiger::name.check(JanTree4_StrictlyAlps, DATA_StrictlyAlps_mean_red)
 JanTree4_StrictlyAlps$tip.label == as.character(DATA_StrictlyAlps_mean_red$SpeciesName)
 DATA_StrictlyAlps_mean_red <- DATA_StrictlyAlps_mean_red[c(match(DATA_StrictlyAlps_mean_red$SpeciesName, JanTree4_StrictlyAlps$tip.label)), ]
 geiger::name.check(JanTree4_StrictlyAlps, DATA_StrictlyAlps_mean_red)
-JanTree4_StrictlyAlps$tip.label == as.character(DATA_StrictlyAlps_mean_red$SpeciesName)
+sort(JanTree4_StrictlyAlps$tip.label) == sort(as.character(DATA_StrictlyAlps_mean_red$SpeciesName))
+# cbind(sort(JanTree4_StrictlyAlps$tip.label), sort(as.character(DATA_StrictlyAlps_mean_red$SpeciesName)))
 
 DATA_StrictlyAlps_mean_red[!complete.cases(DATA_StrictlyAlps_mean_red), ]
 
