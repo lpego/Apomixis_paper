@@ -29,6 +29,41 @@ Repr_mode_summ
 
 Online_v7 <- merge(Online_v7, Repr_mode_summ, by = "SpeciesName", all.x = T)
 
+##### Adding botanical authors names to species names ##### 
+library(taxize)
+Online_v7_mean$SpeciesName
+gsub('_', ' ', Online_v7_mean$SpeciesName)
+
+View(gnr_datasources()) # IPNI is id 167
+t <- gnr_resolve("Eupatorium cannabinum", data_source_ids = 167, canonical = F)
+t
+t$user_supplied_name
+t$submitted_name
+t$data_source_title
+t$score
+t$matched_name
+t$matched_name2
+
+ipni_match <- as.data.frame(gnr_resolve(gsub('_', ' ', Online_v7$SpeciesName), data_source_ids = 167, canonical = F, with_context = T))
+ipni_match
+ipni_match$matched_name
+ipni_match$score
+
+ipni_match[, c(1,3,5)]
+ipni_match$matched_name
+### not so easy to fugure out which name is accepted... 
+
+##### Matching with GSheet for herbarium #####
+library(googlesheets4)
+
+### work in progress
+
+
+# tnrs("Eupatorium cannabinum", source = "ipni")
+# tax_name("Eupatorium cannabinum", get = "species", db = "both")
+# get_uid("Eupatorium cannabinum")
+# get_ids(names = "Eupatorium cannabinum", db = "itis")
+
 ##### How many genera and species? - Extended ######
 unique(gsub('\\s.*', '', Online_v7$SpeciesName)) # list of unique genera
 length(unique(gsub('\\s.*', '', Online_v7$SpeciesName))) # number of unique genera
