@@ -54,15 +54,26 @@ ipni_match$matched_name
 ### not so easy to fugure out which name is accepted... 
 
 ##### Matching with GSheet for herbarium #####
+library(googledrive)
 library(googlesheets4)
+drive_about()
 
-### work in progress
+### This is the live version
+GoogleSheet_live <- drive_get("~/Alpine Asteraceae Checklist")
+GoogleSheet_live
+sheets_get(GoogleSheet_live)
+sheets_sheets(GoogleSheet_live) # worksheets of this document
+as.POSIXct(as.character(GoogleSheet_live$drive_resource[[1]][19]), 
+           tryFormats = c("%Y-%m-%dT%H:%M:%S"), tz = "GMT") # last modified
+
+GoogleSheet_Live <- read_sheet(GoogleSheet_live, sheet = "DATA_FloraAlpina_Correction", col_types = "c")
+GoogleSheet_Live
+str(GoogleSheet_Live)
+
+GoogleSheet_Live$`Flora Alpina ID`
 
 
-# tnrs("Eupatorium cannabinum", source = "ipni")
-# tax_name("Eupatorium cannabinum", get = "species", db = "both")
-# get_uid("Eupatorium cannabinum")
-# get_ids(names = "Eupatorium cannabinum", db = "itis")
+
 
 ##### How many genera and species? - Extended ######
 unique(gsub('\\s.*', '', Online_v7$SpeciesName)) # list of unique genera
