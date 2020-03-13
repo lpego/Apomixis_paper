@@ -601,3 +601,50 @@ nrow(testDATA)
 testNewApomixisData_FloraAlpinaID_manual <- NewApomixisData_FloraAlpinaID_manual[order(NewApomixisData_FloraAlpinaID_manual$ID_FloraAlpina), ]
 nrow(testNewApomixisData_FloraAlpinaID_manual)
 
+
+##### Author names for botanical names #### 
+authnames <- read.csv(file = "/home/luca/Dropbox/Royal Botanic Gardens of Kew/ApomixisPaper/Apomixis_v8/Pegoraro_et_al_Apomixis-Online_Resource_1_v9_27Jan20.csv")
+authnames <- as.character(authnames$Species..name.author.publication.)
+authnames
+
+strsplit(authnames, '\\,', perl = T)
+cbind(vapply(strsplit(authnames, '\\,', perl = T), `[`, 1, FUN.VALUE = character(1)), 
+      vapply(strsplit(authnames, '\\,', perl = T), `[`, 2, FUN.VALUE = character(1))
+      )
+
+write.table(
+  vapply(strsplit(authnames, '\\,', perl = T), `[`, 1, FUN.VALUE = character(1)), 
+  file = "names_authors.txt"
+  )
+
+writeLines(vapply(strsplit(authnames, '\\,', perl = T), `[`, 1, FUN.VALUE = character(1)), con = "names_authors.txt")
+
+write.table(
+  writeLines(vapply(strsplit(authnames, '\\,', perl = T), `[`, 1, FUN.VALUE = character(1))), 
+  file = "names_authors.txt"
+)
+
+authnames <- vapply(strsplit(authnames, '\\,', perl = T), `[`, 1, FUN.VALUE = character(1))
+
+vapply(strsplit(authnames, '[A-z]\\s[a-z]<=\\s', perl = T), `[`, 1, FUN.VALUE = character(1))
+
+grep('(?<=[A-z]\\s[a-z]) ', authnames, perl = T, value = T)
+
+
+onlyauth <- vapply(strsplit(authnames, '(?<=[A-z])\\s[a-z]+\\s', perl = T), `[`, 2, FUN.VALUE = character(1))
+onlyauth
+
+unlist(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T))[unlist(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T)) != "subsp."]
+vapply(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T), `[`, 1, FUN.VALUE = character(1))
+
+cbind(unlist(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T))[unlist(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T)) != "subsp."], 
+      vapply(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T), `[`, 1, FUN.VALUE = character(1)))
+
+onlyauth2 <- unlist(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T))[unlist(strsplit(onlyauth, '(?<=subsp\\.)\\s[a-z]+\\s', perl = T)) != "subsp."]
+
+writeLines(onlyauth2, con = "only_authors.txt")
+
+cbind()
+
+# library(stringr)
+# word(authnames, 3)
