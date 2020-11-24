@@ -1,0 +1,1324 @@
+Collector ID,ID,Species,Leaf,Seeds,Cap,Photo,Herb,Date,Lat N,Long E,Altitude,Notes,Ø cap,h cap,Ø inv,h inv,Ø stem,Ø syn,h syn,Ø stem syn,Cap/Stem
+LP1,FR0,Achillea millefolium ,X,,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP2,FR1a,Cirsium arvense ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP3,FR1b,Leucanthemum adustum ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP4,FR1c,Erigeron alpinus ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP5,FR1d,Hieracium pilosella ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP6,FR1e,Crepis sp ,,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP7,FR1f,Hieracium glaucopsis ,X,X,,,X,24/07/2016,44.33469,6.29546,,Uncertain determination; see determination note. Note on newspaper reads “Species A Site 1”; might be 8a,,,,,,,,,
+LP8,FR2a,Hieracium glaucopsis ,X,X,,,X,24/07/2016,44.33469,6.29546,,Check determination note,,,,,,,,,
+LP9,FR2b,Hieracium villosum ,X,X,,,X,24/07/2016,44.33469,6.29546,,"Mixed… One indeterminable, H. villosum size very anomalous. Check determination note. ",,,,,,,,,
+LP10,FR3,Cirsium acaule ,X,,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP11,FR4,Tragopogon pratensis orientalis,X,,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP12,FR5,Centaurea uniflora ,X,,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP13,FR6,Carduus defloratus carlinifolius,X,,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP14,FR7,Aster alpinus ,X,X,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP15,FR8a,Hieracium sp ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP16,FR8b,Hieracium sp ,,X,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP17,FR8c,Hieracium sp ,,X,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP18,FR8d,Erigeron alpinus ,,X,,,X,24/07/2016,44.33469,6.29546,,Check determination note; only one with ascertained 3 kinds of flowers,,,,,,,,,
+LP19,FR8e,Hieracium villosum ,X,X,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP20,FR8f,Pilosella officinarum ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP21,FR8g,Leucanthemum adusttum cuneifolium,X,X,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP22,FR9,Carduus (litigiosus) ,,,,,X,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP23,FR10,Centaurea uniflora ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP24,FR11,Hieracium sp ,,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP25,FR12,Carduus sp ,X,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP26,FR13,Leontodon hispidus ,X,X,,,X,24/07/2016,44.33469,6.29546,,Could be L. crispsus or L. hirtus,,,,,,,,,
+LP27,FR13a,Hieracium intybaceum ,,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP28,FR13b,Lactuca muralis ,,,,,,24/07/2016,44.33469,6.29546,,,,,,,,,,,
+LP29,FR14a,Carduus sp ,X,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP30,FR14b,Cirsium sp ,X,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP31,FR15,Centaurea uniflora ,X,X,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP32,FR16a,Tragopogon pratensis ,X,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP33,FR16b,Achillea millefolium ,,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP34,FR17,Leucanthemum adustum ,X,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP35,FR18,Hieracium sp ,X,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP36,FR19,Achillea millefolium ,X,,,,,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP37,FR20,Hieracium cydoniifolium ,X,,,,X,24/07/2016,44.34002,6.29641,1847,,,,,,,,,,
+LP38,FR21,Aster alpinus ,,,,,,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP39,FR22,Centaurea uniflora ,X,,,,,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP40,FR23,Achillea millefolium ,X,,,,,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP41,FR24,Tragopogon pratensis ,X,,,,,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP42,FR25,Leucanthemum adustum ,X,,,,,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP43,FR26,Hieracium sp ,X,,,,,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP44,FR27,Arnica montana ,X,X,,,X,24/07/2016,44.33802,6.29635,1893,,,,,,,,,,
+LP45,FR28,Hieracium villosum ,X,X,,,X,24/07/2016,44.33802,6.29635,1893,Check determination note,,,,,,,,,
+LP46,FR29,Leucanthemum adustum ,X,,,,,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP47,FR30,Tragopogon pratensis ,X,,,,,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP48,FR31,Carduus sp ,X,,,,,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP49,FR32,Leontodon crispus ,X,,,,X,24/07/2016,44.33598,6.29635,1987,Uncertain determination; see determination note,,,,,,,,,
+LP50,FR33,Centaurea jacea jacea,X,X,,,X,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP51,FR34,Achillea millefolium ,X,,,,,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP52,FR35,Aster alpinus ,X,X,,,,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP53,FR36,Hieracium intybaceum ,X,X,,,,24/07/2016,44.33598,6.29635,1987,,,,,,,,,,
+LP54,FR37,Aster alpinus ,X,,,,,24/07/2016,44.33535,6.29567,,,,,,,,,,,
+LP55,FR38,Leucanthemum adustum ,X,,,,,24/07/2016,44.33535,6.29567,,,,,,,,,,,
+LP56,FR39,Centaurea uniflora ,,,,,,24/07/2016,44.33535,6.29567,,,,,,,,,,,
+LP57,FR40,Arnica montana ,X,,,,,24/07/2016,44.33535,6.29567,,,,,,,,,,,
+LP58,FR41,Achillea millefolium ,X,,,,,24/07/2016,44.33535,6.29567,,,,,,,,,,,
+LP59,FR42,Carduus sp ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP60,FR44,Hieracium sp ,X,,,,,24/07/2016,44.33443,6.29046,,,,,,,,,,,
+LP61,FR45a,Antennaria dioica ,X,X,,,X,24/07/2016,44.33443,6.29046,,,,,,,,,,,
+LP62,FR45b,Hieracium sp ,X,X,,,,24/07/2016,44.33443,6.29046,,,,,,,,,,,
+LP63,FR46,Leontodon crispus ,X,X,,,X,24/07/2016,44.33443,6.29046,,,,,,,,,,,
+LP64,FR48,Hieracium sp ,,,,,,24/07/2016,44.34171,6.29706,1802,Check determination note,,,,,,,,,
+LP65,FR49a,Leucanthemum adustum ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP66,FR49b,Hieracium sp ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP67,FR50,Cirsium acaule ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP68,FR51,Carduus sp ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP69,FR52,Adenostyles alliariae ,X,X,,,X,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP70,FR53,Tragopogon pratensis ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP71,FR54,Centaurea uniflora ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP72,FR55,Achillea millefolium ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP73,FR56,Leontodon sp ,,,,,X,24/07/2016,44.34171,6.29706,1802,Impossible to determine at species level: small voucher and underdeveloped akenes.,,,,,,,,,
+LP74,FR57,Cirsium sp ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP75,FR58,Centaurea jacea jacea,X,,,,X,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP76,FR59,Centaurea jacea ,X,,,,,24/07/2016,44.34171,6.29706,1802,,,,,,,,,,
+LP77,FR60,Tragopogon pratensis ,X,X,,,,24/07/2016,,,,,,,,,,,,,
+LP78,FR61,Arnica montana ,X,X,,,,24/07/2016,,,,,,,,,,,,,
+LP79,FR62,Aster alpinus ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP80,FR63,Achillea millefolium ,,,,,,24/07/2016,,,,,,,,,,,,,
+LP81,FR64,Leucanthemum adustum ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP82,FR65,Cirsium acaule ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP83,FR66,Centaurea uniflora ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP84,FR67,Senecio doronicum ,X,X,,,X,24/07/2016,,,,,,,,,,,,,
+LP85,FR67b,Senecio doronicum ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP86,FR68,Cardueae   ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP87,FR69,Hieracium sp ,,,,,,24/07/2016,,,,,,,,,,,,,
+LP88,FR70,Andryala integrifolia ,,,,,,24/07/2016,,,,,,,,,,,,,
+LP89,FR71,Pilosella cymosa ,X,X,,,X,24/07/2016,,,,"In Flora Alpina Pilosella is sunk into Hieracium, ie: H. cymosum",,,,,,,,,
+LP90,FR72,Hieracium sp ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP91,FR73,Erigeron alpinus ,X,X,,,X,24/07/2016,,,,Uncertain determination; see determination note,,,,,,,,,
+LP92,FR74,Hieracium murorum ,X,X,,,X,24/07/2016,,,,,,,,,,,,,
+LP93,FR75a,Cirsium vulgare ,X,,,,,24/07/2016,,,,,,,,,,,,,
+LP94,FR75b,Hieracium sp ,X,X,,,,24/07/2016,,,,,,,,,,,,,
+LP95,FR75c,Pilosella sp ,,,,,,24/07/2016,,,,,,,,,,,,,
+LP96,FR76,Erigeron neglectus ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,Check determination note,,,,,,,,,
+LP97,FR77,Carduus defloratus carlinifolius,,,,,X,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP98,FR78,Leucanthemum adustum ,,,,,,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP99,FR79,Leucanthemum coronopifolium coronopifolium,X,,,,X,25/07/2016,44.38621,6.39601,2219,Uncertain determination; see determination note,,,,,,,,,
+LP100,FR80,Aster alpinus ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP101,FR81,Achillea millefolium ,X,,,,,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP102,FR82,Solidago virgaurea ,,,,,,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP103,FR83,Scorzoneroides montana ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,Uncertain determination; see determination note,,,,,,,,,
+LP104,FR84,Antennaria dioica ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP105,FR85,Jacobaea incana incana,X,X,,,X,25/07/2016,44.38621,6.39601,2219,All French plants are subsp incana,,,,,,,,,
+LP106,FR86,Leontodon crispus ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP107,FR87,Hieracium scorzonerifolium ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,Uncertain determination; see determination note,,,,,,,,,
+LP108,FR88,Hieracium murorum ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,"Uncertain; macromorphology matches, but no starred hairs on bracts. ",,,,,,,,,
+LP109,FR89a,Leontodon crispus ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,"Mixed… Three different species! Leontodon crispsus, Leontodon hispidus, Hiearcium murorum; check vouchers",,,,,,,,,
+LP110,FR89b,Leontodon hispidus ,X,X,,,X,25/07/2016,44.38621,6.39601,2219,"Mixed… Three different species! Leontodon crispsus, Leontodon hispidus, Hiearcium murorum; check vouchers",,,,,,,,,
+LP111,FR89c,Hieracium sp ,,X,,,X,25/07/2016,44.38621,6.39601,2219,"Mixed… Three different species! Leontodon crispsus, Leontodon hispidus, Hiearcium murorum; check vouchers",,,,,,,,,
+LP112,FR90,Hieracium lactucella ,,,,,,25/07/2016,44.38621,6.39601,2219,,,,,,,,,,
+LP113,FR91,Pilosella lactucella ,X,X,,,X,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP114,FR92,Cirsium vulgare ,X,X,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP115,FR93,Antennaria dioica ,X,,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP116,FR94,Hieracium lactucella ,X,,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP117,FR95,Senecio doronicum ,X,X,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP118,FR96,Cirsium vulgare ,,,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP119,FR97,Erigeron sp ,X,,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP120,FR98,Hieracium pilosella ,X,X,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP121,FR99,Solidago virgaurea ,X,,,,,25/07/2016,44.38528,6.39642,2184,,,,,,,,,,
+LP122,FR100,Aster alpinus ,X,X,,,,25/07/2016,44.38339,6.39886,2119,,,,,,,,,,
+LP123,FR102,Achillea millefolium ,X,,,,,25/07/2016,44.38339,6.39886,2119,,,,,,,,,,
+LP124,FR103,Scorzoneroides pyrenaica ,X,,,,,25/07/2016,44.38339,6.39886,2119,,,,,,,,,,
+LP125,FR104,Antennaria dioica ,X,X,,,X,25/07/2016,44.38339,6.39886,2119,Excellent voucher,,,,,,,,,
+LP126,FR105,Hieracium lactucella ,,,,,,25/07/2016,44.38339,6.39886,2119,,,,,,,,,,
+LP127,FR106,Pilosela lactucella ,X,X,,,X,25/07/2016,44.38339,6.39886,2119,,,,,,,,,,
+LP128,FR107,Pilosella glacialis ,X,X,,,X,25/07/2016,44.38339,6.39886,2119,Uncertain determination; see determination note,,,,,,,,,
+LP129,FR108,Hieracium murorum ,X,X,,,X,25/07/2016,44.38339,6.39886,2119,Matches all traits in key :),,,,,,,,,
+LP130,FR109,Achillea millefolium ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP131,FR110,Adenostyles alliariae ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP132,FR111,Solidago virgaurea ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP133,FR112,Tragopogon pratensis ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP134,FR113,Cirsium vulgare ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP135,FR114,Cirsium vulgare ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP136,FR115,Leucanthemum adustum ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP137,FR116,Solidago virgaurea ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP138,FR117,Lactuca perennis ,X,X,,,X,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP139,FR118,Tolpis staticifolia ,X,X,,,X,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP140,FR119,Scorzoneroides pyrenaica ,X,,,,,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP141,FR120,Hieracium froelichianum ,X,X,,,X,25/07/2016,44.37932,6.3955,1985,Could be H. umbrosum or H. lachenalii,,,,,,,,,
+LP142,FR121,Mycelis muralis ,X,X,,,X,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP143,FR122,Hieracium glaucum ,X,X,,,X,25/07/2016,44.37932,6.3955,1985,Uncertain determination; see determination note,,,,,,,,,
+LP144,FR123,Hieracium amplexicaule ,X,X,,,X,25/07/2016,44.37932,6.3955,1985,,,,,,,,,,
+LP145,FR124,Centaurea scabiosa ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP146,FR125,Lactuca muralis ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP147,FR126,Senecio ovatus ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP148,FR127,Aster alpinus ,X,X,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP149,FR128,Cirsium vullgare ,,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP150,FR129,Hieracium prenanthoides ,,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP151,FR130,Centaurea jacea ,,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP152,FR131,Lactuca muralis ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP153,FR132,Preanthes purpurea ,X,X,,,X,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP154,FR133,Achillea millefolium ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP155,FR134,Hieracium murorum ,X,X,,,X,25/07/2016,44.38569,6.39095,1922,Only one individual has all the characterizing traits; the two bigger ones lack starred hairs in inner bracts,,,,,,,,,
+LP156,FR135,Hieracium amplexicaule ,X,X,,,X,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP157,FR136,Adenostyles alliariae ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP158,FR137,Leucanthemum adustum ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP159,FR138,Lactuca muralis ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP160,FR139,Solidago virgaurea ,X,,,,,25/07/2016,44.38569,6.39095,1922,,,,,,,,,,
+LP161,FR140a,Scorzoneroides pyrenaica ,X,X,,,,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP162,FR140b,Arctium lappa ,X,X,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP163,FR141,Artemisia absinthium ,X,,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP164,FR142,Artemisia verlotiorum ,X,,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP165,FR143,Inula bifrons ,X,X,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP166,FR144,Carduus nutans nutans,X,X,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP167,FR150,Catananche caerulea ,X,X,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP168,FR151,Centaurea leucophaea ,X,,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP169,FR152,Lactuca serriola ,X,,,,X,26/07/2016,44.25745,6.25511,1172,140-152,,,,,,,,,
+LP170,FR153,Echinops ritro ,X,X,,,X,26/07/2016,44.25846,6.26345,1036,,,,,,,,,,
+LP171,FR154,Achillea millefolium ,X,X,,,X,26/07/2016,44.25846,6.26345,1036,Check determination note,,,,,,,,,
+LP172,FR155,Centaurea scabiosa alpestris,X,X,,,X,26/07/2016,44.25846,6.26345,1036,,,,,,,,,,
+LP173,FR156,Picris hieracioides villarsii,X,X,,,X,26/07/2016,44.25846,6.26345,1036,Subspecific determination uncertain; see determination note,,,,,,,,,
+LP174,FR157,Jacobaea vulgaris ,X,X,,,X,26/07/2016,44.27211,6.29882,1083,,,,,,,,,,
+LP175,FR158,Prenanthes purpurea ,X,,,,,26/07/2016,44.27211,6.29882,1083,,,,,,,,,,
+LP176,FR159,Lactuca muralis ,,,,,,26/07/2016,44.27211,6.29882,1083,,,,,,,,,,
+LP177,FR160,Buphthalmum salicifolium ,X,X,,,X,26/07/2016,44.27211,6.29882,1083,Check determination note,,,,,,,,,
+LP178,FR161,Arctium minus ,X,,,,,26/07/2016,44.27211,6.29882,1083,,,,,,,,,,
+LP179,FR162,Carlina vulgaris ,X,,,,X,26/07/2016,44.27211,6.29882,1083,,,,,,,,,,
+LP180,FR163,Tanacetum corymbosum ,X,,,,X,26/07/2016,44.27211,6.29882,1083,Check determination note,,,,,,,,,
+LP181,FR164,Centaurea sp ,X,X,,,,26/07/2016,44.25846,6.26345,1036,,,,,,,,,,
+LP182,FR165,Hieracium pilosella ,,,,,,26/07/2016,44.2486,6.22959,1586, ,,,,,,,,,
+LP183,FR166,Lactuca perennis ,X,X,,,X,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP184,FR167,Achillea millefolium ,X,X,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP185,FR168,Echinops ritro ,X,,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP186,FR169,Cirsium acaule ,X,,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP187,FR170,Echinops ritro ,X,X,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP188,FR171,Catananche caerulea ,X,X,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP189,FR172,Centaurea scabiosa ,X,X,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP190,FR173,Antennaria dioica ,X,,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP191,FR175,Centaurea jacea ,X,X,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP192,FR176,Inula salicina ,X,X,,,X,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP193,FR177,Centaurea jacea jacea,X,,,,X,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP194,FR178,Hieracium pilosella ,X,,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP195,FR179,Tragopogon pratensis ,X,,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP196,FR180,Achillea millefolium ,X,X,,,,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP197,FR181a,Leucanthemum adusttum adustum,X,X,,,X,26/07/2016,44.2486,6.22959,1586,,,,,,,,,,
+LP198,FR181b,Leucanthemum coronopifolium ,X,X,,,X,26/07/2016,44.2486,6.22959,1586,Uncertain determination; see determination note,,,,,,,,,
+LP199,FR182,Achillea millefolium ,X,X,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP200,FR183,Centaurea scabiosa ,X,,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP201,FR184,Centaurea jacea ,X,X,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP202,FR185,Inula salicina ,X,X,,,X,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP203,FR186,Inula salicina ,X,X,,,X,26/07/2016,44.2476,6.23499,1380,Check determination note,,,,,,,,,
+LP204,FR187,Catananche caerulea ,X,X,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP205,FR188,Cirsium acaule ,X,,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP206,FR189,Leucanthemum adustum ,X,,,,X,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP207,FR190,Leucanthemum vulgare ,X,X,,,X,26/07/2016,44.2476,6.23499,1380,Check determination note,,,,,,,,,
+LP208,FR191,Leucanthemum pallens ,X,X,,,X,26/07/2016,44.2476,6.23499,1380,Check determination note,,,,,,,,,
+LP209,FR192,Inula bifrons ,X,X,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP210,FR193,Inula montana ,X,X,,,X,26/07/2016,44.2476,6.23499,1380,Check determination note,,,,,,,,,
+LP211,FR194,Senecio doria ,X,X,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP212,FR195,Cirsium monspessulanum ,X,X,,,X,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP213,FR196,Echinops ritro ,X,X,,,,26/07/2016,44.2476,6.23499,1380,,,,,,,,,,
+LP214,FR197,Doronicum clusii ,X,,,,X,26/07/2016,44.2476,6.23499,1380,Uncertain determination; see determination note,,,,,,,,,
+LP215,FR198,Cirsium acaule ,X,,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP216,FR199,Cirsium vulgare ,X,,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP217,FR200,Aster alpinus ,X,X,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP218,FR201,Erigeron sp ,X,X,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP219,FR202,Cirsium sp ,X,,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP220,FR203,Adenostyles alliariae ,X,X,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP221,FR204,Solidago virgaurea alpestris,X,X,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP222,FR205,Arnica montana ,X,X,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP223,FR206,Senecio doronicum ,,,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP224,FR207,Achillea millefolium ,X,,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP225,FR208,Achillea millefolium ,X,,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP226,FR209,Tragopogon pratensis ,X,X,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP227,FR210,Leucanthemum adustum ,X,X,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP228,FR211,Centaurea uniflora ,X,X,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP229,FR212,Antennaria dioica ,X,X,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP230,FR213,Berardia subacaulis ,X,,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP231,FR214,Hieracium villosum ,X,X,,,X,27/07/2016,44.28474,6.4317,1772,Contains one uncertain specimen. Check determination note,,,,,,,,,
+LP232,FR215,Leucanthemum adustum cuneifolium,X,X,,,X,27/07/2016,44.28474,6.4317,1772,Uncertain determination; see determination note. Subspecies cuneifolium is not actually recognized,,,,,,,,,
+LP233,FR216,Leucanthemum adusttum adustum,X,,,,X,27/07/2016,44.28474,6.4317,1772,Determination uncertain. Check determination note,,,,,,,,,
+LP234,FR217,Leontodon crispus ,X,X,,,X,27/07/2016,44.28474,6.4317,1772,Determination uncertain. Check determination note,,,,,,,,,
+LP235,FR218,Tolpis staticifolia ,X,X,,,X,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP236,FR219,Hieracium murorum ,X,,,,,27/07/2016,44.28474,6.4317,1772,,,,,,,,,,
+LP237,FR220,Jacobaea vulgaris ,X,X,,,X,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP238,FR221,Erigeron sp ,,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP239,FR222,Leucanthemum adustum ,X,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP240,FR223,Pilosella officinarum ,X,X,,,X,27/07/2016,44.27839,6.4237,1421,Determination uncertain. See determination note,,,,,,,,,
+LP241,FR224,Centaurea scabiosa alpestris,X,X,,,X,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP242,FR225,Centaurea jacea jacea,X,X,,,X,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP243,FR226,Achillea millefolium ,X,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP244,FR227,Cirsium arvense ,X,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP245,FR228,Picris hieracioides hieracioides,X,X,,,X,27/07/2016,44.27839,6.4237,1421,Subspecies not certain. Check determination note,,,,,,,,,
+LP246,FR230,Hieracium murorum ,X,X,,,X,27/07/2016,44.27839,6.4237,1421,Could all the plants I have be subsp oblungum maybe? ,,,,,,,,,
+LP247,FR231,Hieracium tomentosum ,X,X,,,X,27/07/2016,44.27839,6.4237,1421,Bad herbarium speciment; could be H. anryaloides or H. tomentosum,,,,,,,,,
+LP248,FR232,Indeterminable sp ,X,,,,X,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP249,FR233,Carlina vulgaris ,X,X,,,X,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP250,FR234,Scorzoneroides pyrenaica ,X,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP251,FR235,Arctium “big” ,,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP252,FR235b,Arctium sp ,X,,,,,27/07/2016,44.27839,6.4237,1421,,,,,,,,,,
+LP253,FR236,Achillea millefolium ,X,,,,X,28/07/2016,44.31782,6.44161,1881,,,,,,,,,,
+LP254,FR237,Tragopogon pratensis ,X,,,,,28/07/2016,44.31782,6.44161,1881,,,,,,,,,,
+LP255,FR238,Solidago virgaurea ,X,X,,,,28/07/2016,44.31782,6.44161,1881,,,,,,,,,,
+LP256,FR239,Senecio doronicum ,X,X,,,,28/07/2016,44.31782,6.44161,1881,,,,,,,,,,
+LP257,FR240,Tolpis staticifolia ,X,X,,,X,28/07/2016,44.31782,6.44161,1881,,,,,,,,,,
+LP258,FR241,Arnica montana ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP259,FR242,Centaurea uniflora ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP260,FR243,Antennaria dioica ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP261,FR244,Hieracium murorum ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP262,FR245,Cirsium eriophorum ,X,,,,,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP263,FR246,Hieracium villosum ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,Contains two uncertain specimens. Check determination note,,,,,,,,,
+LP264,FR247,Hieracium villosum ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,"Plants are quite small, but determination should be correct. See determination note",,,,,,,,,
+LP265,FR248,Antennaria dioica ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,Check determination note,,,,,,,,,
+LP266,FR249,Cirsium acaule ,X,X,,,,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP267,FR250,Leucanthemum adusttum adustum,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP268,FR251,Solidago virgaurea alpestris,X,X,,,X,28/07/2016,44.31535,6.44221,1961,Check determination note,,,,,,,,,
+LP269,FR252,Berardia lanuginosa ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP270,FR253,Achillea millefolium ,X,X,,,,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP271,FR254,Carduus defloratus carlinifolius,X,,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP272,FR255,Erigeron acer ,,,,,,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP273,FR256,Erigeron alpinus ,X,X,,,X,28/07/2016,44.31535,6.44221,1961,Uncertain determination; see determination note,,,,,,,,,
+LP274,FR257,Erigeron uniflorus ,,,,,X,28/07/2016,44.31535,6.44221,1961,Indeterminable,,,,,,,,,
+LP275,FR258,Arnica montana ,X,X,,,,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP276,FR259,Senecio doronicum doronicum,X,X,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP277,FR260,Aster alpinus ,X,,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP278,FR261,Carlina acaulis caulescens,X,,,,X,28/07/2016,44.31535,6.44221,1961,,,,,,,,,,
+LP279,FR262,Hieracium piliferum ,X,X,,,,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP280,FR263,Aster alpinus ,X,X,,,,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP281,FR264,Hieracium tomentosum ,X,,,,,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP282,FR265,Erigeron alpinus ,X,,,,,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP283,FR266,Antennaria dioica ,X,X,,,X,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP284,FR267,Leucanthemum adusttum adustum,X,,,,X,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP285,FR268,Leucanthemum coronopifolium coronopifolium,X,,,,X,28/07/2016,44.31346,6.44843,2127,Uncertain determination; see determination note,,,,,,,,,
+LP286,FR269,Leucanthemum coronopifolium coronopifolium,X,X,,,X,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP287,FR270,Solidago virgaurea ,X,,,,X,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP288,FR271,Hieracium pilosella ,X,X,,,,28/07/2016,44.31346,6.44843,2127,,,,,,,,,,
+LP289,FR272,Artemisia umbelliforms ,X,,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP290,FR273,Centaurea uniflora ,,,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP291,FR274,Carduus defloratus carlinifolius,X,,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP292,FR275,Senecio doronicum ,,,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP293,FR278,Centaures uniflora ,X,X,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP294,FR279,Berardia subacaulis ,X,,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP295,FR280,Adenostyles alpina ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,Only one damaged leaf; silhouette distinctive though,,,,,,,,,
+LP296,FR281,Doronicum grandiflorum ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,Check determination note,,,,,,,,,
+LP297,FR282,Cirsium spinosissimum ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP298,FR283,Leontopodium alpinum ,,,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP299,FR284,Aster alpinus ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP300,FR285,Solidago virgaurea alpestris,X,X,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP301,FR286,Erigeron atticus ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,Check determination note,,,,,,,,,
+LP302,FR287,Erigeron alpinus ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,Uncertain determination; see determination note,,,,,,,,,
+LP303,FR288,Aster alpinus ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP304,FR289,Erigeron alpinus ,X,,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP305,FR290,Adenostyles leucophylla ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP306,FR291,Achillea millefolium ,X,,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP307,FR292,Pilosella lactucella ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP308,FR293,Antennaria carpatica ,X,X,,,X,28/07/2016,44.31586,6.4565,2378,Check determination note,,,,,,,,,
+LP309,FR294,Leucanthemum adusttum cuneifolium,X,,,,X,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP310,FR295,Leucanthemum adustum adustum,X,,,,X,28/07/2016,44.31586,6.4565,2378,Subspecies not certain. Check determination note,,,,,,,,,
+LP311,FR296,Leucanthemum atratum ,,,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP312,FR297,Scorzoneroides pyrenaica ,X,X,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP313,FR298,Antennaria dioica ,X,X,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP314,FR299,Hieracium piliferum ,X,X,,,,28/07/2016,44.31586,6.4565,2378,,,,,,,,,,
+LP315,FR300,Tanacetum corymbosum ,X,X,,,,,,,,,,,,,,,,,
+LP316,FR301,Jacobaea incana incana,X,X,,,X,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP317,FR302,Erigeron alpinus ,X,X,,,,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP318,FR303,Senecio doronicum ,,,,,,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP319,FR304,Aster alpinus ,X,X,,,X,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP320,FR305,Achillea millefolium ,X,X,,,,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP321,FR306,Solidago virgaurea alpestris,X,X,,,X,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP322,FR307,Antennaria dioica ,X,X,,,X,29/07/2016,44.407917,6.385497,2505,Both male and female individuals in voucher,,,,,,,,,
+LP323,FR308,Centaurea uniflora ,X,X,,,,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP324,FR309,Adenostyles leucophylla ,X,X,,,X,29/07/2016,44.407917,6.385497,2505,,,,,,,,,,
+LP325,FR310,Leucanthemopsis alpina ,X,X,,,X,29/07/2016,44.407917,6.385497,2505,Check determination note,,,,,,,,,
+LP326,FR311a,Leontodon hispidus ,X,X,,,X,29/07/2016,44.407917,6.385497,2505,Check determination note,,,,,,,,,
+LP327,FR311b,Pilosella lactucella ,X,X,,,X,29/07/2016,44.407917,6.385497,2505,Check determination note,,,,,,,,,
+LP328,FR312,Pilosela peleteriana ,X,,,,X,29/07/2016,44.407917,6.385497,2505,Determination uncertain. Check determination note,,,,,,,,,
+LP329,FR315,Antennaria dioica ,X,X,,,X,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP330,FR316,Tragopogon pratensis ,,X,,,,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP331,FR317,Leontopodium nivale alpinum,X,X,,,X,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP332,FR318,Erigeron alpinus ,X,X,,,,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP333,FR319,Carlina acaulis caulescens,X,,,,X,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP334,FR320,Cirsium acaule ,X,,,,,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP335,FR321,Aster alpinus ,,X,,,,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP336,FR322a,Hieracium piliferum ,X,X,,,,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP337,FR322b,Leucanthemum adustum ,X,X,,,,29/07/2016,44.26084,6.20877,1890,,,,,,,,,,
+LP338,FR323,Achillea millefolium ,X,X,,,X,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP339,FR324,Antennaria dioica ,X,X,,,,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP340,FR325,Aster alpinus ,X,X,,,X,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP341,FR326,Tragopogon pratensis ,X,X,,,,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP342,FR327,Leontopodium   ,X,,,,,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP343,FR328,Hieracium glaucopsis ,X,X,,,X,29/07/2016,44.26081,6.20881,1888,"syn H. dentatum; difficult determination, somewhat uncertain. Check determination note",,,,,,,,,
+LP344,FR329,Arnica montana ,X,X,,,X,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP345,FR330,Leucanthemum adusttum adustum,X,X,,,X,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP346,FR331,Centaurea uniflora ,X,,,,,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP347,FR332,Cirsium acaule ,X,,,,,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP348,FR333,Hypochaeris maculata ,X,X,,,X,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP349,FR334,Viscum album ,X,,,,,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP350,FR335,Carlina acaulis caulescens,X,,,,X,29/07/2016,44.26081,6.20881,1888,,,,,,,,,,
+LP351,FR336,Leucanthemum adusttum cuneifolium,X,X,,,X,29/07/2016,44.27214,6.21177,1651,Uncertain determination; subspecies cuneifolium is not actually recognized,,,,,,,,,
+LP352,FR337,Centaurea scabiosa ,X,X,,,,29/07/2016,44.27214,6.21177,1651,,,,,,,,,,
+LP353,FR338,Centaurea jacea ,X,X,,,,29/07/2016,44.27214,6.21177,1651,,,,,,,,,,
+LP354,FR339,Hieracium murorum ,X,,,,X,29/07/2016,44.27214,6.21177,1651,"Very advanced in dispersal, no akenes left. H. murorum is only best guess",,,,,,,,,
+LP355,FR340,Scorzoneroides pyrenaica ,X,X,,,,29/07/2016,44.27214,6.21177,1651,,,,,,,,,,
+LP356,FR341,Solidago virgaurea ,X,X,,,,29/07/2016,44.27214,6.21177,1651,,,,,,,,,,
+LP357,FR342,Tolpis staticifolia ,X,X,,,X,29/07/2016,44.27214,6.21177,1651,,,,,,,,,,
+LP358,FR344a,Adenostyles alliariae ,X,X,,,X,29/07/2016,44.27214,6.21177,1651,,,,,,,,,,
+LP359,FR344b,Erigeron acris angulosus,X,,,,X,29/07/2016,44.27214,6.21177,1651,Subspecies not certain. Check determination note,,,,,,,,,
+LP360,FR345,Catananche caerulea ,X,,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP361,FR346,Centaurea leucophaea ,X,X,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP362,FR347,Solidago virgaurea ,X,X,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP363,FR349,Jacobaea erucifolia ,,,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP364,FR350,Eupatorium cannabinum ,X,,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP365,FR351,Cirsium monspessulanum ,X,X,,,X,29/07/2016,44.027257,6.22486,1358,Seeds from frozen,,,,,,,,,
+LP366,FR352,Erigeron acer ,X,X,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP367,FR353,Artemisia absinthium ,X,,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP368,FR354,Arctium “small” ,X,,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP369,FR355,Echinops sphaerocephalus ,X,,,,,29/07/2016,44.027257,6.22486,1358,,,,,,,,,,
+LP370,FRR1,Carlina acaulis caulescens,X,,,,X,,,,,All French plants are ssp caulescens; on herbarium sheet ID is 175. ,,,,,,,,,
+LP371,FRR10,Leontodon hispidus ,X,X,,,X,,,,,"In voucher 119 but not Scorzoneroides; determination uncertain, check determination note",,,,,,,,,
+LP372,FRR11,Leontodon hispidus ,X,X,,,X,,,,,ID on sheet 139… Check determination note also. ,,,,,,,,,
+LP373,FRR2,Carlina acaulis caulescens,X,X,,,X,,,,,All French plants are ssp caulescens,,,,,,,,,
+LP374,FRR3,Carduus defloratus carlinifolius,X,X,,,X,,,,,,,,,,,,,,
+LP375,FRR4,Centaurea scabiosa alpestris,X,,,,X,,,,,,,,,,,,,,
+LP376,FRR6,Hieracium murorum s.s.,X,X,,,X,,,,,"Can be either 219 or 229, and they have the exact same GS ratio. Much bigger tha the other vouchers, could be H. murorum s.s.",,,,,,,,,
+LP377,FRR7,Hieracium rionii ,X,X,,,X,,,,,Uncertain determination; see determination note,,,,,,,,,
+LP378,FRR8,Hieracium villosum ,X,X,,,X,,,,,,,,,,,,,,
+LP379,FRR9,Leontodon hirtus ,X,X,,,X,,,,,"In voucher 119 but not Scorzoneroides; determination uncertain, check determination note",,,,,,,,,
+LP380,FR356,Senecio doronicum early,,X,,,,,44.33665,6.28209,1938,Another individual in bloom @ 44.336640 N 6.28626 E (1915 m),,,,,,,,,
+LP381,FR357,Senecio doronicum late,,,,,,,44.33665,6.28209,1938,,,,,,,,,,
+LP382,FR358,Senecio doronicum early,,X,x,,,,44.33462,6.29482,1981,,37.72,19.45,9.82,10.48,,,,,1
+LP383,FR359,Senecio doronicum late,,,,,,,44.33462,6.29482,1981,,,,,,,,,,
+LP384,FR360,Senecio doronicum early,,X,,,,,44.3405,6.29449,1820,,,,,,,,,,
+LP385,FR361,Senecio doronicum late ?,,,,,,,44.3405,6.29449,1820,,,,,,,,,,
+LP386,FR362,Senecio doronicum early,,X,,,,,44.40339,6.37521,1952,,,,,,,,,,
+LP387,FR363,Senecio doronicum late,,,,,,,44.40339,6.37521,1952,,,,,,,,,,
+LP388,FR364,Senecio doronicum early,,X,,,,,44.39758,6.38375,2126,,,,,,,,,,
+LP389,FR365,Senecio doronicum late,,,,,,,44.39758,6.38375,2126,,,,,,,,,,
+LP390,FR366,Berardia lanuginosa,,,x,,,,44.40563,6.38222,2340,,,,,,,,,,
+LP391,FR367,Leucanthemopsis alpina,,,x,,,,44.40609,6.38279,2362,,25.94,16.75,9.01,6.83,,,,,1
+LP392,FR368,Saxifraga sp,,,,,,,44.40609,6.38279,2362,,,,,,,,,,
+LP393,FR369,Saxifraga sp,,,,,,,44.40609,6.38279,2362,,,,,,,,,,
+LP394,FR370,Hieracium pilosum ?,,,x,,,,44.40939,6.38183,2386,,42.37,23.06,16.86,11.68,,,,,1
+LP395,FR371,Hieracium rionii,,,x,,,,44.40911,6.38253,2378,,26.91,16.61,7.15,6.48,,65.85 (50.61),94.37 (35.69),,5 (3)
+LP396,FR372,Homogyne alpina,,,x,,,,44.40911,6.38253,2378,,15.99,17.26,5.62,11.14,,,,,1
+LP397,FR373,Saxifraga sp,,,,,,,44.40911,6.38253,2378,,,,,,,,,,
+LP398,FR374,Antennaria dioica,,,,,,,44.40943,6.38709,2498,,,,,,,,,,
+LP399,FR375,Erigeron sp #1,,,x,,,,44.40943,6.38709,2498,,19.57,16.15,19.57,11.91,,,,,1
+LP400,FR376,Erigeron sp #2,,,x,,,,44.40943,6.38709,2498,,11.04,14.04,11.04,9.7,,,,,1
+LP401,FR377,Erigeron sp #3,,,x,,,,44.40943,6.38709,2498,,8.39,11.2,8.39,6.19,,,,,1
+LP402,FR378,Erigeron sp #4,,,x,,,,44.40943,6.38709,2498,,10.78,9.1,10.78,7.11,,,,,1
+LP403,FR379,Senecio doronicum early,,X,,,,,44.40943,6.38709,2498,,,,,,,,,,
+LP404,FR380,Senecio doronicum late,,,,,,,44.40943,6.38709,2498,,,,,,,,,,
+LP405,FR381,Hieracium villosum,,,,,,,44.40652,6.38208,2343,,,,,,,,,,
+LP406,FR382,Aster alpinus,,,,,,,44.40182,6.3838,2206,,,,,,,,,,
+LP407,FR383,Tussilago farfara,,,,,,,44.40182,6.3838,2206,,,,,,,,,,
+LP408,FR384,Cyanus segetum,,,x,,,,44.38071,6.32661,1096,,29.36,26.89,6.37,9.71,,120 (80),380 (130),,13 (3)
+LP409,FR385,Hieracium murorum sl “Hairy”,,,x,,,,44.33147,6.29244,1991,,40 (36.22),22.15 (22.15),8.63 (9.57),11.61 (9.50),,47.38,114.25,,6
+LP410,FR386,Senecio doronicum early,,X,,,,,44.332,6.29235,1988,,,,,,,,,,
+LP411,FR387,Senecio doronicum late,,,,,,,44.332,6.29235,1988,,,,,,,,,,
+LP412,FR388,Pilosella cymosa,,X,x,,,,44.332,6.29235,1988,,8.78,8.78,4.98,4.05,,36.44,33.66,,36
+LP413,FR389,Centaurea uniflora,,,x,,,,44.332,6.29235,1988,,58.24,32.24,16.07,16.53,,,,,1
+LP414,FR390,Arnica montana,,X,x,,,,44.332,6.29235,1988,,52.13,33.1,14.82,13.19,,155,94.54,,3
+LP415,FR391,Aster alpinus,,,x,,,,44.3387,6.29283,1968,,38.03,19.27,18.73,8.12,,,,,1
+LP416,FR392,Hypochaeris maculata,,,x,,,,44.3387,6.29283,1968,,bad capitulum; blossoms from same synfloerescence in tube,,,,,110,310,,3
+LP417,FR393,Carduus defloratus carlinifolius,,,x,,,,44.34212,6.29506,1796,,26.56,27.38,21.04,15.56,,130 (50),340 (140),,8 (3)
+LP418,FR394,Carduus nutans alpicola,,,x,,,,44.34194,6.29082,1727,"Subsp alpicola is extremely similar to subsp leiophyllus, possibly the same",60.84 (52.02),42.82,60.84,28.91,,370 (220),850 (150),,32 (3)
+LP419,FR395,Senecio ovatus,,,x,,,,44.32827,6.31656,1553,,21.81,16.55,6.64 (2.63),5.92 (8.09),,113.64 (64.72),160 (58.02),,149 (26)
+LP420,FR396,Jacobaea vulgaris,,,x,,,,44.32618,6.31045,1675,,28.11,9.82,5.61,4.2,,133 (65),267 (69.95),,94 (12)
+LP421,FR397,Hypochaeris maculata,,X,,,,,44.3291,6.30592,1694,,,,,,,,,,
+LP422,FR398,Centaurea jacea jacea,,,x,,,,44.3291,6.30592,1694,,48.43,25.88,12.29,12.08,,79.5,109.3,,3
+LP423,FR399,Centaurea scabiosa scabiosa,,,x,,,,44.32396,6.31742,1627,,62.47,42.25,25.22,21.45,,110,202,,3
+LP424,FR400,Tripleurospermum inodorum,,X,x,,,,44.56739,6.10231,757,,25.98,10.05,10.28,3.05,,207,230,,21
+LP425,FR401,Onipordum acanthium,,X,,,,,44.42402,6.25908,809,,,,,,,,,,
+LP426,FR402,Taraxacum sp,,X,,,,,44.30992,6.38858,1608,,,,,,,,,,
+LP427,FR403,Leontodon sp,X,X,,,,,44.30992,6.38858,1608,,,,,,,,,,
+LP428,FR404,Carlina acaulis,X,,X,X,X,,44.30992,6.38858,1608,,49.8,46.6,94 (46.60),52 (46.6),,,,,1
+LP429,FR405,Achillea,X,,X,X,X,,44.31742,6.38509,1613,,5.44,5.05,2.3,2.97,,154 (44),48 (24),,223 (91)
+LP430,FR406,Arctium,X,,,,X,,44.31742,6.38509,1613,,,,,,,,,,
+LP431,FR407,Saxifraga,,,,,,,44.31993,6.42753,1516,,,,,,,,,,
+LP432,FR408,Saxifraga,,,,,,,44.31993,6.42753,1516,,,,,,,,,,
+LP433,FR409,Hieracium sect. Glauca,X,,X,X,X,,44.31993,6.42753,1516,,29.64,16.24,16.88,9.84,,51,82,,2
+LP434,FR410,Picris,X,,X,X,X,,44.31993,6.42753,1516,,29.32,14.1,14.36,10.02,,83 (54),220 (95),,8 (2)
+LP435,FR411,Senecio doronicum,X,,,,,,,,,,,,,,,,,,
+LP436,FR412,Cyanus montanus,X,X,X,X,X,,44.31877,6.3553,1752,,37.34,33.3,11.79,13.44,,,,,1
+LP437,FR413,Leucanthemum adustum,X,,X,X,X,,44.31485,6.43758,1795,,70.71,19.17,22.72,6.65,,,,,1
+LP438,FR414,Hieracium villosum,X,,,,X,,44.31485,6.43758,1795,,,,,,,,,,
+LP439,FR415,Bellidastrum michelii,X,X,,,X,,44.31443,6.43696,1811,,,,,,,,,,
+LP440,FR416,Arnica montana,X,,,,,,44.3128,6.43604,1852,,,,,,,,,,
+LP441,FR417,Senecio doronicum,X,X,,,,,44.31216,6.43589,1850,,,,,,,,,,
+LP442,FR418,Carduus defloratus,X,X,,,,,44.31216,6.43589,1850,,,,,,,,,,
+LP443,FR419,Hypochaeris maculata,X,X,,,,,44.31216,6.43589,1850,,,,,,,,,,
+LP444,FR420,Aster alpinus,,X,,,,,44.31216,6.43589,1850,,,,,,,,,,
+LP445,FR421,Centaurea scabiosa,,X,,,,,44.31216,6.43589,1850,,,,,,,,,,
+LP446,FR422,Leucanthemum adustum,,X,,,,,44.31216,6.43589,1850,,,,,,,,,,
+LP447,FR423,Cirsium arvense,,X,,,,,44.31742,6.38509,1613,,,,,,,,,,
+LP448,FR424,Leucanthemum adustum,X,,X,X,X,,44.31974,6.43204,1514,,59.48,22.89,20.84,8.32,,,,,1
+LP449,FR425,Leucanthemum virgatum,X,,X,X,X,,44.31974,6.43204,1514,,13.15,8.95,13.15,5.73,,,,,1
+LP450,FR426,Inula salicina,X,,X,X,X,,44.31974,6.43204,1514,,40.57,21.12,19.62,6.99,,,,,1
+LP451,FR427,Hieracium humile,X,X,X,X,X,,44.31974,6.43204,1514,,40.88,21.27,17.37,12.05,,115 (55),145 (120),,5 (2)
+LP452,FR428,Lactuca serriola,X,,?,X,X,,44.31974,6.43204,1514,,12.63,14.02,3.50 (1.30),9.13,,250 (95),350 (45),,268 (52)
+LP453,FR429,Tanacetum corymbosum,X,,X,X,X,,44.31974,6.43204,1514,,29.55,14.26,9.48,4.92,,125 (70),251 (87),,12 (3)
+LP454,FR430,Tolpis staticifolia,X,,X,X,X,,44.31974,6.43204,1514,,37.67,20.89,7.63,5.79,,75.3,147.3,,2
+LP455,FR431,Tragopogon pratensis,X,,X,X,X,,44.27853,6.42408,1418,JP1; higher measures of involucrum with extended bracts,44.37,10.64,39.49 (8.54),22.25 (5.44),,,,,1
+LP456,FR432,Crepis vesicaria taraxacifolia,X,,X,X,X,,44.27833,6.42638,1500,JP2; capitula in groups of 3,29.49,17.73,7.82,9.1,,72.75,62.68,,17
+LP457,FR433,Crepis pygmaea,X,,X,X,X,,44.28397,6.43458,1710,JP103; bract height from tip to bottom,16.1,17.37,8.07,11.32 (7.22),,,,,1
+LP458,FR434,Hieracium sp,X,,X,X,X,,44.28397,6.43458,1710,JP104,31.95,13.38,6.3,10.47 (4.81),,57.88,90.07,,4
+LP459,FR435,Senecio doronicum,X,X,,,,,44.28397,6.43458,1710,JP105,,,,,,,,,
+LP460,FR436,Arnica montana,,X,,,,,44.28397,6.43458,1710,JP106,,,,,,,,,
+LP461,FR437,Adenostyles alpina,,X,,,,,44.28397,6.43458,1710,JP107,,,,,,,,,
+LP462,FR438,Hypochaeris maculata,X,X,,,,,44.28397,6.43458,1710,JP108,,,,,,,,,
+LP463,FR439,Erigeron sp,X,,X,X,X,,44.28983,6.43567,2070,JP109,17.62,9.77,8.47,6.4,,,,,1
+LP464,FR440,Achillea odorata,X,,X,X,X,,44.28983,6.43567,2070,JP110,4.15,4.68,2.69,3.79,,47.81,36.85,,175
+LP465,FR441,Erigeron sp,X,,X,X,X,,44.28983,6.43567,2070,JP111,13.85,8.08,6.39,5.67,,,,,1
+LP466,FR442,Erigeron sp,X,,X,X,X,,44.28983,6.43567,2070,JP112,11.34,7.6,6.72,5.62,,,,,1
+LP467,FR443,Erigeron sp,X,,X,X,X,,44.28983,6.43567,2070,JP113,14.32,8.69,5.93,5.69,,,,,1
+LP468,FR444,Leucanthemum coronopifolium,X,,X,X,X,,44.28983,6.43567,2070,JP114,26.47,6.39,8.8,6.17,,,,,1
+LP469,FR445,Leontopodium nivale,?,,X,X,X,,44.28983,6.43567,2070,JP115,,,,,,,,,
+LP470,FR446,Tanacetum vulgare,X,X,X,X,X,,44.37244,6.31362,997,Seeds collected on 30 July 2017,11..7,8.5,7.67,4.85,,113.7 (74.58),275 (53.6),,98 (31)
+LP471,FR447,Pilosella officinarum,X,X,,,,,44.37244,6.31362,997,,,,,,,,,,
+LP472,FR448,Adenostyles alliarieae,X,,X,X,X,,44.34146,6.294136,1672,,10.62,17.07,2.49,7.3,,136,107,,140
+LP473,FR449,Cirsium monspessulanum,X,X,X,X,X,,44.67046,6.23971,1052,,27.27,26.29,8.78,14.14,,59,61.52,,13
+LP474,FR450,Senecio ovatus,X,X,X,X,X,,44.67046,6.23971,1052,,18.52,13.42,4.8,7.25,,180,280,,139
+LP475,FR451,Doronicum sp,X,X,X,X,X,,44.72252,6.31779,2553,,64.11,20.92,47.70 (16.61),17.14 (8.36),,,,,1
+LP476,FR452,Achillea nana,X,,X,X,X,,44.72252,6.31779,2553,,11.41,7.55,6.28,4.79,,21.76,14.61,,8
+LP477,FR453,Erigeron uniflorus,X,,X,,X,,44.72252,6.31779,2553,,,,,,,,,,
+LP478,FR454,Leucanthemopsis alpina,X,X,,,X,,44.72252,6.31779,2553,,,,,,,,,,
+LP479,FR455,Taraxacum sp,X,X,X,,X,,44.72252,6.31779,2553,,,,,,,,,,
+LP480,FR456,Saxifraga,,,,,,,44.72252,6.31779,2553,,,,,,,,,,
+LP481,FR457,Cirsium spinosissimus,X,,,,,,44.72252,6.31779,2553,,,,,,,,,,
+LP482,FR458,Solidago virgaurea alpestris,X,X,,,X,,44.72252,6.31779,2553,,,,,,,,,,
+LP483,FR459,Senecio doronicum,X,X,,,,,44.72351,6.31857,2607,,,,,,,,,,
+LP484,FR460,Jacobaea incana,X,X,X,X,X,,44.72422,6.31918,2625,,8.77,8.28,2.66,4.73,,22.52,21.88,,9
+LP485,FR461,Jacobaea incana,X,,,,,,44.72573,6.32062,2648,,,,,,,,,,
+LP486,FR462,Aster alpinus,X,,,,X,,44.72623,6.32373,2678,,,,,,,,,,
+LP487,FR463,Senecio doronicum,X,,,,,,44.72623,6.32373,2678,,,,,,,,,,
+LP488,FR464,Antennaria dioica,X,,,,,,44.72623,6.32373,2678,,,,,,,,,,
+LP489,FR465,Achillea nana,X,X,,,,,44.72623,6.32373,2678,,,,,,,,,,
+LP490,FR466,Antennaria carpatica,X,,X,X,X,,44.72623,6.32373,2678,,7.42,13.05,7.42,7.4,,15.43,15.46,,2
+LP491,FR467,Hieracium sp,X,,X,X,X,,44.72623,6.32373,2678,,24.29,17.35,12.04,10.05,,,,,1
+LP492,FR468,Scorzoneroides helvetica?,X,,X,X,X,,44.72623,6.32373,2678,,27.74,24.33,7.9,10.6,,,,,1
+LP493,FR469,Homogyne alpina,X,X,,,,,44.72731,6.32338,,,,,,,,,,,
+LP494,FR470,Leontodon sp,X,X,,,,,44.72731,6.32338,,,,,,,,,,,
+LP495,FR471,Doronicum sp,,X,,,,,44.72993,6.32625,2683,,,,,,,,,,
+LP496,FR472,Senecio doronicum,X,,,,,,44.72993,6.32625,2683,,,,,,,,,,
+LP497,FR473,Homogyne alpina,,X,,,,,44.72324,6.3443,2463,,,,,,,,,,
+LP498,FR474,Senecio doronicum,X,,,,,,44.72324,6.3443,2463,,,,,,,,,,
+LP499,FR475,Senecio doronicum,X,,,,,,44.72992,6.32625,2431,,,,,,,,,,
+LP500,FR476,Senecio doronicum,X,,,,,,44.72099,6.34373,2429,,,,,,,,,,
+LP501,FR477,,,,,,,,,,,Missed number: no collection associated,,,,,,,,,
+LP502,FR478,Senecio doronicum,X,,,,,,44.72046,6.34202,2415,,,,,,,,,,
+LP503,FR479,Senecio doronicum,X,X,,,,,44.72046,6.34202,2415,,,,,,,,,,
+LP504,FR480,Catananche caerulea,X,X,X,X,X,,44.5716,6.37908,1204?,,46.53,44.41,19.28 (13.10),21.56,,210,280,,2
+LP505,FR481,Echinops ritro,X,X,X,X,X,,44.5716,6.37908,1204?,Synflorescence measures: multiple synflorescences (single spherical synflorescence),,,,,,160 (46.68),260,,8 syn
+LP506,FR482,Senecio doronicum,X,X,,,,,44.57619,6.33727,2076,,,,,,,,,,
+LP507,FR483,Hieracium humile,X,,,,X,,44.57639,6.3365,2114,,,,,,,,,,
+LP508,FR484,Doronicum sp,X,X,,,X,,44.58065,6.33232,2249,,,,,,,,,,
+LP509,FR485,Senecio doronicum,X,X,,,,,44.58065,6.33232,2249,,,,,,,,,,
+LP510,FR486,Bellis sylvestris,X,,X,X,X,,44.57913,6.32992,2322,,30.12,10.01,10.18,6.63,,,,,1
+LP511,FR487,Galinsoga quadriradiata,X,X,X,X,X,,,,,,5.29,4.61,2.99,3.31,,110 (91),105 (67),,20 (9)
+LP512,FR488,Erigeron bonariensis,X,,X,X,X,,,,,,6.12,5.45,6.12,4.87,,21.94,57.47,,32
+LP513,FR489,Senecio viscosus,X,X,X,X,X,,44.34648,6.2931,1610,,14.21,11.99,4.59,8.61,,250 (55),450 (55),,145 (6)
+LP514,FR490,Arctium minus,X,X,X,X,X,,44.35742,6.95305,1836,,21.39,2279,21.39,15.39,,850 (75),1300 (145),,299 (12)
+LP515,FR491,Achillea millefolium,X,,,,,,44.35742,6.95305,1836,,,,,,,,,,
+LP516,FR492,Erigeron schleicheri,X,X,X,X,X,,44.35742,6.95305,1836,,7.62,10.26,5.44,7.06,,60.96,120.79,,16
+LP517,FR493,Cyanus montanus,X,X,,,X,,44.35498,6.95723,1879,"Maybe mixed bags (with Cyanus triumfetti?). Two bags, collected in slightly different places",,,,,,,,,
+LP518,FR494,Crepis,X,X,X,X,X,,44.35498,6.95723,1879,,46.45,28.15,15.64,13.31,,47.33,69.94,,2
+LP519,FR495,Crepis,X,,X,X,X,,44.35498,6.95723,1879,"the flowers were closed, capitulum measurement according to photo",12.92,21.74,11.82,11.64,,180,240,,22
+LP520,FR496,Solidago virgaurea alpestris,X,X,,,X,,44.35498,6.95723,1879,,,,,,,,,,
+LP521,FR497,Hieracium,X,X,X,X,X,,44.35498,6.95723,1879,found a bigger synflorescence later. The first small one is in brackets,24.08,16.94,9.84,8.13,,95 (66.61),150 (93.16),,59 (6)
+LP522,FR498,Centaurea uniflora nervosa,X,,,,X,,44.35498,6.95723,1879,,,,,,,,,,
+LP523,FR499,Scorzoneroides,X,X,X,X,X,,44.35498,6.95723,1879,,35.16,23.89,12.77,11.73,,,,,1
+LP524,FR500,Hieracium villosum,X,X,,,X,,44.35271,6.95888,1904,key not 100% sure,,,,,,,,,
+LP525,FR501,Pilosella peleteriana,X,X,,,X,,44.35271,6.95888,1904,,,,,,,,,,
+LP526,FR502,Erigeron,X,,X,X,X,,44.34199,6.94715,1992,,14.07,13.22,8.67,8.02,,54.81,106.44,,4
+LP527,FR503,Achillea erba-rotta erba-rotta,X,X,X,X,X,,44.34199,6.94715,1992,,9.25,5.88,2.84,4,,20.43,13.88,,4
+LP528,FR504,? (Erigeron?),X,X,,,,,44.34076,6.94718,2035,,,,,,,,,,
+LP529,FR505,Hieracium pseudocerinthe,X,,,,X,,44.34076,6.94718,2035,,,,,,,,,,
+LP530,FR506,Erigeron schleicheri,X,,X,X,X,,44.34076,6.94718,2035,"inv diam, one of the bracts open, possible artefact",12.95,9.92,8.46 (8.92),7.07,,25.15,91.46,,2
+LP531,FR507,Leucanthemum coronopifolium,X,X,X,X,X,,44.34076,6.94718,2035,,39.28,10.43,13.53,4.67,,,,,1
+LP532,FR508,Hieracium metallicorum,X,X,X,X,X,,44.3397,6.94757,2037,,29.35,16.63,10.18,9.1,,56,59.74,,4
+LP533,FR509,Erigeron acris acris,X,,X,X,X,,44.3397,6.94757,2037,,14.62,8.93,7.35,5.26,,47.19,51,,4
+LP534,FR510,Achillea roseoalba,,,,,,,44.3397,6.94757,2037,,4.89,5.23,1.92,2.5,,103 (61),89 (44),,248 (74)
+LP535,FR511,Artemisia absinthium,X,,,,X,,44.35942,6.95466,,,,,,,,,,,
+LP536,FR512,Saxifraga,,,,,,,44.31094,6.45032,2029,,,,,,,,,,
+LP537,FR513,Adenostyles leucophylla,X,X,X,X,X,,44.30975,6.45543,2117,,18.08,21.14,3.98,7.89,,115 (115),220 (50),,89 (56)
+LP538,FR514,Leucanthemum coronopifolium,X,X,,,X,,44.30975,6.45543,2117,,,,,,,,,,
+LP539,FR515,Doronicum grandiflorum,X,X,,,,,44.30914,6.45588,2147,,,,,,,,,,
+LP540,FR516,Pilosella glacialis,X,,X,X,X,,44.30914,6.45588,2147,possible hybrid,,,,,,23.38,17.5,,3
+LP541,FR517,Hieracium oblongum,X,,X,X,X,,44.30914,6.45588,2147,,29.64,15.77,5.82,10.05,,57.95,66.85,,3
+LP542,FR518,Adenostyles alpina,X,,X,X,X,,44.049,6.45916,2297,,10.05,17.17,2.7,7.5,,140 (90),290 (180),,115 (88)
+LP543,FR519,Crepis pygmaea,X,,,,X,,44.049,6.45916,2297,,,,,,,,,,
+LP544,FR520,Solidago canadensis,X,?,X,X,X,,44.37244,6.31362,997,,6.68,8.41,1.94,3.4,,"145 (74,06)","185 (71,84)",,450 (135)
+LP545,FR521,Cirsium morisianum,X,,X,X,X,,44.35559,6.29353,1440,"Ø cap with leaves 138,32",62.94,58.34,62.97,32.62,,285,500,,6
+LP546,FR522,Inula helvetica,X,,X,X,X,,44.35559,6.29353,1440,,21.86,13.14,13.84,6.35,,"115 (58,20)","190 (58,52)",,38 (6)
+LP547,FR523,Arctium minus,,X,,,,,44.35559,6.29353,1440,,,,,,,,,,
+LP548,FR524,Cirsium vulgare,X,X,X,X,X,,44.35559,6.29353,1440,,35.06,49.58,35.06,33.45,,260,640,,16
+LP549,FR525,Cirsium tuberosum,X,X,X,X,X,,44.35538,6.29001,1289,,31.55,31.66,9.93,12.88,,230,560,,5
+LP550,FR526,Solidago virgaurea alpestris,X,,X,X,X,,44.35538,6.29001,1289,,11.48,11.96,4.54,6.82,,115 (78),280 (111),,100 (43)
+LP551,FR527,Prenantes purpurea,X,X,X,X,X,,44.35538,6.29001,1289,,10.51,19.78,2.83,11.45,,40.56,86.28,,10
+LP552,FR528,Buphthalmum salicifolium,X,X,,,X,,44.35538,6.29001,1289,,,,,,,,,,
+LP553,FR529,Hieracium sp,X,,X,X,X,,44.34747,6.29515,1590,,26.98,15.44,4.16,7.57,,95,114,,17
+LP554,FR530,Tanacetum vulgare,X,,,,,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP555,FR531,Aster alpinus,X,X,,,X,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP556,FR532,Scorzoneroides montana,X,,,,X,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP557,FR533,Artemisia genipi,X,,X,X,X,,45.06417,6.40772,2623,Id by Rolland Douzet,3.41,5.3,3.41,4.13,,8.76,17.74,,25
+LP558,FR533B,Artemisia genipi,X,,,,X,,45.06417,6.4024,2601,Id by Rolland Douzet,,,,,,,,,
+LP559,FR534,Leontopodium nivale alpino,X,,,,,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP560,FR535,Saussurea alpina,X,,X,X,X,,45.06417,6.40772,2623,Id by Rolland Douzet,24.92,28.72,9.48,16.06,,52.51,"59,79 (39,87)",,15 (9)
+LP561,FR536,Doronicum grandiflorum,X,X,,,,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP562,FR537,Solidago virgaurea alpestris,X,,X,X,X,,45.06417,6.40772,2623,Id by Rolland Douzet,18.89,13.92,6.33,6.76,,24.09,26.46,,4
+LP563,FR538,Leucanthemopsis alpina,X,X,,,X,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP564,FR539,Achillea nana,X,X,,,X,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP565,FR540,Erigeron uniflorus,X,X,,,X,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP566,FR541,Leucanthemum adustum,X,,,,X,,45.06417,6.40772,2623,Id by Rolland Douzet,,,,,,,,,
+LP567,FR542,Taraxacum obovatum,X,,,,X,,45.06417,6.40772,2623,,,,,,,,,,
+LP568,FR543,Taraxacum sp,X,X,X,?,X,,45.06417,6.40772,2623,,,,,,,,,,
+LP569,FR544,Adenostyles leucophylla,X,,,,,,,,,Id by Rolland Douzet,,,,,,,,,
+LP570,FR545,Pilosella lactucella,X,,X,X,X,,45.06417,6.4024,2601,Id by Rolland Douzet,23.63,13.7,9.46,7.57,,23.63,17.21,,2
+LP571,FR546,Crepis aurea,X,,,,X,,45.06417,6.4024,2601,Id by Rolland Douzet,,,,,,,,,
+LP572,FR547,Homogyne alpina,X,X,,,,,45.06417,6.4024,2601,,,,,,,,,,
+LP573,FR548,Jacobea incana,X,,,,,,45.06417,6.4024,2601,Id by Rolland Douzet,,,,,,,,,
+LP574,FR549,Leucanthemopsis alpina,X,,,,,,45.06417,6.4024,2601,,,,,,,,,,
+LP575,FR550,Hieracium piliferum,X,,X,,,,45.06417,6.4024,2601,Id by Rolland Douzet,,,,,,,,,
+LP576,FR551,Hieracium glanduliferum,X,,X,,X,,45.06417,6.4024,2601,Id by Rolland Douzet,,,,,,,,,
+LP577,FR552,Gnaphalium supinum,X,X,X,X,X,,45.06417,6.4024,2601,Id by Rolland Douzet,2.66,6.34,2.66,5.13,,7.96,14.34,,3
+LP578,FR553,Gnaphalium hoppeanum,X,X,X,X,X,,45.06417,6.4024,2601,Id by Rolland Douzet,3.31,6.58,3.31,4.94,,11.34,13.94,,9
+LP579,FR554,Pilosella glacialis,X,,X,X,X,,45.06417,6.4024,2601,Id by Rolland Douzet,16.61,12.11,7.07,6.1,,29.89,19.49,,4
+LP580,FR555,Pilosella sp,X,,X,X,X,,45.06417,6.4024,2601,,22.61,14.04,9.09,7.19,,34.84,25.69,,7
+LP581,FR556,Scorzoneroides helvetica,X,,X,,X,,45.06417,6.4024,2601,"Id by Rolland Douzet, take photo and measure if necessary",,,,,,,,,
+LP582,FR557,Antennaria carpatica,X,,,,,,45.06417,6.4024,2601,Id by Rolland Douzet,,,,,,,,,
+LP583,FR558,Taraxacum sp,X,,X,X,X,,45.06417,6.4024,2601,,42.22,21.6,"18,56 (12,45)",17.27,,,,,1
+LP584,FR559,Taraxacum cucculatum,X,,X,X,X,,45.06417,6.4024,2601,,27.89,16.32,"19,01 (12,08)",11.68,,,,,1
+LP585,FR560,Hiaracium armeriacum ?,X,,X,,,,,,,,16.03,14.63,6.75,9.97,,34.11,61.82,,2
+LP586,FR561,Centaurea leucophaea,X,,X,X,,,,,,Id by Rolland Douzet,30.27,24.2,6.72,11.15,,180,300,,32
+LP587,FR562,Jacobaea erucifolia,X,,X,X,,,,,,Id by Rolland Douzet,15.22,11.54,4.05,5.72,,195,245,,143
+LP588,FR563,Xeranthemum inapertum,X,,X,X,,,,,,Id by Rolland Douzet,11.56,14.35,11.56,14.35,,?,?,,?
+LP589,FR564,Artemisia atrata,,,X,,,,,,,"Id by Rolland Douzet, take photo and measure",,,,,,,,,
+LP590,FR565,Artemisia chamaemelifolia,,,X,,,,,,,"Id by Rolland Douzet, take photo and measure",,,,,,,,,
+LP591,FR566,Filago arvensis,X,,X,,,,,,,"Id by Rolland Douzet, Take photo and measure single capitulum",,,,,,28.98,"121,32?",,103?
+LP592,FR567,Cirsium heterophyllum,X,X,X,X,X,,45.03308,6.39406,1908,,48.23,48.77,22.24,23.87,,,,,
+LP593,FR568,Artemisia verlotoirum,X,,X,,X,,45.04589,6.32922,1590,Take photo and measure single capitulum,,,,,,350,820,,17100
+LP594,FR569,Artemisia abrotanifolius,X,,X,,X,,45.04424,6.28517,1407,Take photo and measure single capitulum; immature synflorescence,,,,,,60,125,,37
+LP595,FR570,Artemisia campestris,X,,X,,X,,45.04424,6.28517,1407,Take photo and measure single capitulum,,,,,,320,850,,6664
+LP596,FR571,Senecio ovatus,X,X,X,X,X,,45.0415,6.28388,1380,,23.02,12.08,1.69 (3.53),6.5,,315,300,,384
+LP597,FR572,Hieracium prenantoides,X,X,X,X,X,,45.0415,6.28388,1380,,27.49,19,7.35,9.01,,130,141,,26
+LP598,FR573,Tripleurospermum inodorum,X,X,,,,,45.04315,6.33186,1596,,,,,,,,,,
+LP599,FR574,Lactuca serriola,X,,X,,X,,45.04315,6.33186,1596,Take photo and measure single capitulum,,,,,,230,570,,225
+LP600,FR575,Senecio adonifolius,X,,X,X,X,,,Lautaret,,,15.06,11.01,3.18,6.34,,48.58,99.39,,34
+LP601,FR576,Senecio squalidus rupestris,X,X,X,X,X,,,Lautaret,,,24.49,11.61,4.51,7.91,,48.54 (98),200 (200),,69 (25)
+LP602,FR577,Hieracium sp1,X,X,X,X,X,,,Lautaret,,,48.71,19.94,12.74 (14.87),12.55,,220,570,,8
+LP603,FR578,Hieracium amplexicaule,X,,X,X,X,,,Lautaret,,,36.4,17.04,14.87 (5.80),10,,165,175,,22
+LP604,FR579,Achillea oxyloba,X,,X,X,X,,,Lautaret,,,7.58,7.68,3.04,5.08,,52 (55.40),43 (46.45),,67 (211)
+LP605,FR580,Hieracium sp2,X,X,X,X,X,,,Lautaret,,,32.61,18.93,16.11 (7.09),12.01,,275,260,,23
+LP606,FR581,Doronicum austriacum,X,X,X,X,X,,,Lautaret,,,59.4,14.68,28.04,7.32,,155,260,,7
+LP607,FR582,Hieracium valdepilosum,X,X,X,X,X,,,Lautaret,,,39.65,21.2,11.96 (8.08),9.74,,115,195,,13
+LP608,FR583,Hypochaeris sp,X,X,X,X,X,,,Lautaret,,,47.97,26.77,9.8,13.45,,175,230,,3
+LP609,FR584,Lactuca alpina,X,X,,,X,,,Lautaret,,,,,,,,,,,
+LP610,FR585,Cirsium montanum,X,X,X,X,X,,,Lautaret,,,58.03,41.05,19.26 (64.27),20.14,,300,420,,6
+LP611,FR586,Cirsium pubigerum,X,X,X,X,X,,,Lautaret,,not a species of the Alps,33.83,33.13,13.77 (58.66),16.77 (41.95),,115,185,,6
+LP612,FR587,Anthemis arvensis,X,,X,X,X,,,Lautaret,,,38.44,9.62,14.19,2.74,,,,,
+LP613,FR588,Centaurea phrigia,X,,X,,,,,Lautaret,,take photo and measurement,,,,,,,,,
+LP614,FR589,Senecio ovirensis gaudinii,X,X,,,,,,Lautaret,,,,,,,,,,,
+LP615,FR590,Senecio abrotanifolius abrotanifolius,X,,,,,,,Lautaret,,,,,,,,,,,
+LP616,FR591,Cirsium carniolicum carniolicum,?,X,,,,,,Lautaret,,,,,,,,,,,
+LP617,FR592,Achillea clavenae,X,,,,,,,Lautaret,,check with FR579,,,,,,,,,
+LP618,FR593,Senecio subalpinus,X,X,,,,,,Lautaret,,Check with FR594,,,,,,,,,
+LP619,FR594,Senecio cordatus,X,X,X,X,X,,,Lautaret,,,34.31,12.83,8.64,5,,85,160,,23
+LP620,FR595,Gnaphalium uliginosum,X,,X,,X,,,Lautaret,,take photo and measurement,,,,,,,,,
+LP621,FR596,Petasites paradoxus,X,,,,X,,,Lautaret,,,,,,,,,,,
+LP622,FR597,Hieracium tomentosum,X,,X,X,,,,Lautaret,,syn hieracium lanosum?,40.03,26.1,15.58,11.4,,50,59,,2
+LP623,FR598,Saussurea discolor,X,X,X,X,X,,,Lautaret,,,22.74,24.12,7.2,11.42,,35.47,40.68,,5
+LP624,FR599,Carduus personata,X,X,,,,,,Lautaret,,,,,,,,,,,
+LP625,FR600,Ligularia sibirica,X,,X,X,,,,Lautaret,,,20.36,17.16,4.94,7.24,,95,365,,219
+LP626,FR601,Senecio doronicum,X,,X,,,,44.06522,6.40574,2678,,58.52,21.26,12.26,12.75,,,,,
+LP627,FR602,Cirsium monspessulanum,X,,,,,,44.85825,6.57948,1257,,,,,,,,,,
+LP628,FR603,Centaurea leucophaea,X,X,,,X,,44.85933,6.58506,1233,,,,,,,150,235,,17
+LP629,FR604,Calendula arvensis,X,X,,,X,,44.85933,6.58506,1233,,,,,,,,,,
+LP630,FR605,Artemisia chamaemelifolia,X,,,,X,,44.85933,6.58506,1233,,,,,,,110,470,,2496
+LP631,FR606,Carlina vulgaris,X,,X,X,X,,44.86083,6.58783,1201,,28.69 (53.41),18.75 (34.25),28.69 (53.41),18.75 (34.25),,115,120,,4
+LP632,FR607,Carlina acanthifolia,X,,,,,,44.86083,6.58783,1201,,116.25,71.4,116.25,71.4,,,,,
+LP633,FR608,Cota tinctoria,X,X,X,X,X,,44.86288,6.58887,1215,,33.21,9.44,15.82,4.08,,90,130,,3
+LP634,FR609,Achillea ageratum,X,,X,X,X,,44.8622,6.58772,1222,,3.64,5.16,1.94,4.05,,31.73,17.28,,221
+LP635,FR610,Achillea setacea,X,,X,X,X,,44.8622,6.58772,1222,,4.49,7.06,2.33,4.17,,63.49,53.27,,218
+LP636,FR611,Cirsium eriophorum,X,,X,X,X,,44.901029,6.654416,1327,GPS coordinate extracted from Gmaps,41.4,54.65,41.4,34.98,,165,340,,8
+LP637,FR612,Achillea millefolum,,X,,,,,,,,,,,,,,,,,
+LP638,FR613,Adenostyles alliareae,,X,,,,,44.86218,6.58773,1583,,,,,,,,,,
+LP639,FR614,Leucanthemum adustum,,X,,,,,44.86218,6.58773,1583,,,,,,,,,,
+LP640,FR615,Inula helvetica,,X,,,,,44.35559,6.29353,1440,,,,,,,,,,
+LP641,FR616,Carlina acaulis caulescens,,X,,,,,44.86218,6.58773,1583,,,,,,,,,,
+LP642,FR617,Cirsium acaule,X,X,X,X,,,44.3419,6.2941,1716,,44.01,48.39,18.22,22.67,,,,,1
+LP643,FR618,Cirsium eriophorum eriophorum,X,X,X?,,,,44.3419,6.2941,1716,,,,,,,,,,
+LP644,FR619,Cisrium vulgare,,X,,,,,,,,,,,,,,,,,
+LP645,FR620,Senecio viscosus,,X,,,,,44.34648,6.2931,1610,,,,,,,,,,
+LP646,FR621,Crepis vesicaria taraxicifolia,,X,,,,,44.34665,6.29747,1607,,,,,,,,,,
+LP647,FR622,Tanacetum vulgare,,X,,,,,44.37244,6.31362,997,,,,,,,,,,
+LP648,FR623,Tripleurospermum inodorum,,X,,,,,,,,,,,,,,,,,
+LP649,FR624,Cota tinctoria tinctoria,X,X,X,X,X,,44.298244,6.568403,,,,,,,,,,,
+LP650,FR625,Leucanthemum coronopifolium,X,,,,,,44.24644,6.70512,2249,,,,,,,,,,
+LP651,FR626,Senecio doronicum,X,X,,,,,44.25249,6.71275,2345,,,,,,,,,,
+LP652,FR627,Senecio doronicum,X,X,,,,,44.25315,6.71517,2405,,,,,,,,,,
+LP653,FR628,Doronicum grandiflorum,X,X,,,,,44.25411,6.71406,2428,,,,,,,,,,
+LP654,FR629,Adenostyles leucophylla,X,X,,,,,44.25411,6.71406,2428,,,,,,,,,,
+LP655,FR630,Achillea nana,X,X,,,X,,44.25411,6.71406,2428,,,,,,,,,,
+LP656,FR631,Adenostyles alpina,X,X,,,X,,44.25411,6.71406,2428,,,,,,,,,,
+LP657,FR632,Solidago virgaurea alpestirs,X,,,,X,,44.25411,6.71406,2428,,,,,,,,,,
+LP658,FR633,Aster alpinus,,X,,,,,44.25411,6.71406,2428,,,,,,,,,,
+LP659,FR634,Leucanthemum coronopifolium,,X,,,,,44.25411,6.71406,2428,,,,,,,,,,
+LP660,FR635,Leucanthemopsis alpina,X,X,,,X,,44.26045,6.70982,2754,,,,,,,,,,
+LP661,FR636,Artemisia umbelliformis,X,X?,,,X,,44.2609,6.71199,2814,,,,,,,,,,
+LP662,FR637,Saussurea alpina,X,X,,,X,,44.26424,6.7029,2951,,,,,,,,,,
+LP663,FR638,Leucanthemopsis alpina pseudotomentosa,X,,X,X,X,,44.26269,6.70966,2873,,27.7,13.43,8.28,5.73,,,,,1
+LP664,FR639,Taraxacum sp,X,,,,X,,44.26269,6.70966,2873,,,,,,,,,,
+LP665,FR640,Erigeron uniflorus,X,,,,X,,44.26269,6.70966,2873,,,,,,,,,,
+LP666,FR641,-,,,,,,,,,,"No collection associated, empty",,,,,,,,,
+LP667,FR642,Gnaphalium hoppeanum,X,X,,,X,,44.25952,6.71632,2692,,,,,,,,,,
+LP668,FR643,Cirsium spinosissimus,,x,,,,,44.25952,6.71632,2692,,,,,,,,,,
+LP669,FR644,Crepis pygmaea,X,X?,,,,,44.25936,6.71471,2675,,,,,,,,,,
+LP670,FR645,Antennaria dioica,X,X,,,,,44.24774,6.7154,2355,,,,,,,,,,
+LP671,FR646,Leucanthemopsis alpina,X,X,,,X,,44.2892,6.61178,2338,,,,,,,,,,
+LP672,FR647,Saussurea alpina,X,X,,,,,44.29436,6.61896,2539,,,,,,,,,,
+LP673,FR648,?,,,,,,,44.29436,6.61896,2539,,,,,,,,,,
+LP674,FR649,Doronicum grandiflorum,X,X,,,,,44.28896,6.60467,2317,,,,,,,,,,
+LP675,FR650,Leucanthemum coronopifolium,X,X,,,X,,44.28896,6.60467,2317,,,,,,,,,,
+LP676,FR651,Cirsium spinosissimus,X,X,,,,,44.28896,6.60467,2317,,,,,,,,,,
+LP677,FR652,Echinops sphareocephalus,X,,X,X,X,,44.3197,6.69477,1689,“Capitulum” measures refer to songle syncephalous inflorescence,49,46.31,,,,180,190,,5
+LP678,FR653,Senecio doronicum,X,,,,,,44.3197,6.69477,1689,,,,,,,,,,
+LP679,FR654,Senecio doronicum,X,,,,,,44.31719,6.690034,1662,,,,,,,,,,
+LP680,FR655,Carlina vulgaris,X,,,,,,44.31719,6.690034,1662,,,,,,,,,,
+LP681,FR656,Carlina vulgaris,X,,,,,,,,,,,,,,,,,,
+LP682,FR657,Inula conyzae,X,,X,X,X,,44.31719,6.690034,1662,,7.6,11.85,7.6,7.17,,93.12,58.5,,22
+LP683,FR658,Antennaria carpatica,X,X,,,,,44.26042,6.7396,2372,,,,,,,,,,
+LP684,FR659,Leucanthemopsis alpina,X,,,,X,,44.26042,6.7396,2372,,,,,,,,,,
+LP685,FR660,Gnaphalium supinum,X,X,,,X,,44.2584,6.73907,2354,,,,,,,,,,
+LP686,FR661,Jacobaea incana incana,X,X,,,X,,44.25714,6.73808,2373,,,,,,,,,,
+LP687,FR662,Jacobaea incana incana,X,X,,,X,,44.20259,7.1503,2349,,,,,,,,,,
+LP688,FR663,Leucanthemopsis alpina pseudotomentosa,X,X,,,X,,44.20259,7.1503,2349,,,,,,,,,,
+LP689,FR664,Senecio personii (J. incana),X,,X,X,X,,44.20338,7.1513,2354,,19.36,10.73,3.97,6.04,,28.16,37.59,,7
+LP690,FR665,Leucanthemopsis alpina pseudotomentosa,X,,X,X,X,,44.20338,7.1513,2354,,25.71,10.85,10.42,6.51,,,,,1
+LP691,FR666,Leucanthemum coronopifolium ceratophylloiodes,X,X,X,X,X,,44.20338,7.1513,2354,,50.03,11.42,14.52,1.3,,,,,1
+LP692,FR667,Hieracium lantoscanum (sect Intybacea),X,X,X,X,X,,44.20338,7.1513,2354,,33.06,18.51,14.29,11.67,,125 (210),110 (265),,4 (14)
+LP693,FR668,Achillea millefolium,X,,,,X,,44.20338,7.1513,2354,,,,,,,,,,
+LP694,FR669,Antennaria dioica,X,X,,,X,,44.20338,7.1513,2354,,,,,,,,,,
+LP695,FR670,Taraxacum sp,X,,X,X,X,,44.20338,7.1513,2354,,,,,,,,,,
+LP696,FR671,Senecio doronicum,X,,,,,,44.20338,7.1513,2354,,,,,,,,,,
+LP697,FR672,Jacobaea incana incana,X,X,,,X,,44.20487,7.1561,2465,,,,,,,,,,
+LP698,FR673,Achillea erba-rotta erba-rotta,X,X,,,X,,44.20487,7.1561,2465,,,,,,,,,,
+LP699,FR674,Saxifraga sp,,,,,,,44.20487,7.1561,2465,,,,,,,,,,
+LP700,FR675,Leucanthemopsis alpina,X,,,,,,,,,,,,,,,,,,
+LP701,FR676,Centaurea uniflora,X,X,,,,,,,,,,,,,,,,,
+LP702,FR677,Leucanthemum adustum,X,X,,,,,44.20487,7.1561,2465,,,,,,,,,,
+LP703,FR678,Gnaphalium supinum,X,X,,,X,,44.17535,7.1441,2338,,,,,,,,,,
+LP704,FR679,Gnaphalium hoppeanum,X,,,,X,,44.17535,7.1441,2338,,,,,,,,,,
+LP705,FR680,Leucanthemopsis alpina,X,,,,X,,44.17535,7.1441,2338,,,,,,,,,,
+LP706,FR681,Arnica montana,,X,,,,,44.17389,7.1567,2313,,,,,,,,,,
+LP707,FR682,Gnaphalium sylvaticum,X,,X,,X,,44.17389,7.1567,2313,,,,,,,,,,
+LP708,FR683,Senecio/Jacobaea (mixed bag),X,,,,,,,,,,,,,,,,,,
+LP709,FR684,Gnaphalium sylvaticum,X,,X,X,,,44.1775,7.17254,2178,,2.95,6.99,2.95,5.43,,29.18 (9.60),160.66,,61
+LP710,FR685,Matricaria discoidea,X,,X,X,X,,44.18073,7.16402,2084,,8.94,10.69,8.94,3.38,,,,,
+LP711,FR686,Crepis pygmaea,X,X,,,,,44.32045,6.80709,2775,,,,,,,,,,
+LP712,FR687,Achillea nana,X,X,,,X,,44.32157,6.80667,2862,,,,,,,,,,
+LP713,FR688,Leucanthemopsis alpina pseudotomentosa,X,X,,,X,,44.32157,6.80667,2862,,,,,,,,,,
+LP714,FR689,Doronicum grandiflorum,X,X,,,,,44.32157,6.80667,2862,,,,,,,,,,
+LP715,FR690,Jacobaea incana incana,X,X,,,X,,44.32157,6.80667,2862,,,,,,,,,,
+LP716,FR691,Jacobaea incana incana,X,X,,,X,,44.32157,6.80667,2862,Big/red,,,,,,,,,
+LP717,FR692a,Jacobaea incana incana,X,X,,,X,,44.32157,6.80667,2862,Big/red,,,,,,,,,
+LP718,FR692b,Jacobaea incana incana,X,X,,,X,,44.32157,6.80667,2862,Green/small,,,,,,,,,
+LP719,FR693,Carduus dafloratus carlinifolius,X,X,,,,,44.32157,6.80667,2862,,,,,,,,,,
+LP720,FR694a,Saussurea alpina,X,X,,,X,,44.32157,6.80667,2862,,,,,,,,,,
+LP721,FR694b,Berardia lanuginosa,X,,,,,,44.32157,6.80667,2862,,,,,,,,,,
+LP722,FR695,Leontodon crispus,X,X,,,X,,44.32157,6.80667,2862,,,,,,,,,,
+LP723,FR696,Senecio doronicum,X,X,,,,,44.34501,6.80097,2623,,,,,,,,,,
+LP724,FR697,Gnaphalium hoppeanum,X,X,,,X,,44.34501,6.80097,2623,,,,,,,,,,
+LP725,FR698,Artemisia umbelliformis,X,X,X,X,X,,44.3321,6.7735,2560,take picture and measures of single capitulum,,,,,,19.65 (10.63),165.69 (10.85),,19
+LP726,FR699,Senecio viscosus,X,X,,,X,,44.3321,6.7735,2560,,,,,,,,,,
+LP727,FR700,Hieracium lawsonii,X,X,,,X,,44.3321,6.7735,2560,,,,,,,,,,
+LP728,FR701,Cirsium alsophilum,X,X,,,X,,44.20113,7.12267,1811,,,,,,,,,,
+LP729,FR702,Jacobaea incana incana,X,,,,,,44.3321,6.7735,2560,One with and one without ligulae,,,,,,,,,
+LP730,FR703a,Lactuca serriola,X,X,X,X,X,,45.04335,6.33181,1603,,,,,,,,,,
+LP731,FR703c,Artemisia vulgaris,X,,X,X,X,,45.04335,6.33181,1603,,,,,,,,,,
+LP732,FR703b,Artemisia absinthium,X,,X,X,X,,45.04335,6.33181,1603,,,,,,,,,,
+LP733,FR703d,Telekia speciosa,,,,,,,,Lautaret,,,,,,,,310,515 (300),,36 (27)
+LP734,FR704,Leucanthemopsis alpina,X,X,,,X,,44.68684,6.98025,2616,,,,,,,,,,
+LP735,FR705,Doronocum grandiflorum,X,,,,X,,44.68684,6.98025,2616,,,,,,,,,,
+LP736,FR706,Achillea nana,X,,,,X,,44.68684,6.98025,2616,,,,,,,,,,
+LP737,FR707,Gnaphalium supinum,X,,,,X,,44.68684,6.98025,2616,,,,,,,,,,
+LP738,FR708,Jacobaea incana incana,X,,,,X,,44.68684,6.98025,2616,,,,,,,,,,
+LP739,IT1,Aposeris foetida,X,,X,X,X,,45.75737,11.41748,579,"In Orno-Ostryetum undergrwoth, bordering with Fagus formations. ",35.39,15.5033333333333,3.84333333333333,10.598,,,,,1
+LP740,IT2,Tephroseris balbisiana,X,,X,,X,,45.75488,11.41338,797,In Orno-Ostryetum being replaced by Fagus formations. ,44.9466666666667,16.2633333333333,6.85,10.12,,,,,11
+LP741,IT3,Petasites sp,X,,,,,,45.75541,11.412,827,,,,,,,,,,
+LP742,IT4,Corydalis cava,,,X,,X,,45.75514,11.41075,865,"Fresh meadow, possibly eutrophic. Presence of Centaurea ad Carduus. Locality ""Cason del Valugan"" (denomination pro-loco GAM). ",,,,,,,,,
+LP743,IT5,Bellis perennis,X,,X,,X,,45.75803,11.40208,1053,"""Zona di particolatre interesse floristico"". Presence of Leucanthemum?",20.8466666666667,9.67666666666667,6.47,5.92,,,,,1
+LP744,IT6,Corydalis cava,,,X,,,,45.75787,11.40213,1031,"""Zona di particolare interesse floristico""",,,,,,,,,
+LP745,IT7,Tussilago farfara,X,,,,,,45.75943,11.39541,1126,,,,,,,,,,
+LP746,IT8,Petasites albus,,,X,,X,,45.76002,11.39522,1167,,10.4733333333333,21.4966666666667,4.04666666666667,12.8233333333333,,,,,14.3333333333333
+LP747,IT9,Tussilago farfara,,X,,,X,,45.76149,11.39232,1218,,,,,,,,,,
+LP748,IT10,Taraxacum officinale,X,,X,,X,,45.75958,11.39021,1294,Monte Summano summit,38.8133333333333,19.5733333333333,7.73333333333333,12.6033333333333,,,,,1
+LP749,IT11,Hieracium murorum?,X,X,X,,X,,45.7538,11.41511,730,,26.8833333333333,21.4833333333333,5.53,12.6566666666667,,,,,7.33333333333333
+LP750,IT12,Crepis vesicaria taraxacifolia,X,X,,,X,,45.75867,11.42311,,"Near a patch of acidic soil (presence of Betula, Deschampsia) ",,,,,,,,,
+LP751,IT13,Hieracium murorum?,X,,,,X,,45.75819,11.42602,334,,,,,,,,,,
+LP752,IT14,Fumaria officinalis?,,,,,X,,45.75864,11.4279,307,,,,,,,,,,
+LP753,IT15,Chelidonium majus,,,X,,X,,45.73794,11.59006,157,4 or 5 petals per flower.,29.2833333333333,9.83,,,,,,,5
+LP754,IT16,Tragopogon pratense orientale,X,,X,,X,,45.73841,11.59084,165,,57.26,28.0433333333333,10.0933333333333,33.3266666666667,,,,,
+LP755,IT17,Crepis vesicaria taraxacifolia,X,X,X,,X,,45.73841,11.59084,165,,25.6833333333333,14.9166666666667,5.19666666666667,4.99666666666667,,,,,18.3333333333333
+LP756,IT18,Taraxacum officinale?,X,X,X,,X,,45.66489,11.80406,1419,,36.8733333333333,17.9766666666667,7.20333333333333,13.6233333333333,,,,,1
+LP757,IT19,Pseudofumaria lutea?,,,,,X,,45.66841,11.78086,990,,,,,,,,,,
+LP758,IT20,Hieracium murorum?,X,,X,,X,,45.6672,11.74969,562,,30.9,16.39,4.955,9.845,,,,,
+LP759,IT21,Senecio inaequidens,X,,X,,X,,45.68636,11.75984,369,"Woody at base; growing out of crevices in rock. Leaves aromatic, camphor-menthol?",27.81,11.23,5.1,6.89,,,,,1
+LP760,IT22,Crepis sancta,X,X,X,,X,,45.68636,11.75984,369,,23.63,12.3,4.41333333333333,8.38333333333333,,,,,
+LP761,IT23a,Leontodon crispus,X,,,,X,,45.61889,10.71152,384,GPS gone awry?… On road Albisano-Castion Veronese. ,,,,,,,,,
+LP762,IT23b,Lactuca perennis,X,,,,,,45.61889,10.71152,384,GPS gone awry?… On road Albisano-Castion Veronese. ,,,,,,,,,
+LP763,IT24,Leucanthemum vulgare var vulgare,X,,X,,X,,45.59412,10.73936,,GPS gone awry?… 5 km from Costermano del Garda,35.76,11.2866666666667,12.7033333333333,2.63,,,,,3.66666666666667
+LP764,IT25,Crepis vesicaria vesicaria,X,,,,X,,45.59412,10.73936,,,,,,,,,,,
+LP765,IT26,Petasites albus,check,X,X,,,,45.80314,11.56389,1034,Also seed collection for MSB,,,,,,,,,
+LP766,IT27,Cyanus triumfettii,X,X,,X!,,,45.80229,11.54553,1200,,11.55471,39.3933333333333,14.5966666666667,15.8833333333333,,,,,1
+LP767,IT28,Pilosella piloselloides,X,X,,X!,,,45.79818,11.73817,243,"Dry oligothrophic meadow (Festuco-brometalia), presence of A. pyramidalis",14.59,9.9,2.42666666666667,6.13666666666667,,44.8466666666667,62.6833333333333,,13.3333333333333
+LP768,IT29,Buphthalmum salicifolium (already have),,X,X!,X,,,45.79818,11.73817,243,,45.05,17.2066666666667,12.01,5.44,,,,,1
+LP769,IT30,Leontodon hirtus,,X,X,X!,,,45.79818,11.73817,243,,29.4566666666667,20.48,5.44666666666667,11.04,,,,,1
+LP770,IT31,Lactuca perennis,,X,,X!,,,45.79874,11.73927,305,(some of the samples have GPS as IT32),36.39,25.1133333333333,3.35,12.97,,137.92,210.043333333333,,
+LP771,IT32,Inula hirta,X,X,,X!,,,45.79985,11.73854,344,,34.58,15.7133333333333,26.7033333333333,9.74333333333333,,,,,1
+LP772,IT33,Carduus nutans macrolepis,X,X,,X!,,,45.80437,11.7325,240,,42.6,33.565,41.25,15.88,,,,,
+LP773,IT34,Cirsium pannonicum,X,X,X,X!,,,45.79267,11.70271,431,,22.13,28.8866666666667,10.0666666666667,14.3466666666667,,,,,1
+LP774,IT35,Tragopogon pratensis,,,X,,,,45.79267,11.70271,431,,,,,,,,,,
+LP775,IT36,Cyanus montanus,X,X,,X!,,,45.79564,11.70638,443,,43.2,29.09,10.02,18.23,,,,,1
+LP776,IT37,Cirsium arvense,X (check),X,X,X!,,,45.72603,11.64959,75,,22.9233333333333,21.9233333333333,6.7,11.06,,280 (120),380 (105),,
+LP777,IT38,Matricaria chamomilla,X,X,X,X!,,,45.696,11.6343,73,,19.4333333333333,7.62,5.06333333333333,1.49333333333333,,182.333333333333,168.333333333333,,
+LP778,IT39,Achillea millefolium,,X,X?,X,,,45.696,11.6343,73,,7.60333333333333,6.37,2.15666666666667,3.92,,37.3766666666667,27.2433333333333,,
+LP779,IT40,Erigeron annuus,X,X,,X!,,,45.696,11.6343,73,,19.7766666666667,4.87333333333333,6.96666666666667,1.97,,180 (78),350 (60),,
+LP780,IT41,Senecio vulgaris,X,X,X?,X,,,45.696,11.6343,73,,4.06333333333333,8.56,4.13333333333333,7.38333333333333,,51.6666666666667,101.666666666667,,
+LP781,IT42,Sonchus olearaceus,check,X,X,X,,,45.696,11.6343,73,,3.55666666666667,17.64,8.42,12.8533333333333,,88.3333333333333,83.3333333333333,,
+LP782,IT43,Lapsana communis,X,X,,X,,,45.696,11.6343,73,,2.49333333333333,9.44333333333333,2.63666666666667,6.55666666666667,,45.5133333333333,47.9333333333333,,
+LP783,IT44,Homogyne alpina,X,X,,X,,,46.10193,11.38771,1803,Under Larix,7.51333333333333,11.19,4.86,9.58,,,,,1
+LP784,IT45,Antennaria dioica (♀),,X,,X,,,46.10193,11.38771,1803,,4.83,5.79,4.71,4.89,,14.29,9.82,,7
+LP785,IT46,Antennaria dioica (♂),,X,,X,,,46.10193,11.38771,1803,,4.48,8.65,3.99,5.6,,13.55,13.43,,6
+LP786,IT47,Tussilago farfara,check,X,X,,,,46.1124,11.3901,1777,,,,,,,,,,
+LP787,IT48,Pilosella officinarum,,X,,X,,,45.79432,11.46528,1272,,27.9966666666667,14.9833333333333,6.53,7.49333333333333,,,,,1
+LP788,IT49,Tephroseris longifolia,check,X,,X?,,,45.79402,11.46281,1269,,29.8766666666667,19.3933333333333,6.65666666666667,8.10666666666667,,96.77,86.5166666666667,,
+LP789,IT50,Pilosella lactucella,,X,,X,,,45.79402,11.46281,1269,,20.3233333333333,10.9733333333333,3.01,5.34666666666667,,,,,1
+LP790,IT51,Aposeris foetida,check,X,X,,,,45.79402,11.46281,1269,,,,,,,,,,
+LP791,IT52,Saxifraga bryoides,,,,,,,45.8777,11.67091,265,,,,,,,,,,
+LP792,IT53,Cirsium pannonicum,check,X,,,,,45.87816,11.66935,363,"Ologothrophic meadow (cut?), Brometum",,,,,,,,,
+LP793,IT54,Cirsium pannonicum,X,X,,X,,,45.87816,11.66935,363,,23.42,24.435,11.65,13.695,,,,,1
+LP794,IT55,Carduus deflortus summanus,X,X,,X,,,45.87816,11.66935,363,Not in full bloom,17.58,15.54,26.275,12.43,,,,,1
+LP795,IT56,Centaurea nigrescens,check,X,,X?,,,45.87816,11.66935,363,Only 1 individual,,,,,,,,,
+LP796,IT57,Tanacetum corymbosum subcorymbosum,cneck,X,,X?,,,45.87805,11.66908,376,,33.115,15.555,7.97,5.655,,112.5,110,,5
+LP797,IT58,Inula hirta,check,X,,X?,,,45.87805,11.66908,376,,,,,,,,,,
+LP798,IT59,Cyanus montanus,check,X,,,,,45.87805,11.66908,376,,,,,,,,,,
+LP799,IT60,Leucanthemum cuneifolium,check,X,,X?,,,45.87664,11.67014,374,,,,,,,,,,
+LP800,IT61,Achillea millefolium,,X,,,,,45.87664,11.67014,374,,,,,,,,,,
+LP801,IT62,Onopordum acanthium,X,X,,X,,,45.45759,11.31472,31,"Border of the road, just out the roundabout for Gambellara",24.04,39.38,53.6566666666667,24.56,,1170,433.333333333333,,
+LP802,IT63,Carduus nutans,check,X,,,,,45.5699,11.1536,458,,,,,,,,,,
+LP803,IT64,Centaurea nigrescens ramosa,X,X,,X?,,,45.5699,11.1536,458,,,,,,,,,,
+LP804,IT65,Cirsium arvensis,check,X,,X?,,,45.6833,11.17753,635,,,,,,,,,,
+LP805,IT66,Centaurea nigrescens ramosa,,X,,,,,45.6833,11.17753,635,,,,,,,,,,
+LP806,IT67,Achillea millefolium,,X,,,,,45.6833,11.17753,635,,,,,,,,,,
+LP807,IT68,Telekia speciosa,X,X,,X,,,45.6702,11.18369,717,Not in bloom,,,42.33,18.9166666666667,,135.09,141.16,,
+LP808,IT69,Tanacetum corymbosum subcorymbosum,check,X,,X?,,,45.7085,11.19757,599,"On very steep dirt road, not to do again! Only 1 individual in bloom: multiple measures of different capitula on same corymb. ",31.7433333333333,15.1666666666667,8.88,5.02333333333333,,127.72,105.63,,
+LP809,IT70,Crepis biennis (Picris hieracioides?),X,X,X,X,X,,45.76034,11.62708,198,,27.01,18.64,10.93,9.23,,600,1200,,782
+LP810,IT71,Eupatorium cannabinum,X,,,X,,,45.76034,11.62708,198,,,,,,,,,,
+LP811,IT72,Siegesbeckia orientalis,X,X,X,X,X,,45.70683,11.61797,80,,7.96,7.57,13.29,5.81,,380,430,,142
+LP812,IT73,Xanthium orientale italicum,X,X,X,X,X,,45.70683,11.61797,80,,18.22 (female),21.67 (female),,,,1450,1500,,576
+LP813,IT74,Galinsoga praviflora,X,X,X,X,X,,45.73819,11.61502,145,,8.44,5.61,4.54,3.43,,420,370,,146
+LP814,IT75,Bidens bipinnata,X,X,X,X,X,,45.73819,11.61502,145,,12.66,11.65,9.46,6.13,,510,620,,48
+LP815,IT76,Helianthus tuberosus,X,X,X,X,X,,45.70782,11.61403,76,,100.69,22.83,34.96,9.92,,480,1250,,38
+LP816,IT77,Bidens frondosa,X,X,X,X,X,,45.69664,11.63582,73,,9.45,7.55,20.45,5.82,,270 (700),160 (650),,9 (112)
+LP817,FR709,Tussilago farfara,X,X,X,X,X,23/04/2018,44.347367,6.292483,1581,,29.56,15.91,8.14,10.68,2.8,,,,
+LP818,FR710,Petasites albus,X,,X,X,X,23/04/2018,,,,,17.86,19.61,13.74 (4.88),11.46,1.08,88.49,69.65,4.49,39
+LP819,FR711a,Senecio doronicum,X,,,,,23/04/2018,44.32002,6.43188,1557,,,,,,,,,,
+LP820,FR711b,Tussilago farfara,X,,,,X,23/04/2018,44.32002,6.43188,1557,,,,,,,,,,
+LP821,FR712,Carlina acaulis caulescens,,X,,,,23/04/2018,44.31944,6.42849,1557,,,,,,,,,,
+LP822,FR713,Carlina canthifolia,,X,,,,25/04/2018,44.47856,5.88877,1133,,,,,,,,,,
+LP823,FR714,Senecio doronicum,X,,,,,17/05/2018,44.34028,6.29359,1766,,,,,,,,,,
+LP824,FR715,Senecio doronicum,X,,,,,17/05/2018,44.33681,6.2822,1934,,,,,,,,,,
+LP825,FR716a,Senecio doronicum,X,,,,,17/05/2018,44.33137,6.27408,2019,,,,,,,,,,
+LP826,FR716b,Senecio doronicum,X,,,,,17/05/2018,44.33137,6.27408,2019,,,,,,,,,,
+LP827,FR717,Taraxacum sect alpinum,X,X,X,X,X,17/05/2018,44.33137,6.27408,2019,,29.31,14.96,"16,53 (10,24)","10,28 (6,02)",1.13,,,,
+LP828,FR718a,Senecio doronicum,X,,,,,17/05/2018,44.331,6.27342,2027,,,,,,,,,,
+LP829,FR718b,Senecio doronicum,X,,,,,17/05/2018,44.331,6.27342,2027,,,,,,,,,,
+LP830,FR719,Aposeris foetida,X,,,,,17/05/2018,44.33186,6.27433,2025,,,,,,,,,,
+LP831,FR720,Senecio doronicum,X,,,,,17/05/2018,44.3342,6.29422,1968,,,,,,,,,,
+LP832,FR721,Senecio doronicum,X,,,,,17/05/2018,44.34052,6.29454,1818,,,,,,,,,,
+LP833,FR722,Trogopogon dubius,X,X,,X,X,18/05/2018,44.59653,6.52327,919,,59.64,32.19,86.4,22.9,10.78,170,485,,3
+LP834,FR723,Scorzonera sp,X,X,,X,X,18/05/2018,44.59653,6.52327,919,,21.53,"20,68 (16,07)","15,27 (8,62)",12.8,2.36,115,425,,5
+LP835,FR724,Cyanus segetum,X,,,,X,18/05/2018,44.59653,6.52327,919,,,,,,,,,,
+LP836,CH1,Hieracium gr murorum,X,X,X,X,X,19/05/2018,46.00872,8.98722,897,,32.75,18.86,"4,64 (12,96)",12.35,1.59,52.06,103.75,1.68,4
+LP837,CH2,Pilosella lattucella,X,,,,X,19/05/2018,46.00833,8.98694,898,,,,,,,,,,
+LP838,CH3,Tanacetum corymbosum,X,,,,,19/05/2018,46.00833,8.98694,880,,,,,,,,,,
+LP839,CH4,Erigeron karviskianus,X,,X,X,X,19/05/2018,46.00863,8.98528,881,,17.71,5.93,7.46,2.5,1.17,193,112.76,,6
+LP840,CH5,Cyanus triumfetti,X,X,X,X,X,19/05/2018,46.00686,8.98604,723,,58.57,33.7,14.67,15.3,4.01,35,135,3.39,3
+LP841,CH6,Lapsana communis,X,,,,X,19/05/2018,46.0013,8.98556,279,,,,,,,,,,
+LP842,CH7,Erigeron karviskianus,X,,,,,19/05/2018,46.0013,8.98556,279,,,,,,,,,,
+LP843,CH8,Tanacetum corymbosum sybcorymbosum,X,,,,X,19/05/2018,46.00203,8.98751,288,,,,,,,,,,
+LP844,CH9,Santolina chamecyparissus,X,,,,X,19/05/2018,46.00221,8.98815,313,,,,,,,,,,
+LP845,CH10,Leucanthemum vulgare,X,,,,X,19/05/2018,46.00221,8.98815,313,,,,,,,,,,
+LP846,CH11,Mycelis muralis,X,,,,X,19/05/2018,46.00423,8.9963,289,,,,,,,,,,
+LP847,CH12,Petasites albus,X,,,,X,21/05/2018,46.38902,8.53927,758,,,,,,,,,,
+LP848,CH13,Petasites paradoxus,X,X,,,X,21/05/2018,46.37127,8.55038,657,,,,,,,,,,
+LP849,CH14,Hieracium gr murorum,X,,X,X,X,21/05/2018,46.37127,8.55038,657,,36.48,16.98,"5,01 (15,31)",8.73,1.17,74.67,120.35,2.05,17
+LP850,CH15,Leucanthemum vulgare,X,,,,X,21/05/2018,46.37127,8.55038,657,,,,,,,,,,
+LP851,CH16,Crepis sp,X,,X,X,X,21/05/2018,46.37077,8.55672,667,,43.5,21.5,"19,84 (11,80)",7.49,1.79,((500))(320)170,((270))(205)8,"((5,78))(4,33)2,68",((48))(33)8
+LP852,CH17,Leontodon hispidus,X,,X,X,X,21/05/2018,46.38723,8.54227,741,,40.9,22.36,"(18,18) 10,38",11.86,5.44,,,,
+LP853,CH18,Taraxacum sect ruderalia,X,X,,,X,21/05/2018,46.38723,8.54227,741,,,,,,,,,,
+LP854,CH19,Tussilago farfara,,X,,,,21/05/2018,46.45368,8.66041,1348,,,,,,,,,,
+LP855,CH20,Bellidastrum michelii,X,,,,X,21/05/2018,46.45284,8.66036,1298,,,,,,,,,,
+LP856,CH21,Petasites albus,X,X,,,X,21/05/2018,46.44829,8.66247,1287,,,,,,,,,,
+LP857,CH22,Doronicum pardalianches,X,X,X,X,X,22/05/2018,46.03122,9.14852,282,,49.61,15.93,27.11,6.99,1.42,175,60,1.75,2
+LP858,CH23,Hieracium gr murorum,X,X,,,,22/05/2018,46.01708,9.11012,271,,,,,,,,,,
+LP859,CH24,Hieracium bifidum,X,X,,,X,22/05/2018,46.019,9.22938,348,,,,,,,,,,
+LP860,CH25,Erigeron karviskianus,X,,,,X,22/05/2018,46.019,9.22938,348,,,,,,,,,,
+LP861,CH26,Hypochaeris radicata,X,,X,,X,22/05/2018,46.019,9.22938,348,,,,,,,,,,
+LP862,CH27,Leonthodon hispidus,X,,X,,X,22/05/2018,45.9917,9.2267,347,,,,,,,,,,
+LP863,CH28,Achillea roseoalba,X,,X,X,X,22/05/2018,45.9917,9.2267,347,,5.79,5.96,1.79,4.25,0.73,25.22,26.4,1.78,48
+LP864,CH29,Leucanthemum vulgare,X,,,,X,22/05/2018,45.9917,9.2267,347,,,,,,,,,,
+LP865,CH30,Artemisia verlotiorum,X,,,,,22/05/2018,45.9917,9.2267,347,,,,,,,,,,
+LP866,CH31,Scorzonera austriaca,X,X,,,,22/05/2018,45.99482,9.22272,437,,,,,,,,,,
+LP867,CH32,Inula hirta,X,,,,,22/05/2018,45.9941,9.22238,464,,,,,,,,,,
+LP868,CH33,Scorzonera austriaca,,,,,X,22/05/2018,45.9941,9.22238,464,,,,,,,,,,
+LP869,CH34,Leonthodon hispidus tenuifolius,X,X,X,X,X,22/05/2018,45.99658,9.21958,618,,33.73,19.45,"10,97 (5,29)",10.88,2.92,,,,
+LP870,CH35,Centaurea rhatica,X,,,,,22/05/2018,45.99658,9.21958,618,,,,,,,,,,
+LP871,CH36,Centaurea scabiosa grinensis,X,,,,,22/05/2018,45.99658,9.21958,618,,,,,,,,,,
+LP872,CH37,Cirsium Eristhales,X,,X,X,X,22/05/2018,45.95981,9.00145,654,,27.44,30.13,17.16,12.11,3.43,88.3,92.6,4.15,3
+LP873,CH38,Tanacetum corimbosum,X,,,,,22/05/2018,45.95981,9.00145,654,,,,,,,,,,
+LP874,FR725,Scorzoneroides sp,,X,,,,09/06/2018,44.3875,5.93894,562,,,,,,,,,,
+LP875,FR726,Hieracium tomentosum,X,,X,X,X,09/06/2018,44.48228,5.88837,1118,same as OH408,,,,,,,,,
+LP876,A1,Carduus acanthoides,X,X,X,X,X,14/06/2018,47.98749,16.43984,186,NEW species,32.23,27.74,14.01,11.21,2.41,90 (105),110 (150),5 (8),"4,55 (5,90)"
+LP877,A2,Cirsium arvense,X,,,,,14/06/2018,47.98749,16.43984,186,,,,,,,,,,
+LP878,A3,Tripleurospermum inodorum,X,X,,,X,14/06/2018,47.98749,16.43984,186,,,,,,,,,,
+LP879,A4,Onopordum acanthium,X,,,,,14/06/2018,47.98749,16.43984,186,,,,,,,,,,
+LP880,A5,Achillea millefolium,X,,,,X,14/06/2018,48.03317,16.02977,154,,,,,,,,,,
+LP881,A6,Centaurea jacea,X,X,X,,X,14/06/2018,48.03317,16.02977,154,Maybe a different subspecies than subsp. Jacea,37.24,25.92,9.12,11.65,2.46,103,167,3,1.77
+LP882,A7,Cirsium pannonicum,X,X,X,X,X,14/06/2018,48.04065,16.04163,453,To do dissection,29.87,32.81,8.97,13.15,2.09,70,265,3,2.7
+LP883,A8,Centaurea scabiosa,X,X,,,X,14/06/2018,48.04065,16.04163,453,,,,,,,,,,
+LP884,A9,Inula hirta,X,,,,X,14/06/2018,48.04065,16.04163,453,,,,,,,,,,
+LP885,A10,Inula salicina,X,,,,X,14/06/2018,48.04065,16.04163,453,,,,,,,,,,
+LP886,A11,Tanacetum corymbosum,X,X,,,,14/06/2018,48.04065,16.04163,453,,,,,,,,,,
+LP887,A12,Taraxacum sp,X,X,X,X,X,15/06/2018,47.71728,15.77466,1530,NEW species; Dissection done; section Alpestria? ,37.31,17.79,"7,12 (19,69)",9.7,1.61,,,,
+LP888,A13,Homogyne alpina,X,X,,,X,15/06/2018,47.71728,15.77466,1530,,,,,,,,,,
+LP889,A14,Belidastrum michelii,X,X,,,,15/06/2018,47.71728,15.77466,1530,,,,,,,,,,
+LP890,A15,Carduus defloratus summanus,X,,,,X,15/06/2018,47.71728,15.77466,1530,,,,,,,,,,
+LP891,A16,Leontodon hispidus,X,,,,X,15/06/2018,47.71728,15.77466,1530,,,,,,,,,,
+LP892,A17,Hieracium villosum,X,,,,X,15/06/2018,47.71728,15.77466,1530,,,,,,,,,,
+LP893,A18,Achillea clavenae,X,,X,X,X,15/06/2018,47.71736,15.77347,1561,Only from JB Lautaret; re-do GS and dissection if there's time,13.09,7.13,3.18,6.43,0.65,"37,60 (38,78)","37,11 (63,93)",17 (21),"1,49 (1,64)"
+LP894,A19,Carduus defloratus summanus,,,X,X,,15/06/2018,47.71915,15.77241,1584,To do dissection,36.73,26.97,"(11,71) 22,73",17.03,2.8,,,,
+LP895,A20,Senecio subalpinus,X,,,,,15/06/2018,47.71691,15.76619,1608,,,,,,,,,,
+LP896,A21,Senecio subalpinus,X,,X,X,X,15/06/2018,47.71784,15.77401,1564,Only from JB Lautaret; re-do GS and dissection if there's time,27.74,14.87,11.25,6.52,2.79,45.27,61.11,6,2.98
+LP897,A22,Prenantes purpurea,X,,,,,15/06/2018,47.72835,15.79708,553,,,,,,,,,,
+LP898,A23,Cirsium eristhales,X,X,,,,15/06/2018,47.72835,15.79708,553,,,,,,,,,,
+LP899,A24,Cirsium x oleraceum?,X,,,,,15/06/2018,47.73669,15.78478,552,Hybrid C. oleraceum x C. eristhales? ,,,,,,,,,
+LP900,A25,Cirsium oleraceum,X,X,X,X,X,15/06/2018,47.73669,15.78478,552,NEW species,20.33,29.92,17.9,17.9,2.43,95 (145),200 (545),5 (8),"5,70 (7,33)"
+LP901,A26,Buphthalmum salicifolium,X,,,,,15/06/2018,47.74579,15.77217,554,,,,,,,,,,
+LP902,A27,Cirsium x oleraceum?,X,,X,X,X,15/06/2018,47.8776,15.7701,719,Different than JBB Lautaret,"(66,94) 34,11","(50,34) 39,10",15.49,22.04,3.52,117.72,80.76,5,5.57
+LP903,A28,Cirsium rivulare,X,X,X,X,X,15/06/2018,47.87259,15.78424,736,NEW species; Dissection done,20.25,36.49,11.02,16.16,2.66,80,225,5,4.4
+LP904,A29,Senecio subalpinus,X,X,X,X,X,15/06/2018,47.87259,15.78424,736,Only from JB Lautaret; re-do GS and dissection if there's time (choose the best sample of S. subalpinus),33.36,12.08,8.05,5.85,1.54,(95) 70,(180) 75,(17) 4,4.07
+LP905,A30,Centaurea leucophaea,X,,X,X,X,16/06/2018,48.27803,16.34484,431,Maybe Centaurea stoebe; GS and dissection if there’s time,48.14,26.6,11.49,15.35,2,102.5,180,5,2.62
+LP906,A31,Inula oculus-christi,X,X,X,X,X,16/06/2018,48.27803,16.34484,431,NEW species,24.31,13.14,9.52,6.21,1.65,,,,
+LP907,A32,Scorzonera hispanica,X,X,,,X,16/06/2018,48.27803,16.34484,431,Only 1 individual,,,,,,,,,
+LP908,A33,Cyanus montanus,X,,,,,17/06/2018,47.79037,15.81182,1334,,,,,,,,,,
+LP909,A34,Achillea clavenae,X,,,,,17/06/2018,47.78864,15.81158,1455,Only from JB Lautaret; re-do GS and dissection if there's time,,,,,,,,,
+LP910,A35,Doronicum clusii,X,,X,X,X,17/06/2018,47.78661,15.80827,1591,NEW species; dissection done,65.25,"(22,73) 14,8","36,02 (13,26)","13,37 (7,68)",2.81,,,,
+LP911,A36,Hieracium sect alpina,X,,X,X,X,17/06/2018,47.7885,15.81142,1466,"NEW species (not sure which, but we don’t have it); dissection done",31.08,21.84,8.56,12.64,2.26,49.39,83.88,3,2
+LP912,A37,Leucanthemum atratum,X,,X,X,X,17/06/2018,47.79323,15.81586,1225,NEW species (different subspecies than France),56.84,"(11,37) 7,76",18.3,2.34,2.38,,,,
+LP913,A38,Tephoroseris integrifolia,X,X,X,X,X,17/06/2018,47.79204,15.81456,1242,NEW species; dissection done,29.08,13.06,4.9,6.38,1.3,62.97,91.19,4,2.22
+LP914,A39,Hieracium sect amplexicaulia,X,X,X,X,X,17/06/2018,47.79204,15.81456,1242,"NEW species (not sure which, but we don’t have it); dissection done",30.8,21.15,5.94,9.78,1.4,101.12,108.06,4,1.61
+LP915,A40,Carduus defloratus summanus,,X,,,,17/06/2018,47.88478,15.75414,695,,,,,,,,,,
+LP916,A41,Senecio/Jacobaea sp,X,X,X,X,X,18/06/2018,47.9573,16.26658,244,Dissection done,25.99,10.6,4.92,4.43,1.78,295,290,3.76,67
+LP917,A42,Centaurea leucophaea,X,,,,,18/06/2018,47.9573,16.26658,244,,,,,,,,,,
+LP918,A43,Artemisia absinthium,X,,,,,18/06/2018,47.9573,16.26658,244,,,,,,,,,,
+LP919,A44,Echinops ritro rhutenica,X,,X,X,X,18/06/2018,47.9568,16.26459,244,Different subspecies than France,43.65,50.26,-,-,4.44,195,330,12,7.71
+LP920,A45,Echinops sphaerocephalus,X,,X,X,X,18/06/2018,47.94569,16.26889,249,To do dissection if there’s time,59.19,59.26,-,-,4.36,385,470,25,10.6
+LP921,A46,(empty),,,,,,,,,,,,,,,,,,,
+LP922,A47,Cota tinctoria,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP923,A48,Achillea millefolium,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP924,A49,Centaurea scabiosa,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP925,A50,Leucanthemum vulgare,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP926,A51,Centaurea nigra,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP927,A52,Onopordum acanthium,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP928,A53,Tripleurospermum inodorum,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP929,A54,Centaurea leucophaea,X,,,,,19/06/2018,47.32495,11.68786,465,,,,,,,,,,
+LP930,A55,Cirsium oleraceum,X,X,,,,19/06/2018,47.32581,11.69125,554,,,,,,,,,,
+LP931,A56,Cirsium arvense,X,,,,,19/06/2018,47.32581,11.69125,554,,,,,,,,,,
+LP932,CH39,Erigeron karviskianus,,X,,,,20/06/2018,46.00863,8.98528,881,Same individual as CH4,,,,,,,,,
+LP933,CH40,Rudbeckia hirta,X,,X,X,X,20/06/2018,46.02692,8.76233,347,Semi-wild,52.1,11.79,36.54,13.93,3.26,,,,
+LP934,CH41,Erigeron annuus,X,,,,,20/06/2018,46.02695,8.76651,380,,,,,,,,,,
+LP935,CH42,Centaurea jacea,X,,,,,20/06/2018,46.02695,8.76651,380,Probably Centaurea nigra,,,,,,,,,
+LP936,CH43,Lapsana communis,X,,,,,20/06/2018,46.02695,8.76651,380,,,,,,,,,,
+LP937,CH44,Scorzonera humilis,X,X,,,,21/06/0218,46.1044,8.96611,978,ID by Sofia Mangili,,,,,,,,,
+LP938,CH45,Carduus defloratus,X,,X,X,X,21/06/0218,46.10529,8.97186,1010,,44.46,29.87,31.59,12.81,3.37,,,,
+LP939,CH46,Centaurea scabiosa grinensis,X,X,X,X,X,21/06/0218,45.96212,8.88513,417,,40.64,34.02,20.06 (14.37),18.06,2.98,260,530,3.81,9
+LP940,CH47,Leontodon hispidus tenuifolius,X,,,,,21/06/0218,45.96212,8.88513,417,,,,,,,,,,
+LP941,CH48,Cyanus trumfettii,X,,,,X,21/06/0218,45.96207,8.88476,413,,,,,,,,,,
+LP942,CH49,Galonsoga quadriradiata,X,,,,X,21/06/0218,45.96199,8.88022,482,,,,,,,,,,
+LP943,CH50,Leontodon helveticus,X,,X,X,X,22/06/2018,46.21058,8.78732,1784,,,,,,,,,,
+LP944,CH51,Hieracium murorum,X,,,,X,22/06/2018,46.21058,8.78732,1784,,,,,,,,,,
+LP945,CH52,Homogyne alpina,X,,,,,22/06/2018,46.21058,8.78732,1784,,,,,,,,,,
+LP946,CH53,Achillea distans ,X,,X,X,X,22/06/2018,46.21069,8.79354,1706,,16.19,7.24,3.84,4.16,1.05,135 (68.34),325 (44.14),3.86 (2.07),67 (29)
+LP947,CH54,Arnica montana,X,,,,,22/06/2018,46.21421,8.79385,1650,,,,,,,,,,
+LP948,CH55,Carduus defloratus defloratus,X,,,,,22/06/2018,46.1341,8.7968,1535,,,,,,,,,,
+LP949,CH56,Adenostyles alliareae,X,,,,,22/06/2018,46.21189,8.79884,1500,,,,,,,,,,
+LP950,CH57,Achillea roseoalba,X,,,,X,22/06/2018,46.20733,8.80109,1441,,,,,,,,,,
+LP951,CH58,Carduus defloratus defloratus,X,,,,,22/06/2018,46.20733,8.80109,1441,,,,,,,,,,
+LP952,CH59,Cirsium palustre,X,X,X,X,X,22/06/2018,46.20715,8.80046,1443,,,,,,,,,,
+LP953,CH60,Hieracium amplexicaule,X,,(X),X,X,22/06/2018,46.20391,8.79724,1433,Capitulum was not open yet; rot before opening… ,-,-,5.87 (17.08),17.5 (15.09),,,,,
+LP954,CH61,Achillea clavenae,X,,,,,23/06/2018,45.93156,9.01994,1673,,,,,,,,,,
+LP955,CH62,Hieracium villosum,X,,,,X,23/06/2018,45.93156,9.01994,1673,,,,,,,,,,
+LP956,CH63,Pilosella officinarum,X,,,,X,23/06/2018,45.93537,9.0219,1621,,,,,,,,,,
+LP957,CH64,Plosella lactucella,X,,,,X,23/06/2018,45.93537,9.0219,1621,,,,,,,,,,
+LP958,CH65,Carduus defloratus defloratus,X,,X,X,X,23/06/2018,45.92674,9.01793,1560,,41.6,27.04,36.04,13.46,3.41,,,,
+LP959,CH66,Arnica montana,X,,,,,23/06/2018,45.93961,9.02406,1562,,,,,,,,,,
+LP960,CH67,Solidago virgaurea,X,,,,X,23/06/2018,45.94328,9.0313,1327,,,,,,,,,,
+LP961,CH68,Echinops exaltatus,X,X,X,X,X,24/06/2018,46.00907,9.0088,306,,,,,,,275,260,8.06,3
+LP962,CH69,Centaurea rhaetica,X,X,X,X,X,24/06/2018,45.99966,9.21657,738,,41.92,27.49,15.98,16.12,2.6,,,,
+LP963,CH70,Leucanthemum heterophyllum,X,,X,X,X,24/06/2018,46.0048,9.21802,904,"Ø disc 11.28, ligule 10.80",37.01,8.69,17.85,3.9,1.97,,,,
+LP964,CH71,Centaurea jacea gaudinii,X,,,,X,24/06/2018,45.99655,9.21991,626,Not yet in flower,,,,,,,,,
+LP965,CH72,Cirsium palustre,X,,,,,24/06/2018,45.97311,9.066946,746,,,,,,,,,,
+LP966,CH73,Senecio aquaticus,X,,X,X,X,24/06/2018,45.97311,9.066946,746,,24.38,7.16,4.66,4.28,1.28,160,270,4.24,51
+LP967,CH74,Crepis paludosa,X,,,X,X,24/06/2018,45.97283,9.06761,740,,,,,,,,,,
+LP968,CH75,Anthemis triumfettii,X,X,X,X,X,24/06/2018,45.95072,8.98079,550,,43.4,8.84,16.08,2.61,2.46,280,400,3.69,17
+LP969,CH76,Crepis capillaris,X,X,X,X,X,25/06/2018,45.83786,8.87339,423,,13.57,6.69,6.80 (3.00),4.59,0.69,170,380,3.8,36
+LP970,CH77,Hypochaeris radicata,X,X,,,,25/06/2018,45.83786,8.87339,423,,,,,,,,,,
+LP971,FR727,Inula spiraefolia,X,X,X,X,X,03/07/2018,44.36342,5.88735,609,,30.48,20.47,14.97 (11.61),11.39,2.62,,,,
+LP972,FR728,Stahelina dubia,X,X,X,X,X,03/07/2018,44.36342,5.88735,609,,8.52,30.18,4.02,21.28,2.12,28.75,51.68,1.6,3
+LP973,FR729,Rhaponticum coniferum,X,,X,X,X,03/07/2018,44.36441,5.89026,608,,22.63,38.25,22.63,29.1,4.16,,,,
+LP974,FR730,Helichrysum italicum,X,,X,X,X,03/07/2018,44.47067,6.13017,659,,5.48,8.92,5.48,7.09,1.4,21.24,17.72,1.24,13
+LP975,A57,Carduus personata,x,x,x,x,x,16/07/2018,46.56657,12.48257,1398,,"31,19","24,49","18,66","14,16","2,25",1190 (130),1160 (310),"26,17",475 (24)
+LP976,A58,Achillea millefolium,x,,,,x,16/07/2018,46.56657,12.48257,1398,,,,,,,,,,
+LP977,A59,Petasites paradoxus,x,,,,,16/07/2018,46.56657,12.48257,1398,,,,,,,,,,
+LP978,A60,Centaurea nigra,x,,,,x,16/07/2018,46.56657,12.48257,1398,,,,,,,,,,
+LP979,A61,Cirsium eristales,x,,,,,16/07/2018,46.56657,12.48257,1398,,,,,,,,,,
+LP980,A62,Cirsium heterophillum,x,,,,x,16/07/2018,46.57534,12.49728,1418,,,,,,,,,,
+LP981,A63,Leucanthemum atratum halleri,x,x,x,x,x,10/07/2018,47.2394722222222,13.51375,1974,Andreas collections,"35,57","16,08 (disc: 11,14)","15,86","6,25","3,06",,,,
+LP982,A64,Doronicum clusii stiriacum,x,x,,,x,15/07/2018,47.2716666666667,14.0838888888889,2110,Andreas collections,,,,,,,,,
+LP983,A65,Senecio carniolicus disjunctus (4x) ?,x,x,x,x,x,15/07/2018,47.2716666666667,14.0838888888889,2110,Andreas collections,,,,,,"30,89","36,00","2,05",13
+LP984,A65A,Senecio carniolicus carniolicus (6x),x,x,x,x,x,15/07/2018,47.2716666666667,14.0838888888889,2110,Andreas collections,,,,,,"31,72","41,24","2,64",13
+LP985,A65B,Senecio carniolicus disjunctus (4x),x,x,x,x,x,15/07/2018,47.2716666666667,14.0838888888889,2110,Andreas collections,,,,,,"30,04","27,67","2,03",9
+LP986,A65C,Senecio carniolicus doubtful individuals,x,x,,,x,15/07/2018,47.2716666666667,14.0838888888889,2110,Andreas collections,,,,,,,,,
+LP987,A66,Antennaria carpatica,x,x,,,,17/07/2018,47.12253,12.82531,2318,,,,,,,,,,
+LP988,A67,Hieracium armerioides,x,x,x,x,x,17/07/2018,47.12227,12.82532,2324,,"19,77","15,65","8,43","10,89","1,68",,,,
+LP989,A68,Saussurea alpina,x,,,,,17/07/2018,47.12227,12.82532,2324,,,,,,,,,,
+LP990,A69,Leontopodium nivale alpinum,x,,,,,17/07/2018,47.12328,12.82621,2337,,,,,,,,,,
+LP991,A70,Belidastrum michelii,x,,,,x,17/07/2018,47.12385,12.82639,2354,,,,,,,,,,
+LP992,A71,Achillea clavenae,x,,,,x,17/07/2018,47.12388,12.82635,2354,,,,,,,,,,
+LP993,A72,Homogyne alpina,x,,,,x,17/07/2018,47.12388,12.82635,2354,,,,,,,,,,
+LP994,A73,Doronicum glaciale,x,,x,x,x,17/07/2018,47.12247,12.82878,2431,,"40,45","9,33","31,57","3,93","2,72",,,,
+LP995,A74,Achillea atrata,x,,x,x,x,17/07/2018,47.12224,12.82704,2361,,"14,86","9,14","5,37","6,01","1,09","44,30","29,72","1,67",7
+LP996,A75,Hieracium pilosum,x,,,,x,17/07/2018,47.12224,12.82704,2361,,,,,,,,,,
+LP997,A76,Antennaria dioica (male and female),x,,,,x,17/07/2018,47.06833,12.83988,2258,,,,,,,,,,
+LP998,A77,Achillea millefolium sudetica,x,,x,x,x,17/07/2018,47.06729,12.83774,2196,,"7,57","6,62","2,74","5,17","0,91","36,96","31,04","1,85",35
+LP999,A78,Pilosella hoppeana,x,,x,x,x,17/07/2018,47.06569,12.83252,2149,,"43,65","21,84","9,85","10,75","2,21",,,,
+LP1000,A79,Taraxacum venustum,x,x,x,x,x,18/07/2018,47.08244,12.8416,2577,,"30,37","14,66","5,64","7,43","0,98",,,,
+LP1001,A80,Taraxacum carinthiacum,x,,x,x,x,18/07/2018,47.08244,12.8416,2577,different from A83,"37,00","16,34","7,43","10,95","1,22",,,,
+LP1002,A81,Taraxacum pacheri,x,,x,x,x,18/07/2018,47.08249,12.84136,2586,,"19,42","14,13","5,60","9,92","1,00",,,,
+LP1003,A82,Leucanthemopsis alpina,x,,,,,18/07/2018,47.08244,12.84014,2586,,,,,,,,,,
+LP1004,A83,Taraxacum carinthiacum,x,,x,x,x,18/07/2018,47.08244,12.83995,2633,different from A80,"30,58","16,62","8,37","10,53","1,13",,,,
+LP1005,A84,Erigeron uniflorus,x,,,,,18/07/2018,47.08228,12.84261,2592,,,,,,,,,,
+LP1006,A85,Cicerbita alpina,x,x,x,x,x,19/07/2018,46.78288,12.78845,1638,,,,,,,105,200,"5,94",41
+LP1007,A86,Achillea oxyloba,x,,x,x,x,19/07/2018,46.77042,12.79189,1930,,"23,72","12,22","5,73","5,45","0,91",,,,
+LP1008,A87,Homogyne discolor,x,x,x,x,x,19/07/2018,46.77042,12.79189,1930,,,,,,,,,,
+LP1009,A88,Crepis terglouensis,x,x,x,x,x,19/07/2018,46.76274,12.80268,2270,,"36,26","25,07","4,93","9,75","2,53",,,,
+LP1010,A89,Crepis aurea,x,,,,x,19/07/2018,46.76274,12.80268,2270,,,,,,,,,,
+LP1011,A90,Taraxacum sp,x,,x,x,x,19/07/2018,46.76147,12.80417,2268,,,,,,,,,,
+LP1012,A91,Gnaphalium supinum,x,,,,x,19/07/2018,46.76143,12.80439,2267,,,,,,,,,,
+LP1013,A92,Gnaphalium hoppeanum,x,,,,,19/07/2018,46.76379,12.80059,2219,,,,,,,,,,
+LP1014,A93,Achillea oxyloba,,x,,,,19/07/2018,46.76379,12.80059,2219,,,,,,,,,,
+LP1015,A94,Hieracium lachenalii,x,,x,x,x,19/07/2018,46.77022,12.79089,1958,,"35,34","16,76","5,94 (19,32)","5,59","1,18","53,0","51,46","1,38",3
+LP1016,A95,Petasites paradoxus,x,,,,,19/07/2018,46.77828,12.78971,1723,,,,,,,,,,
+LP1017,A96,Adenostiles alliare,x,,,,,19/07/2018,46.78288,12.78845,1638,,,,,,,,,,
+LP1018,A97,Solidago virgaurea virgaurea,x,,x,x,x,19/07/2018,46.78288,12.78845,1638,,"24,35","14,81","3,64","8,63","1,16","55,0","205,0","2,81",24
+LP1019,A98,Cirsium eristales,x,,,,,19/07/2018,46.78288,12.78845,1638,,,,,,,,,,
+LP1020,A99,Carlina acaulis,x,,,,,19/07/2018,46.78347,12.788,1640,,,,,,,,,,
+LP1021,A100,Carduus defloratus crassifolius,x,x,x,x,x,19/07/2018,46.78347,12.788,1640,,"30,44","30,37","21,78","14,48","3,04",,,,
+LP1022,A101,Prenanthes purpurea,x,,,,,19/07/2018,46.78423,12.78753,1636,,,,,,,,,,
+LP1023,A102,Hieracium amplexicaule,x,x,x,x,x,19/07/2018,46.78974,12.78404,1620,,"27,72","22,03","6,47","10,74","1,33","130,0","275,0","6,28",11
+LP1024,A103,Carduus personata,x,,,,,20/07/2018,47.14296,12.81415,1601,,,,,,,,,,
+LP1025,A104,Doronicum austriacum,x,x,x,x,x,20/07/2018,47.14314,12.81543,1650,,"63,13","13,03","20,96","7,49","2,27",260,390,"13,90",14
+LP1026,A105,Cirsium oleraceum,x,,,,,20/07/2018,47.14314,12.81543,1650,,,,,,,,,,
+LP1027,A106,Erigeron acris,x,,x,x,x,20/07/2018,47.15695,12.81345,1311,,"9,03","12,56","5,26","6,11","0,86","51,50","94,79","1,56",8
+LP1028,A107,Senecio nemorensis,x,,,,x,20/07/2018,47.15695,12.81345,1311,,,,,,,,,,
+LP1029,A108,Cicerbita alpina,x,,,,,20/07/2018,47.13978,12.81013,1699,,,,,,,,,,
+LP1030,A109,Hieracium sect amplexicaulia,x,x,x,x,x,20/07/2018,47.13978,12.81013,1699,,"35,74","14,35","5,03 (16,37)","8,51","1,59","105,0","100,0","2,13",13
+LP1031,A110,Centaurea pseudophrygia,x,,x,x,x,20/07/2018,47.13009,12.807,1848,,"73,72","31,04","20,31","16,23","6,75",,,,
+LP1032,A111,Carduus personata,,x,,,,20/07/2018,47.13009,12.807,1848,,,,,,,,,,
+LP1033,A112,Senecio doronicum,x,,,,x,20/07/2018,47.12461,12.82355,2293,,,,,,,,,,
+LP1034,A113,Aster alpinus,x,,,,x,20/07/2018,47.12461,12.82355,2293,,,,,,,,,,
+LP1035,A114,Erigeron alpinus,x,,,,x,20/07/2018,47.12461,12.82355,2293,,,,,,,,,,
+LP1036,A115,Erigeron sp,x,,,,x,20/07/2018,47.12461,12.82355,2293,,,,,,,,,,
+LP1037,A116,Leontodon montanus,x,x,x,x,x,20/07/2018,47.0979,12.83191,2338,,"31,42","21,46","6,69","13,17","2,55",,,,
+LP1038,A117,Achillea atrata,x,,,,,20/07/2018,47.0979,12.83191,2338,,,,,,,,,,
+LP1039,A118,Hieracium sect alpina,x,,x,x,x,20/07/2018,47.06936,12.83927,2302,,"30,36","26,81","14,04","13,28","2,53",,,,
+LP1040,A119,Senecio carniolicus noricus (2x),x,x,x,x,x,20/07/2018,47.06928,12.83923,2303,,,,,,,"21,41","16,70","1,60",9
+LP1041,A120,Hypochaeris uniflora,x,x,,,x,20/07/2018,47.0675,12.83779,2203,,"74,92","48,24","19,42","24,89","10,98",,,,
+LP1042,A121,Aster alpinus,x,,,,x,20/07/2018,47.0675,12.83779,2203,,,,,,,,,,
+LP1043,A122,Crepis conyzifolia,x,,,,x,21/07/2018,47.0634,12.82595,2003,,,,,,,,,,
+LP1044,A123,Willemetia stipitata,x,,x,x,x,21/07/2018,47.0691,12.84261,2215,,"38,74","16,77","17,34","9,99","1,80","94,94","88,70","2,73",5
+LP1045,A124,Hieracium valdepilosum,x,,x,x,x,21/07/2018,47.05592,12.8033,1954,,,,,,,,,,
+LP1046,A125,Senecio doronicum,x,,,,,21/07/2018,47.05946,12.79703,2022,,,,,,,,,,
+LP1047,A126,Senecio doronicum,x,,,,,21/07/2018,47.06711,12.77199,2145,,,,,,,,,,
+LP1048,A127,Achillea clavenae,x,x,,,,21/07/2018,47.07452,12.74988,2282,,,,,,,,,,
+LP1049,A128,Artemisia genipi,x,,,,x,21/07/2018,47.07504,12.75082,2348,,,,,,,,,,
+LP1050,A129,Crepis pontana,x,x,,,x,21/07/2018,47.06096,12.79334,2087,,,,,,,,,,
+LP1051,A129,Crepis pontana,x,,x,x,,21/07/2018,47.06066,12.79168,2047,,"52,75","24,84","18,82 (23,86)","13,37","6,57",,,,
+LP1052,A130,Senecio doronicum,x,,,,x,21/07/2018,47.06135,12.79348,2108,,,,,,,,,,
+LP1053,A131,Hypochaeris uniflora,x,,,,x,21/07/2018,47.06135,12.79348,2108,,,,,,,,,,
+LP1054,A132,Pilosella aurantiaca,x,,,,x,21/07/2018,47.06081,12.79331,2078,,,,,,,,,,
+LP1055,A133,Saussurea alpina alpina,x,,,,,21/07/2018,47.06167,12.79314,2122,,,,,,,,,,
+LP1056,A134,Petasites paradoxus,x,,,,,21/07/2018,47.0620555555556,12.8173055555556,1875,,,,,,,,,,
+LP1057,A135,Senecio nemorensis,x,x,x,x,x,22/07/2018,47.15162,12.81429,1494,,"25,97","18,00","3,36","7,85","1,10","190,0","250,0","3,54",104
+LP1058,A136,Senecio cacaliaster,x,x,x,x,x,22/07/2018,47.15162,12.81429,1494,,"11,86","17,67","3,05","8,03","0,70","210,0","195,0","3,51",85
+LP1059,CH78,Senecio doria,X,X,X,X,X,24/07/2018,46.49405,8.3477,1660,probably S. ovatus,37.03,16.94,2.78,8.05,1.22,270,280,6.55,286
+LP1060,CH79,Hieracium sect amplexicaulia,X,X,X,X,X,24/07/2018,46.49419,8.34802,1662,,27.18,16,4.46 (10.11),10.76,0.79,81.72,119.92,2.85,28
+LP1061,CH80,Tolpis staticifolia,X,,,,,24/07/2018,46.49419,8.34802,1662,,,,,,,,,,
+LP1062,CH81,Doronicum clusii,X,,,,,24/07/2018,46.48184,8.38662,2437,,,,,,,,,,
+LP1063,CH82,Achillea nana,X,,,,,24/07/2018,46.48152,8.38656,2438,,,,,,,,,,
+LP1064,CH83,Erigeron glabratus,X,,X,X,X,24/07/2018,46.48152,8.38656,2438,,12.93,9.66,7.79 (12.79),5.13,1.78,,,,
+LP1065,CH84,Senecio carniolicus,X,,,,X,24/07/2018,46.48152,8.38656,2438,,,,,,,,,,
+LP1066,CH85,Pilosella officinarum subsp ?,X,,X,X,X,24/07/2018,46.48152,8.38656,2438,,28.93,15.58,6.85 (13.78),9.83,1.42,,,,
+LP1067,CH86,Taraxacum sp,X,,X,X,X,24/07/2018,46.47839,8.38935,2495,,31.47,16.91,13.19 (18.63),12.68,1.55,,,,
+LP1068,CH87,Hieracium sect alpina,X,X,X,X,X,24/07/2018,46.47858,8.38898,2500,,29.26,18.23,9.09,1028,1.85,,,,
+LP1069,CH88,Leucanthemopsis alpina,X,,,,,24/07/2018,46.47858,8.38898,2500,,,,,,,,,,
+LP1070,CH89,Hieracium sect lanatella,X,,X,X,X,24/07/2018,46.47858,8.38898,2500,,37.6,20.95,9.42,11.97,2.6,,,,
+LP1071,CH90,Tussilago farfara,X,,,,,24/07/2018,46.47789,8.38879,2485,,,,,,,,,,
+LP1072,CH91,Taraxacum sp,X,,X,X,X,24/07/2018,46.47789,8.38879,2485,,36.02,15.92,13.06 (18.58),10.05,1.67,,,,
+LP1073,CH92,Hieracium intybaceum,X,,,,,24/07/2018,46.47733,8.41281,2235,,,,,,,,,,
+LP1074,CH93,Senecio doronicum,X,,,,,24/07/2018,46.47733,8.41281,2235,,,,,,,,,,
+LP1075,CH94,Achillea erba-rotta moschata,X,,,,,24/07/2018,46.47752,8.4128,2237,,,,,,,,,,
+LP1076,CH95,Hypochaeris uniflora,X,,,,,24/07/2018,46.47752,8.4128,2237,,,,,,,,,,
+LP1077,CH96,Arnica montana,X,,,,,24/07/2018,46.47752,8.4128,2237,,,,,,,,,,
+LP1078,CH97,Cirsium eriophorum,X,,X,X,X,24/07/2018,46.50387,8.50891,1389,perhaps subsp spathulatum,54.19 (58.53),58.44,58.53,36,6.78,180,370,9.36,9
+LP1079,CH98,Arctium nemorosum,X,,X,X,,24/07/2018,46.50385,8.50929,1386,maybe A. minus,10.61 (22.55),18.15,22.55,13.95,6.78,170,370,10.95,62
+LP1080,CH99,Cirsium vulgare,X,,,,,24/07/2018,46.50385,8.50929,1386,,,,,,,,,,
+LP1081,CH100,Carduus personata,X,,,,,24/07/2018,46.61453,8.57122,1548,,,,,,,,,,
+LP1082,CH101,Doronicum grandiflorum,X,,,,X,25/07/2018,46.55712,8.41407,2498,,,,,,,,,,
+LP1083,CH102,Gnaphalium sylvaticum,X,,X,X,X,25/07/2018,46.55928,8.14107,2502,,2,7.59,3.28,5.47,0.28,10.33,58.99,1.99,34
+LP1084,CH103,Gnaphalium norvegicum,X,,X,X,X,25/07/2018,46.55985,8.41448,2502,,1.84,7.34,2.84,6,0.69,11.7,41.8,2.05,38
+LP1085,CH104,Achillea nana,X,,,,X,25/07/2018,46.56559,8.41408,2497,,,,,,,,,,
+LP1086,CH105,Achillea erba-rotta moschata,X,,,,X,25/07/2018,46.56559,8.41424,2490,,,,,,,,,,
+LP1087,CH106,Carduus crispus,X,X,X,X,X,25/07/2018,46.75797,8.64619,667,,8.66,25.93,8.66,12.49,2.15,28.62,109.37,3.14,10
+LP1088,CH107,Cicerbita alpina,X,,,X,X,25/07/2018,46.62326,8.57667,1437,,,,,,,,,,
+LP1089,CH108,Hieracium sect prenanthoides,X,,X,X,X,25/07/2018,46.62268,8.57544,1477,,25.32,17.13,4.45 (7.68),9.51,1.06,77.77,62.65,1.45,9
+LP1090,CH109,Hieracium sect prenanthoides,X,,,,X,25/07/2018,46.62298,8.57598,1476,maybe same species as CH108,,,,,,,,,
+LP1091,CH110,Prenanthes purpurea,X,,,,,25/07/2018,46.62326,8.57667,1437,,,,,,,,,,
+LP1092,CH111,Mycelis muralis,X,,,,,25/07/2018,46.62268,8.57544,1477,,,,,,,,,,
+LP1093,CH112,Crepis paludosa,X,X,,X,X,25/07/2018,46.59258,8.4881,1785,,16.52,13.4,6.91,7.87,1.12,71.17,66.57,2.01,5
+LP1094,CH113,Crepis pyrenaica,X,,X,X,X,25/07/2018,46.59128,8.47155,2057,,43.82,22.2,16.56,12.35,2.18,165,205,4.41,7
+LP1095,CH114,Centaurea scabiosa alpestris,X,,X,X,X,25/07/2018,46.59128,8.47155,2057,,66.17,38.07,25.06,23.03,5.1,74.15,76.94,3.59,2
+LP1096,CH115,Hieracium villosum,X,,,,X,25/07/2018,46.59128,8.47155,2057,,,,,,,,,,
+LP1097,CH116,Pilosella aurantiaca,X,,,,X,25/07/2018,46.59436,8.45847,2116,,,,,,,,,,
+LP1098,CH117,Senecio alpinus,X,,X,X,X,26/07/2018,46.64911,8.68736,1778,,33.01,10.63,7,5.03,2.05,71.43,124.6,3.68,9
+LP1099,CH118,Centaurea nervosa,X,,X,X,X,26/07/2018,46.53711,8.8378,1754,,82.84,41.62,21.54,16.21,4.22,,,,
+LP1100,CH119,Senecio alpinus,X,,X,X,X,26/07/2018,46.55894,8.89328,1755,,40.05,12.08,7.01,5.39,1.01,100,185,3.65,12
+LP1101,CH120,Senecio doronocum,X,,,,,26/07/2018,46.55568,8.86541,2109,,,,,,,,,,
+LP1102,CH121,Doronicum grandiflorum,X,,,,,26/07/2018,46.55581,8.85203,2221,,,,,,,,,,
+LP1103,CH122a,Crepis conyzifolia,X,,X,X,X,26/07/2018,46.59242,8.46232,2086,,38.19,25.11,10.64,10.19,3.56,149,184.37,5.28,5
+LP1104,CH122b,Achillea erba-rotta moschata,X,,X,X,X,26/07/2018,46.57598,8.42261,2383,,10.72,8.04,3.9,4.82,1.02,26.59,24.75,1.27,8
+LP1105,CH123,Hieracium intybaceum,X,X,X,X,X,26/07/2018,46.57594,8.42267,2383,,36.53,21.8,21.35 (11.30),12.81,2.85,61.55,102.45,3.29,2
+LP1106,CH124,Leucanthemum praecox,X,,X,X,X,26/07/2018,46.57605,8.42245,2400,,49.81,10.29,22.47,0.4,1.85,,,,
+LP1107,CH125,Hypochaeris uniflora,X,X,X,X,X,26/07/2018,46.57597,8.42242,2400,,68.48,43.52,17.19,18.16,12.07,,,,
+LP1108,CH126,Senecio doronicum,X,,,,,26/07/2018,46.57597,8.42242,2400,,,,,,,,,,
+LP1109,CH127,Doronicum clusii,X,,X,X,X,27/07/2018,46.57679,8.42185,2414,,66.48,13.66,40.18,6.48,3.37,,,,
+LP1110,CH128,Achillea erba-rotta moschata,X,,,,,27/07/2018,45.86387,7.15902,2258,,,,,,,,,,
+LP1111,CH129,Centaurea nervosa,X,,,,,27/07/2018,45.86374,7.15908,2255,,,,,,,,,,
+LP1112,CH130,Leucanthemum adustum,X,,,,,27/07/2018,45.86332,7.1595,2247,,,,,,,,,,
+LP1113,CH131,Artemisia campestris campestris,X,,X,X,X,22/08/2018,46.25315,7.40649,593,Vineyard,1.92,3.85,1.92,3.1,0.43,390,830,4.03,6688
+LP1114,CH132,Conyza canadensis,X,X,X,X,X,22/08/2018,46.25315,7.40649,593,Vineyard,2.97,5.2,1.91,4.07,0.49,85,350,4.17,935
+LP1115,CH133,Chiondrilla juncea,X,X,X,X,X,22/08/2018,46.25319,7.40579,600,Vineyard,18.6,17.58,2.24,11,0.59,210,340,2.16,45
+LP1116,CH134,Conyza bonariensis,X,X,X,X,X,22/08/2018,46.25335,7.40602,604,Vineyard,2.71,5.43,2.71,4,0.47,50,285,4.74,196
+LP1117,CH135,Arctium lappa,X,X,,,,22/08/2018,46.26919,7.53579,963,,,,,,,,,,
+LP1118,CH136,Achillea ptarmica,X,,X,X,X,22/08/2018,46.30779,7.87707,897,,13.33,7.79,4.85,3.93,0.87,134,129.23,1.98,26
+LP1119,CH137,Artemisia vulgaris,X,X,X,X,X,22/08/2018,46.30757,7.877726,894,,1.99,3.78,1.99,2.82,0.37,380,570,5.21,2205
+LP1120,CH138,Artemisia absinthium,X,X,,,,22/08/2018,46.30757,7.877726,894,,,,,,,,,,
+LP1121,CH139,Hieracium sabaudum,X,,X,X,X,22/08/2018,46.30768,7.87695,893,,27.99,15.13,5.19 (12.14),8.13,0.83,75,240,2.49,32
+LP1122,CH140,Artemisia absinthium,X,,X,X,X,22/08/2018,46.30733,7.87714,875,,4.01,3.52,3.22,2.24,0.37,380,550,4.42,2800
+LP1123,CH141,Artemisia valesiaca,X,,,,,22/08/2018,46.30972,7.80617,702,"Another population at 46.30968 N, 7.80566 E, 697 m)",,,,,,,,,
+LP1124,CH142,Centaurea vallesiaca,X,,X,X,X,22/08/2018,46.30989,7.80409,663,"Synflorescence measurements likely invalid, plant underwent cut",27.33,24.5,6.13,12.2,1.48,(89.83),(86.34),(3.05),(25)
+LP1125,CH143,Centaurea vallesiaca,,X,,,,22/08/2018,46.26254,7.45034,517,,,,,,,,,,
+LP1126,CH144,Tolpis staticifolia,X,,,,,23/08/2018,45.9899,7.7051,2614,,,,,,,,,,
+LP1127,CH145,Leontodon croceus,X,X,X,X,X,23/08/2018,45.990062,7.704933,2025,,39.04,18.7,6.87,9.98,2.78,,,,
+LP1128,CH146,Leontodon hispidus tenuiflorus,X,,,,X,23/08/2018,45.990062,7.704933,2025,,,,,,,,,,
+LP1129,CH147,Artemisia glacialis,X,X,X,X,X,23/08/2018,45.98976,7.70472,2630,,4.22,5.42,2.84,3.73,0.66,7.78,17.07,0.91,6
+LP1130,CH148,Achillea nana,X,X,,,,23/08/2018,45.98976,7.70472,2630,,,,,,,,,,
+LP1131,CH149,Senecio doronicum,X,,,,,23/08/2018,45.98976,7.70472,2630,,,,,,,,,,
+LP1132,CH150,Gnaphalium hoppeanum,X,X,,,,23/08/2018,45.9894,7.70332,2648,,,,,,,,,,
+LP1133,CH151,Erigeron schleicheri,X,,X,X,X,23/08/2018,45.98814,7.69263,2835,,12.83,12.56,17.07,8.62,2.05,100.27,91.82,2.24,4
+LP1134,CH152,Artemisia glacialis,X,,X,X,X,23/08/2018,45.98814,7.69263,2835,,2.85,5.96,4.8,3.76,1.18,15.28,81.09,1.43,11
+LP1135,CH153,Crepis rhaetica,X,X,X,X,X,23/08/2018,45.98968,7.68665,2788,"Another population at 45.990890 N, 7.68582 E, 2758 m)",23.34,18.35,8.46,13.96,2.07,,,,
+LP1136,CH154,Artemisia genipi,X,,,,,23/08/2018,45.98968,7.68665,2788,,,,,,,,,,
+LP1137,CH155,Senecio doroniocum,X,,,,,23/08/2018,45.98862,7.69558,2814,,,,,,,,,,
+LP1138,CH156,Carlina acaulis,X,,,,,23/08/2018,45.98989,7.70511,2627,,,,,,,,,,
+LP1139,CH157,Gnaphalium luteoalbum,X,X,X,X,X,23/08/2018,46.26782,7.88036,752,,2.45,4.5,2.45,3.02,0.71,13.98,27.65,1.35,16
+LP1140,CH158,Pulicaria dysenterica,X,X,X,X,X,24/08/2018,46.233941,7.33874,670,,26.32,7.89,10.68,4.09,1.38,310,280,3.52,27
+LP1141,CH159,Inula conyzae,X,,X,X,X,24/08/2018,,,,,8.11,13.23,11.12,9.6,1.45,160,185,2.32,34
+LP1142,CH160,Aster linosyris,X,,X,X,X,24/08/2018,46.27114,7.39629,1029,,9.46,12.66,5.72,4.66,1.15,9.46,23.64,0.76,7
+LP1143,CH161,Xeranthemum annuum,X,X,X,X,X,24/08/2018,46.26741,7.3987,920,,28.58,17.45,10.91,8.77,1.29,125,184,1.22,3
+LP1144,CH162,Cota tinctoria,X,X,,,,24/08/2018,46.26741,7.3987,920,,,,,,,,,,
+LP1145,CH163,Achillea nobilis,X,X,X,X,X,24/08/2018,46.26204,7.477,538,,4.57,4.61,2.65,3.59,0.33,61.04,75.4,1.32,75
+LP1146,CH164,Artemisia valesiaca,X,,X,X,X,24/08/2018,46.26176,7.47787,546,,,,,,,,,,
+LP1147,CH165,Hieracium lawsonii,X,,,,X,24/08/2018,46.18626,8.09195,1187,,,,,,,,,,
+LP1148,CH166,Hieracium bupleoroides,X,,,,X,24/08/2018,46.18626,8.09195,1187,,,,,,,,,,
+LP1149,CH167,Crepis tectorum,X,X,X,X,X,28/08/2018,46.0448,8.9723,324,,11.96,7.29,2.63,4.33,0.37,84,275,1.3,42
+LP1150,CH168,Artemisia annua,X,,,,,28/08/2018,46.04408,8.97431,337,,,,,,,,,,
+LP1151,CH169,Centaurea splendens,X,X,X,X,X,28/08/2018,46.18729,8.99199,274,,33.53,25.44,10.61,13.52,1.76,290,360,3.7,52
+LP1152,CH170,Tanacetum parthenium,X,X,X,X,X,29/08/2018,46.51995,8.69642,1356,"Another population at 46.51987 N, 8.69631 E, 1355 m",22.69,6.38,8.19,1.86,1.84,100,200,2.33,14
+LP1153,CH171,Rhapontocum scariosum,X,X,,,X,29/08/2018,46.54982,8.70094,1933,,,,,,,,,,
+LP1154,CH172,Achillea distans,X,X,X,X,X,29/08/2018,46.54982,8.70094,1933,,9.35,7.69,3.54,5.73,1.54,85.74 (44.28),220 (38.52),2.56 (1.10),121 (32)
+LP1155,CH173,Achillea erba-rotta moschata,X,,,,,29/08/2018,46.54982,8.70094,1933,,,,,,,,,,
+LP1156,CH174,Senecio doronicum,X,,,,,29/08/2018,46.54982,8.70094,1933,,,,,,,,,,
+LP1157,CH175,Centaurea nervosa,X,X,X,X,X,29/08/2018,46.54987,8.70095,1939,,74.34,38.47 (32.00),21.73,18.77,6.38,,,,
+LP1158,CH176,Pilosella hoppeana,X,X,,,X,29/08/2018,46.54982,8.70094,1933,,,,,,,,,,
+LP1159,CH177,Crepis pyrenaica,X,,,,X,29/08/2018,46.54982,8.70094,1933,,,,,,,,,,
+LP1160,CH178,Crepis pyrenaica,,X,,,,29/08/2018,46.54935,8.70288,1927,,,,,,,,,,
+LP1161,CH179,Hypochaeris uniflora,,X,,,,29/08/2018,46.54935,8.70288,1927,,,,,,,,,,
+LP1162,CH180,Leontodon autumnalis,X,X,X,X,X,29/08/2018,46.55413,8.71491,1950,,30.31,18.97,5.77,10.63,4.32,90,114,1.8,5
+LP1163,CH181,Leucanthemum praecox,X,,,,X,29/08/2018,46.55413,8.71491,1950,,,,,,,,,,
+LP1164,CH182,Pilosella aurantiaca,X,,X,X,,29/08/2018,46.55052,8.7172,1941,,25.45,14.22,5.33,7.38,1.3,46.89,32.25,1.55,8
+LP1165,CH183,Senecio alpinus,X,X,,,,29/08/2018,46.5464,8.7136,1948,,,,,,,,,,
+LP1166,CH184,Hieracium bupleoroides,X,X,,,X,29/08/2018,46.52447,8.90469,1220,,,,,,,,,,
+LP1167,CH185,Senecio abrotanifolius,X,X,X,X,X,29/08/2018,46.53455,8.854,1897,,33.24,16.06,6.71,7.17,2.4,,,,
+LP1168,CH186,Artemisia genipi,X,,,,X,29/08/2018,46.53468,8.85178,1838,,,,,,,,,,
+LP1169,IT78,Erigeron canadensis,X,X,X,X,X,25/08/2018,45.84601,8.89057,343,,2.09,4.77,1.5,3.96,0.34,140,410,4.25,1862
+LP1170,IT79,Solidago gigantea,X,,,,,25/08/2018,45.84617,8.89061,343,,,,,,,,,,
+LP1171,IT80,Lactuca serriola hybrid?,X,X,,,X,25/08/2018,45.84595,8.8902,345,,,,,,,,,,
+LP1172,IT81,Xanthium orientale italicum,X,X,X,X,X,25/08/2018,45.84595,8.8902,345,,,,,,,40.53,50.96,4.82,23
+LP1173,IT82,Bidens frondosa,X,,,,,25/08/2018,45.84595,8.8902,345,,,,,,,,,,
+LP1174,IT83,Ambrosia artemisiifolia,X,,X,X,X,25/08/2018,45.84595,8.8902,345,,3.07,2.04,3.07,2.04,0.32,6.16 (400),152 (400),1.88 (5.74),32256
+LP1175,IT84,Aster pilosum,X,,X,X,X,25/08/2018,45.8675,8.8588,403,,16.43,6.8,4.67,3.52,0.96,240,390,2.45,153
+LP1176,IT85,Inula conyzae,X,X,,,,25/08/2018,45.8591,8.8161,595,,,,,,,,,,
+LP1177,IT86,Centaurea jacea gaudinii,X,,X,X,X,25/08/2018,45.86361,8.81643,648,,38.26,23.42,11.43,10.95,2.48,,,,
+LP1178,IT87,Aster amellus,X,,,,,25/08/2018,,,,,,,,,,,,,
+LP1179,IT88,(empty),,,,,,,,,,,,,,,,,,,
+LP1180,IT89,Scorzonera sp,X,X,X,X,X,27/08/2018,46.00542,9.22218,823,,29.67,14.88,4.1,6.16,1.83,190,210,2.34,6
+LP1181,IT90,Aster amellus,X,,X,X,X,27/08/2018,46.0054,9.22227,820,,23.66,11.49,6.06,5.06,1.29,110,140,1.86,29
+LP1182,IT91,Aster linosyris,X,,,,X,27/08/2018,46.00549,9.22218,823,,,,,,,,,,
+LP1183,IT92,Centaurea scabiosa,X,,,,X,27/08/2018,46.0054,9.22227,820,,,,,,,,,,
+LP1184,IT93,Xerolekia speciosissima,X,,,,,27/08/2018,46.00719,9.22622,797,,,,,,,,,,
+LP1185,IT94,Xerolekia speciosissima,X,,,,X,27/08/2018,46.00716,9.22596,801,,,,,,,,,,
+LP1186,IT95,Scorzonera sp,X,,,,,27/08/2018,46.00719,9.22622,797,,,,,,,,,,
+LP1187,IT96,Serratula tinctoria,X,X,X,X,X,27/08/2018,46.00695,9.2258,806,,18.38,20.49,4.27,10.7,1.26,32.86,43.31,1.27,6
+LP1188,IT97,Centaurea jacea gaudinii,X,X,X,X,X,27/08/2018,46.00659,9.22458,815,,43.95,25.04,10.17,14.51,2.29,,,,
+LP1189,IT98,Xerolekia speciosissima,X,X,,,,27/08/2018,,,,,,,,,,,,,
+LP1190,IT99,Artemisia annua,X,,X,X,,20/09/2018,45.70928,11.61751,75,"Cantiere, svincolo per Mason (loc Cantarana)",2.15,1.1,2.15,0.64,0.12,420,200,3.18,7965
+LP1191,IT100a,Leontopodium nivale alpinum,X,,X,X,X,20/09/2018,45.789965,11.176471,1987,,4.8,6.16,3.65,4.75,0.49,29.87,8.52,0.87,5
+LP1192,IT100b,Leontopodium nivale alpinum,,X,,,,20/09/2018,45.789058,11.176642,1950,,,,,,,,,,
+LP1193,IT101,Senecio abrotanifolius,X,,,,X,20/09/2018,45.787387,11.181961,1916,,,,,,,,,,
+LP1194,IT102,Achillea clavenae,X,X,,,,20/09/2018,45.785539,11.185029,1876,,,,,,,,,,
+LP1195,IT103,Crepis kerneri,X,,X,X,X,20/09/2018,45.783988,11.198235,1687,,34.48,21.52,10.35,10.89,1.63,,,,1
+LP1196,IT104,Senecio squalidus rupestre,X,X,X,X,X,20/09/2018,45.789169,11.216984,1400,,33.66,12.83,4.39,6.78,0.94,93,85,1.82,9
+,MB 2,Centaurea jacea,x,,x,x,x,15.6.2018,45.84512,14.26522,422,Planinsko polje,39.2,24.01,12.05,13.51,12.05 (13.51),/,/,/,/
+,MB3,Cirsium erisithales,x,x,,x,x,16.6.2018,46.09419,13.8997,236,Stopnik,36.41,35.05,12.89,14.24,12.89 (14.24),34,77,9.85,16
+,MB 5,Aster bellidiastrum,x,,x,x,x,16.6.2018,46.433,13.74313,1619,Vršič pass,24.01,11.01,10.96,5.67,10.96 (5.67),/,/,/,/
+,MB 7,Erigeron glabratus,x,,x,x,x,17.6.2018,45.5876,14.44789,1744,Mt. Snežnik,19.42,11.29,12.01,7.51,12.01 (7.51),/,/,/,/
+,MB 8,Hieracium villosum,x,,x,x,x,17.6.2018,45.55375,14.44856,1714,Mt. Snežnik,36.91,17.51,22.55,11.33,22.55 (11.33),/,/,/,/
+,MB 9,Hieracium murorum,x,,x,x,x,17.6.2019,45.55375,14.44856,1714,Mt. Snežnik,34.48,19.66,18,11.79,18 (11.79),9.5,9.5,3.18,3
+,MB 10,Doronicum austriacum,x,,x,x,x,17.6.2020,45.55375,14.44856,1714,Mt. Snežnik,52.71,14.8,29.75,8.61,29.75 (8.61),6.5,22.5,6.21,7
+,MB 11,Centaurea triumfettii,x,,x,x,x,17.6.2021,45.55375,14.44856,1714,Mt. Snežnik,51.59,33.02,9.59,15.03,9.59 (15.03),/,/,/,/
+,MB 12,Cicerbita alpina,x,,x,x,x,17.6.2022,45.55375,14.44856,1714,Mt. Snežnik,24.13,19.02,14.23,10.1,14.23 (10.1),7,22,8.03,70
+,MB 13,Achillea clavenae,x,,x,x,x,17.6.2022,45.55375,14.44856,1714,Mt. Snežnik,12.59,8.48,3.72,6.93,3.72 (6.93),5,3,2.28,16
+,MB 15,Hypochoeris illyrica,x,,x,x,x,21.6.2018,44.333,15.5552,1493,"Croatia, Velebit, Mt. Sveto Brdo",59.49,28.45,26.62,16.31,26.62 (16.31),/,/,/,/
+,MB 16,?,x,,,x,x,21.6.2018,44.333,15.5552,1493,"Croatia, Velebit, Mt. Sveto Brdo",38.5,24.77,17.1,12.58,17.1 (12.58),/,/,/,/
+,MB 18,Senecio doronicum,x,,,,x (Peter),21.6.2018,44.333,15.5552,1493,"Croatia, Velebit, Mt. Sveto Brdo",/,/,/,/,/ (/),/,/,/,/
+,MB 19,Centaurea scabiosa subsp. fritschii,x,x,x,x,x,24.6.2018,45.881045,14.206622,508,Grčarevec,54.22,32.72,14.53,19.04,14.53 (19.04),38,58,5.4,7
+,MB 20,Cirsium pannonicum,x,,x,x,x,24.6.2018,45.570057,14.319902,1029,Ilirska Bistrica - Sviščaki,37.25,30.77,14.64,17.23,14.64 (17.23),12,23,4.79,3
+,MB 21,Cirsium sp. (hybrid),x,,x,x,x,24.6.2018,45.570057,14.319902,1029,Ilirska Bistrica - Sviščaki,31.39,31.58,16.83,16.83,16.83 (16.83),10,22,4.4,4
+,MB 22,Jurinea mollis,x,x,x,x,x,24.6.2018,45.46239,13.983951,648,Rakitovec - Mt. Kavčič,38.57,35.2,26.13,24.85,26.13 (24.85),/,/,/,/
+,MB 23,Centaurea rupestris,x,,x,x,x,24.6.2018,45.46239,13.983951,648,Rakitovec - Mt. Kavčič,35.84,37.75,14.61,22.28,14.61 (22.28),8,21.5,3.95,4
+,MB 24,Jurinea mollis,x,,x,x,,28.6.2018,45.47139,13.96158,529,Rakitovec,51.58,41.88,32.32,26.32,32.32 (26.32),/,/,/,/
+,MB 25,Serratula lycopifolia,x,x,,,,29.6.2018,45.48041,13.94476,487,Rakitovec/Podpeč ?,/,/,/,/,/ (/),/,/,/,/
+,MB 26,Senecio squalidus,x,,x,x,x,29.6.2018,45.48041,13.94476,487,Rakitovec,23.09,10.87,6.23,6.31,6.23 (6.31),10.26,9.5,2.66,16
+,MB 27,Inula sipreifolia,x,,x,x,x,29.6.2018,45.47878,13.94803,498,Rakitovec,25.72,12.87,23.61,8.45,23.61 (8.45),11,15.7,2.86,9
+,MB 28,Inula ensifolia,x,,x,x,x,29.6.2018,45.47815,13.95149,529,Rakitovec,29.69,15.1,15.82,9.97,15.82 (9.97),/,/,/,/
+,MB 29,Hypochoeris maculata,x,,x,x,x,2.7.2018,45.47086,13.98893,799,"Istrska vrata, Kavčič",52.43,30.29,34,17.86,34 (17.86),19,39,6.31,3
+,MB 30,Centaurea rupestris,x,,,,x (Peter),2.7.2018,45.47086,13.98893,799,"Istrska vrata, Kavčič",/,/,/,/,/ (/),/,/,/,/
+,MB 31,Carthamus lanatus,x,,x,x,x,2.7.2018,45.50266,13.93114,389,Zazid,"22,27(61,47)",41.78,61.47,33.7,61.47 (33.7),17,13,2.51,3
+,MB 32,Serratula lycopifolia,x,,x,x,x,5.7.2018,45.46091,13.02031,930,Žbevnica,48.07,43.45,26.99,16.09,26.99 (16.09),/,/,/,/
+,MB 33,Centaurea rupestris,x,,,x,x,2.7.2018,45.45724,13.02763,930,Žbevnica,/,/,/,/,/ (/),/,/,/,/
+,MB 34,Centaurea rupestris,x,,,x,x,2.7.2018,45.45724,13.02763,930,Žbevnica,/,/,/,/,/ (/),/,/,/,/
+,MB 35,Centaurea rupestris,x,,,x,x,2.7.2018,45.45724,13.02763,930,Žbevnica,/,/,/,/,/ (/),/,/,/,/
+,MB 36,Scorzonera villosa,,x,,,,29.6.2018,45.48041,13.94476,487,Rakitovec,/,/,/,/,/ (/),/,/,/,/
+,MB 37,Senecio doronicum,x,,,,x,2.7.2018,45.47086,13.98893,799,"Istrska vrata, Kavčič",/,/,/,/,/ (/),/,/,/,/
+,MB 38,Senecio doronicum,x,,,,x,5.7.2018,45.45722,13.02465,939,Žbevnica,/,/,/,/,/ (/),/,/,/,/
+,MB 39 (MB 90),Cirsium arvense,x,,x,x,x,10.7.2018,45.880452,14.208382,509,Grčarevec,28.49,23.95,7.38,12.04,7.38 (12.04),14,39,6.11,24
+,MB 40,Hieracium pilosella,x,,x,x,x,08/07/2018,46.43362,14.29131,1523,Korošica,19.23,10.94,9,5.62,9 (5.62),/,/,/,/
+,MB 41,Aposeris foetida,x,,x,x,x,08/07/2018,46.43362,14.29131,1524,Korošica,30.24,11.92,16.03,5.61,16.03 (5.61),/,/,/,/
+,MB 42,Doronicum austriacum,x,,x,x,x,08/07/2018,46.43362,14.29131,1525,Korošica,42.6,9.77,19.81,5.37,19.81 (5.37),17,27.5,/,8(9)
+,MB 43,Scolymus hispanicum,(only silica),,x,x,x,17/07/2018,45.526706,13.621507,9,Strunjan,39.48,35.2,10.08,19.7,10.08 (19.7),11,46,7.77,26
+,MB 44,Crepis aurea,x,,x,x,x,08/07/2018,46.433135,14.290658,1504,Korošica,39.37,19.83,13.18,10.35,13.18 (10.35),/,/,/,/
+,MB 45,Homogyne sylvestris,x,x,x,x,x,08/07/2018,46.42847,14.28365,1146,Korošica,17.81,23.78,6.59,12.44,6.59 (12.44),/,/,/,/
+,MB 46,Gnaphalium sylvatica,x,,x,x,x,08/07/2018,46.433135,14.290658,1504,Korošica,"1,04 (2,18),5,96",5.96,2.18,5.96,2.18 (5.96),2,5.5,1.89,16
+,MB 47,Arnica montana,x,,x,x,x,08/07/2018,46.43203,14.29266,1454,Korošica,55.63,19.37,16.3,11.65,16.3 (11.65),11,30,5.15,3
+,MB 48,Serratula tinctoria subsp. tinctoria,x,,x,x,x,10/07/2018,45.845803,14.265984,423,Planinsko polje,26.43,18.19,12.7,11.17,12.7 (11.17),4.4,8,2.42,4
+,MB 49,Cirsium waldsteinii x erisithales,x,x (Oriane),x,x,x,11/07/2018,45.557028,14.45056,1253,Snežnik,31.55,33.89,19.79,21.14,19.79 (21.14),8.5,12.5,6.23,3
+,MB 50,Cirsium erisithales,x,x (Oriane),x,x,x,11/07/2018,45.557028,14.45056,1253,Snežnik,40.46,33.87,24.3,19.66,24.3 (19.66),37,10,6.85,6
+,MB 51,Adenostyles alliariae,x,x (Oriane),x,x,x,11/07/2018,45.557028,14.45056,1253,Snežnik,9.95,16.96,2.33,6.72,2.33 (6.72),29,20,6.56,691
+,MB 52,Senecio ovatus,x,,x,x,x,11/07/2018,45.52553,14.43786,1286,Snežnik,31.83,16.46,3.22,7.32,3.22 (7.32),15,17,3.43,37
+,MB 53,Adenostyles glabra,x,,x,x,x,11/07/2018,45.557028,14.45056,1253,Snežnik,11.04,16.51,1.42,4.79,1.42 (4.79),9.5,8,3.45,364
+,MB 54,Cirsium waldsteinii,x,x (Oriane??),x,x,x,11.07.2018 & 20.7.2018,45.557028,14.45056,1253,Snežnik - Velika Padežnica,40.92,44.12,25.98,22.7,25.98 (22.7),9,8.5,4.65,4
+,MB 55,Doronicum austriacum,x,x (Oriane??),? Oriane? :),x,x,11.07.2018 & 20.7.2018,45.557028,14.45056,1253,Snežnik - Velika Padežnica,48.2,15.42,21.41,5.38,21.41 (5.38),7,15,2.9,3
+,MB 56,Telekia speciosa,x,x,(Oriane),x,x,11.07.2018 & 20.7.2018,45.57922,14.40081,1220,"Snežnik, Sviščaki",70.58,19.75,45.65,8.51,45.65 (8.51),23,55,13.56,8
+,MB 57,Inula helenium,x,,x,x,x,11/07/2018,45.545553,14.284932,424,"Ilirska Bistrica, Vrbnica",92.15,30.35,44.7,17.36,44.7 (17.36),21,76,15.53,27
+,MB 58,Tragopogon pratensis subsp. orientalis,x,x,x,x,x,13/07/2018,45.842093,14.254301,456,Planinsko polje,54.26,20.09,50.22,19.81,50.22 (19.81),19,45,5.58,3
+,MB 59,Senecio abortanifolius,x,,x,x,x,13/07/2018,46.440006,13.748377,1526,Before the Vršič pass,47.16,15.16,8.22,6.74,8.22 (6.74),8,11,3.17,4
+,MB 61,?,,,x,x,x,13/07/2018,46.436415,13.74528,1601,Vršič pass,41.43,19.18,17.25,13.29,17.25 (13.29),8.2,5.9,2.26,2
+,MB 62,?,,,x,x,x,13/07/2018,46.436415,13.74528,1601,Vršič pass,45.87,21.38,17.97,12.09,17.97 (12.09),/,/,/,/
+,MB 64,Centaurea dichroantha,x,,x,x,,13/07/2018,46.398803,13.745518,752,Juliana Botanical garden,37.92,38,24.97,21.93,24.97 (21.93),12,34,5.92,4
+,MB 65,Centaurea alpina,x,,,x,,13/07/2018,46.398803,13.745518,752,Juliana Botanical garden,54.26,47.93,14.2,21.61,14.2 (21.61),/,/,/,/
+,MB 66,Centaurea dichroantha,x,,,x,,13/07/2018,46.398803,13.745518,752,Juliana Botanical garden,53.96,63.4,19.36,20.77,19.36 (20.77),50,34,5.84,5
+,MB 67,Centaurea haynaldi subsp. Julica,x,,x,x,,13/07/2018,46.398803,13.745518,752,Juliana Botanical garden,28.86,23.42,15.41,13.52,15.41 (13.52),/,/,/,/
+,MB 69,Centaurea dichroantha,x,,x,x,,13/07/2018,46.398803,13.745518,752,Juliana Botanical garden,59.19,35.17,16.78,19.03,16.78 (19.03),25,45,4.6,4
+,MB 70,Centaurea dichroantha,x,,x,x,x,13/07/2018,46.372866,13.735432,580,Trenta,41.13,34.18,18.69,20.12,18.69 (20.12),18,36,4.93,4
+,MB 71,Cardus defloratus subsp. crassifolius,x,,x,x,x,13/07/2018,46.407665,13.750677,1102,Alongside road Vršič - Trenta,34.01,32.41,17.23,15.51,17.23 (15.51),29,53,9.21,10
+,MB 72,Aster alpinum,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",36,18.02,13.1,8.14,13.1 (8.14),/,/,/,/
+,MB 73,Leucanthemum  sp.,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",52.4,14.67,20.97,4.26,20.97 (4.26),/,/,/,/
+,MB 74 or OH508,Antenaria dioica - male,x,x,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",,,,, (),Oriane,,,
+,MB 74 or OH508,Antenaria dioica - female,x,x,x,x,x,,,,,,,,,, (),,,,
+,MB 75,Hieracium sp.,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",45.2,18.32,18.47,11.52,18.47 (11.52),/,/,/,/
+,MB 76,Leontodon sp.,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",33.07,20.91,16.51,12.62,16.51 (12.62),/,/,/,/
+,MB 77,Hieracium valdepillosum,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",37.28,23.49,16.89,13.39,16.89 (13.39),/,/,/,/
+,MB 78,Hieracium alpinum,x,x,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",39.2,25.27,16.52,14.53,16.52 (14.53),/,/,/,/
+,MB 79,Scorzonera aristata,x,x,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",65.12,28.66,31.29,21.96,31.29 (21.96),/,/,/,/
+,MB 80,Saussurea pygmaea,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",35.29,33.66,17.01,17.23,17.01 (17.23),/,/,/,/
+,MB 81,Solidago virgaurea subsp. minuta,x,,x,x,x,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",14.4,9.07,6.59,6.47,6.59 (6.47),2.649,4.641,2.14,8
+,MB 82,Leontodon helveticus,x,,x,x,x,22/07/2018,46.446079,13.647463,2108,"Mt. Mangart, saddle",26.1,18.2,10.55,9.54,10.55 (9.54),/,/,/,/
+,MB 83,Doronicum grandifolorum,x,,x,x,x,22/07/2018,46.437126,13.64375,1985,Mt. Mangart,75.37,17.32,40.41,8.45,40.41 (8.45),/,/,/,/
+,MB 84,Gnaphalium hoppeanum,x,,x,x,x,23/07/2018,46.446079,13.647463,2109,"Mt. Mangart, saddle",,,,, (),Oriane,,,
+,MB 85 or OH 505,Lentopodium alpinum,x,,x,,,22/07/2018,46.435165,13.642987,2036,"Mt. Mangart, Jarečica",5.46,7.23,5.22,4.38,5.22 (4.38),33.19,11.16,1.59,6
+,MB 86 or OH 502,Homogyne discolor,x,,x,,,22/07/2018,46.446079,13.647463,2108,"Mt. Mangart, saddle",,,,, (),Oriane,,,
+,MB 87,Achillea atrata,x,,x,x,x,22/07/2018,46.446079,13.647463,2108,"Mt. Mangart, saddle",18.64,7.27,7.54,5.7,7.54 (5.7),2.831,1.843,2.74,4
+,MB 88 or OH 509,Cirsium spinosissium,x,x,x,,,22/07/2018,46.446079,13.647463,2108,"Mt. Mangart, saddle",,,,, (),Oriane ?,,,
+,OH 503,Solidago virgaurea  subsp. virgaurea,x,,x,x,x,25/07/2018,46.43529,13.6269,1600,"Mt. Mangart, alongside road",18.6,13.42,5.34,8.17,5.34 (8.17),6.965,16.45,14.16,72
+,MB 90 (MB 39),Cirsium arvense,,x,,,,26/07/2018,45.880452,14.208382,509,Grčarevec,/,/,/,/,/ (/),/,/,/,/
+,MB 91,Cirsium vulgare,x,x,x,x,x,26/07/2018,45.880452,14.208382,509,Grčarevec,45.24,49.83,32.3,29.97,32.3 (29.97),12,16,4.9,14
+,MB 92,Helichrysum italicum,,x,x,x,,26/07/2018,45.880452,14.208382,509,"Grčarevec - garden (originally from Croatia, Premantura)",3.63,5.18,2.09,3.91,2.09 (3.91),2.88,1.716,1.29,73
+,MB 93,Cirsium oleraceum,x,x,x,x,x,31/07/2018,46.494213,13.734212,846,"Kranjska Gora, Zelenci spring",38.75,37.42,17.13,15.61,17.13 (15.61),6.6,15.5,5.63,5
+,MB 94,Pulicaria dysenterica,x,x,x,x,x,12/08/2018,46.526706,13.621507,9,Strunjan,16.69,7.47,9.45,4.98,9.45 (4.98),16.09,22.72,1.43,13
+,MB 95,Senecio doria,x,x,x,x,x,14/08/2018,46.01514,15.46069,223,"Krško, Senovo",23.32,14.99,5.57,7.38,5.57 (7.38),26,70,12.4,168
+,MB 96,Carlina acaulis,x,x,x,x,x,15/08/2018,46.25217,13.83836,1661,Mt. Vogel (chair lift Orlova glava),85.9,46.21,245,46.21,245 (46.21),/,/,/,/
+,MB 97,Bupthalmum salicifolium,x,x,x,x,x,15/08/2018,46.24269,13.83591,1706,Mt. Vogel ,55.9,13.14,23.56,6.48,23.56 (6.48),/,/,/,/
+,MB 98,Leucanthemus sp.,x,x,x,x,x,15/08/2018,46.24502,13.83797,1706,Mt. Vogel ,67.6,13.09,22.77,6.33,22.77 (6.33),/,/,/,/
+,MB 99,Centaurea jacea,x,x,x,x,x,15/08/2018,46.26036,13.83811,1706,Mt. Vogel ,40.41,23.28,12.01,13.41,12.01 (13.41),11.1,19,1.81,9
+,MB 100,Senecio rupestris ?,,x,,,,15/08/2018,46.26036,13.83811,1706,Mt. Vogel ,/,/,/,/,/ (/),/,/,/,/
+,MB 101,Solidago canadensis,x,,x,x,x,15/08/2018,46303,14.047056,525,Alongside road Bohinj - Bled,4.12,4.83,1.72,2.95,1.72 (2.95),27,29,4.24,4541
+,MB 102,Solidago gigantea,x,,x,x,x,15/08/2018,46.268501,13.898558,509,Alongside road Bohinj - Bled,6.15,5.78,2.44,3.64,2.44 (3.64),15,30.5,4.91,754
+,MB 103,Cirsium carniolicum,,x,,x,,31/07/2018,46.429614,14.243831,1284,"Karavanke, Zelenica",/,/,/,/,/ (/),/,/,/,/
+,MB 105,Carduus collinus,,x,x,x,x,24/08/2018,45.480173,14.049305,653,"Croatia, Vodice",32.07,24.69,11.69,11.08,11.69 (11.08),22,56,5.82,7
+,MB 106,Centaurea jacea,,x,x,x,x,24/08/2018,45.480173,14.049305,653,"Croatia, Vodice",27.04,20.02,9.86,18.81,9.86 (18.81),23,27,1.9,5
+,MB 107,Cirsium acaule,,x,x,x,x,24/08/2018,45.481655,14.049181,653,"Croatia, Vodice",42.1,51.44,13.88,28.78,13.88 (28.78),/,/,/,/
+,MB 108,Eupatorium cannabinum,,x,x,x,x,24/08/2018,45.447964,14.063597,650,"Croatia, Trstenik",6.95,10.25,2.12,5.56,2.12 (5.56),30,83,7.88,1370
+,MB 109,Arctium lappa,,x,,,,24/08/2018,45.448286,14.063311,651,"Croatia, Trstenik",/,/,/,/,/ (/),/,/,/,/
+,MB 110,Picris hieracioides,x,,x,x,x,25/08/2018,45.3814,13.883616,96,"Croatia, Istrske toplice",25.55,13.57,15.36,8.23,15.36 (8.23),5,27,3.08,21
+,MB 111,Inula conyza,x,x,x,x,x,25/08/2018,45.378687,13.882876,38,"Croatia, Istrske toplice",5.42,10.01,5.42,7.29,5.42 (7.29),20,42,6.38,110
+,MB 112,Carlina vulgaris,x,x,x,x,x,25/08/2018,45.3814,13.883616,96,"Croatia, Istrske toplice","27,97 (31,81)",19.39,31.81,11.88,31.81 (11.88),/,/,/,/
+,MB 113,Crepis kerneri,,x,,,,27/08/2018,45.585423,14.452341,1653,Mt. Snežnik,/,/,/,/,/ (/),/,/,/,/
+,MB 114,Leucanthemum liburnicum,x,x,x,x,x,27/08/2018,45.587418,14.448008,1738,Mt. Snežnik,41.77,9.67,16.05,7.23,16.05 (7.23),/,/,/,/
+,MB 115,Cirsium eriophorum,x,x,x,x,x,27/08/2018,45.2802,14.201993,1251,"Croatia, Učka",51.28,57.08,43.23,29.6,43.23 (29.6),65,102,19.05,16
+,MB 116,Artemisia absinthium,x,x,x,x,x,27/08/2018,45.378046,14.521538,318,"Croatia, Grobnik",4.42,3.11,3.1,1.91,3.1 (1.91),36,69,7.01,2384
+,MB 118,Xanthium italicu (strumarum),x,,x,x,x,27/08/2018,45.378788,14.49686,292,"Croatia, Grobnik",4.28,8.86,4.28,5.01,4.28 (5.01),26.2,154.58,6.96,"Female:64, Male: 30"
+,MB 119,Scolymus hispanicus,x,,,,,27/08/2018,45.378046,14.521538,318,"Croatia, Grobnik",/,/,/,/,/ (/),/,/,/,/
+,MB 120,Centaurea rupestris,,x,,,,24/08/2018,45.481655,14.049181,653,"Croatia, Vodice",/,/,/,/,/ (/),/,/,/,/
+,MB 121,Carlina acaulis,,x,,,,27/08/2018,45.2802,14.201993,1251,"Croatia, Učka",/,/,/,/,/ (/),/,/,/,/
+,MB 122,Carlina corymbosa subsp. corymbosa,x,x,x,x,x,13/09/2018,45.557214,13.795466,53,Dekani,"24,32 (50,58)","27,96 (31,26)",50.58,31.26,50.58 (31.26),16,19,2.21,3
+,MB 123,Crepis kerneri,x,x,x,x,x,16/09/2018,45.592792,14.450638,1534,"Mt. Snežnik, close to Smrekova draga",23.56,15.4,7.63,9.75,7.63 (9.75),/,/,/,/
+,MB 124,Leontopodium alpinum,,x,,,,16/09/2018,45.58957,14.448236,1740,Mt. Snežnik,/,/,/,/,/ (/),/,/,/,/
+,MB 125,Picris echioides,x,,x,x,x,20/09/2018,45.507604,13.611889,13,Liminjan,27.49,16.48,22.3,10.85,22.3 (10.85),17,30,3.88,11
+,MB 126,Hieracium pilosella,x,,x,x,x,20/09/2018,45.611211,13.935477,494,"Kozina, by the highway",33.14,12.85,15.46,8.04,15.46 (8.04),/,/,/,/
+,MB 127,Dittrichia graveolens,x,x?,x,x,x,20/09/2018,45.611211,13.935477,494,"Kozina, by the highway",5.21,7.33,4.25,6.32,4.25 (6.32),11,28,3.72,106
+,MB 128,Aster squamatus,x,x?,x,x,x,20/09/2018,45.571348,13.789165,79,Škofije,4.16,8,2.97,7.3,2.97 (7.3),29,65,5.51,620
+,MB 129,Aster lynosiris,x,,,,x,20/09/2018,45.58839,13.725167,74,Valdoltra,/,/,/,/,/ (/),/,/,/,/
+,MB 130,Senecio fontanicola?,,x?,,,,31/07/2018,46.491269,13.737105,835,"Kranjska Gora, Zelenci spring",/,/,/,/,/ (/),/,/,/,/
+,MB 131,Hieracium gymnocephalum,x,x,x,x,x,13/10/2018,42.06378,19.544266,79,"Montenegro, Lovčen",31.14,15.28,17.81,10.32,17.81 (10.32),7.63,22.6,2.9,3
+,MB 132,Aster albanicus,x,x,x,x,x,12/10/2018,42.06378,19.544266,79,"Albania, Bardanjold",31.54,13.47,7.23,9.44,7.23 (9.44),8,13,1.39,4
+,MB 133,Artemisia sp.,x,,x,x,x,12/10/2018,42.06378,19.544266,79,"Albania, Bardanjold",3.8,3.8,3.12,2.59,3.12 (2.59),1,14.5,1.09,30
+,MB 134,Aster lynosiris,,,x,x,x,05/10/2018,45.525925,13.642879,81,Jagodje,15.78,17.29,6.4,8.1,6.4 (8.1),4,11.5,1.68,23
+,OH 476,Arctium tomentosum ,,x,,,,,,,,,/,/,/,/,/ (/),/,/,/,/
+,OH 488,Arctium lappa ,,x,,,,,,,,,/,/,/,/,/ (/),/,/,/,/
