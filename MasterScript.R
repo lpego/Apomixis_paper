@@ -364,10 +364,6 @@ library(ggstance)
 # install_github("GuangchuangYu/ggtree")
 
 ape::Ntip(JanTree4)
-grep('*tenerrimus', JanTree4$tip.label, value = T)
-ape::Ntip(JanTree4_CC)
-grep('*tenerrimus', JanTree4_CC$tip.label, value = T)
-setdiff(JanTree4$tip.label, JanTree4_CC$tip.label)
 
 ### IMPORTANT: data attached to the tree must have taxa name in first column! Order is irrelevant
 DATA_CC_red_ggtree <- DATA_CC_mean_red
