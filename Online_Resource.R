@@ -29,48 +29,48 @@ Repr_mode_summ
 
 Online_v7 <- merge(Online_v7, Repr_mode_summ, by = "SpeciesName", all.x = T)
 
-##### Adding botanical authors names to species names ##### 
-library(taxize)
-Online_v7_mean$SpeciesName
-gsub('_', ' ', Online_v7_mean$SpeciesName)
-
-View(gnr_datasources()) # IPNI is id 167
-t <- gnr_resolve("Eupatorium cannabinum", data_source_ids = 167, canonical = F)
-t
-t$user_supplied_name
-t$submitted_name
-t$data_source_title
-t$score
-t$matched_name
-t$matched_name2
-
-ipni_match <- as.data.frame(gnr_resolve(gsub('_', ' ', Online_v7$SpeciesName), data_source_ids = 167, canonical = F, with_context = T))
-ipni_match
-ipni_match$matched_name
-ipni_match$score
-
-ipni_match[, c(1,3,5)]
-ipni_match$matched_name
-### not so easy to fugure out which name is accepted... 
-
-##### Matching with GSheet for herbarium #####
-library(googledrive)
-library(googlesheets4)
-drive_about()
-
-### This is the live version
-GoogleSheet_live <- drive_get("~/Alpine Asteraceae Checklist")
-GoogleSheet_live
-sheets_get(GoogleSheet_live)
-sheets_sheets(GoogleSheet_live) # worksheets of this document
-as.POSIXct(as.character(GoogleSheet_live$drive_resource[[1]][19]), 
-           tryFormats = c("%Y-%m-%dT%H:%M:%S"), tz = "GMT") # last modified
-
-GoogleSheet_Live <- read_sheet(GoogleSheet_live, sheet = "DATA_FloraAlpina_Correction", col_types = "c")
-GoogleSheet_Live
-str(GoogleSheet_Live)
-
-GoogleSheet_Live$`Flora Alpina ID`
+# ##### Adding botanical authors names to species names ##### 
+# library(taxize)
+# Online_v7_mean$SpeciesName
+# gsub('_', ' ', Online_v7_mean$SpeciesName)
+# 
+# View(gnr_datasources()) # IPNI is id 167
+# t <- gnr_resolve("Eupatorium cannabinum", data_source_ids = 167, canonical = F)
+# t
+# t$user_supplied_name
+# t$submitted_name
+# t$data_source_title
+# t$score
+# t$matched_name
+# t$matched_name2
+# 
+# ipni_match <- as.data.frame(gnr_resolve(gsub('_', ' ', Online_v7$SpeciesName), data_source_ids = 167, canonical = F, with_context = T))
+# ipni_match
+# ipni_match$matched_name
+# ipni_match$score
+# 
+# ipni_match[, c(1,3,5)]
+# ipni_match$matched_name
+# ### not so easy to fugure out which name is accepted... 
+# 
+# ##### Matching with GSheet for herbarium #####
+# library(googledrive)
+# library(googlesheets4)
+# drive_about()
+# 
+# ### This is the live version
+# GoogleSheet_live <- drive_get("~/Alpine Asteraceae Checklist")
+# GoogleSheet_live
+# sheets_get(GoogleSheet_live)
+# sheets_sheets(GoogleSheet_live) # worksheets of this document
+# as.POSIXct(as.character(GoogleSheet_live$drive_resource[[1]][19]), 
+#            tryFormats = c("%Y-%m-%dT%H:%M:%S"), tz = "GMT") # last modified
+# 
+# GoogleSheet_Live <- read_sheet(GoogleSheet_live, sheet = "DATA_FloraAlpina_Correction", col_types = "c")
+# GoogleSheet_Live
+# str(GoogleSheet_Live)
+# 
+# GoogleSheet_Live$`Flora Alpina ID`
 
 
 
@@ -334,7 +334,7 @@ write.csv(Online_v7_StrictlyAlps_mean, file = "Online_v7_StrictlyAlps_mean.csv")
 
 ##### Prepare the tree for strictly Alps ##### 
 library(ape)
-JanTree4_StrictlyAlps_online <- drop.tip(JanTree4, setdiff(JanTree4$tip.label, Online_v7_StrictlyAlps_mean$SpeciesName))
+JanTree4_StrictlyAlps_online <- drop.tip(JanTree4_CC_online, setdiff(JanTree4_CC_online$tip.label, Online_v7_StrictlyAlps_mean$SpeciesName))
 
 setdiff(Online_v7_StrictlyAlps_mean$SpeciesName, JanTree4_StrictlyAlps_online$tip.label)
 setdiff(JanTree4_StrictlyAlps_online$tip.label, Online_v7_StrictlyAlps_mean$SpeciesName)
@@ -348,6 +348,53 @@ JanTree4_StrictlyAlps_online$edge.length[JanTree4_StrictlyAlps_online$edge.lengt
 ### all good
 
 write.tree(JanTree4_StrictlyAlps_online, file = "JanTree4_StrictlyAlps_online.tre")
+
+
+
+##### Adding Apomixis type - Extended database ##### 
+Aposporous <- c("Antennaria", "Crepis", "Erigeron", "Eupatorium", "Pilosella")
+Diplosporous <- c("Antennaria", "Arnica", "Chondrilla", "Erigeron", "Eupatorium", 
+                  "Hieracium", "Leontopodium", "Rudbeckia", "Taraxacum")
+Uncertain <- c("Petasites", "Picris", "Solidago", "Tanacetum", "Lentodon", 
+               "Leucanthemum", "Helianthus", "Cichorium")
+
+grep(paste(Aposporous, collapse = "|"), Online_v7_mean$SpeciesName, value = T)
+grep(paste(Diplosporous, collapse = "|"), Online_v7_mean$SpeciesName, value = T)
+
+Online_v7_mean[Online_v7_mean$Reproductive.mode %in% "Apomictic", "SpeciesName"]
+
+unique(vapply(strsplit(Online_v7_mean[Online_v7_mean$Reproductive.mode %in% "Apomictic", "SpeciesName"], '_', perl = T), `[`, 1, FUN.VALUE = character(1))) %in% c(Aposporous, Diplosporous)
+### Centaurea and Picris are not in the confirmed apomictic genera
+
+Online_v7_mean$Apomixis_type <- factor(as.character("Sexual"), levels = c("Sexual", "Aposporous", "Apo-diplosporous", "Diplosporous", "Uncertain"))
+Online_v7_mean[grepl(paste(Aposporous, collapse = "|"), Online_v7_mean$SpeciesName), "Apomixis_type"] <- "Aposporous"
+Online_v7_mean[grepl(paste(Diplosporous, collapse = "|"), Online_v7_mean$SpeciesName), "Apomixis_type"] <- "Diplosporous"
+Online_v7_mean[grepl(paste(Uncertain, collapse = "|"), Online_v7_mean$SpeciesName), "Apomixis_type"] <- "Uncertain"
+Online_v7_mean[grepl(paste(Aposporous, collapse = "|"), Online_v7_mean$SpeciesName) & grepl(paste(Diplosporous, collapse = "|"), Online_v7_mean$SpeciesName), "Apomixis_type"] <- "Apo-diplosporous"
+Online_v7_mean$Apomixis_type
+
+### can now filter records by apomixis type as well as use Apomixis_type as factor (random factor in MCMCglmm?)
+write.csv(Online_v7_mean, file = "Online_v7_mean_ApomixisType.csv")
+
+
+
+##### Adding Apomixis type - Strictly Alps database ##### 
+str(Online_v7_StrictlyAlps_mean)
+
+Online_v7_StrictlyAlps_mean$Apomixis_type <- factor(as.character("Sexual"), levels = c("Aposporous", "Diplosporous", "Apo-diplosporous", "Uncertain", "Sexual"))
+Online_v7_StrictlyAlps_mean[grepl(paste(Aposporous, collapse = "|"), Online_v7_StrictlyAlps_mean$SpeciesName), "Apomixis_type"] <- "Aposporous"
+Online_v7_StrictlyAlps_mean[grepl(paste(Diplosporous, collapse = "|"), Online_v7_StrictlyAlps_mean$SpeciesName), "Apomixis_type"] <- "Diplosporous"
+Online_v7_StrictlyAlps_mean[grepl(paste(Uncertain, collapse = "|"), Online_v7_StrictlyAlps_mean$SpeciesName), "Apomixis_type"] <- "Uncertain"
+Online_v7_StrictlyAlps_mean[grepl(paste(Aposporous, collapse = "|"), Online_v7_StrictlyAlps_mean$SpeciesName) & grepl(paste(Diplosporous, collapse = "|"), Online_v7_StrictlyAlps_mean$SpeciesName), "Apomixis_type"] <- "Apo-diplosporous"
+Online_v7_StrictlyAlps_mean$Apomixis_type
+
+with(Online_v7_StrictlyAlps_mean, table(Apomixis_type, Embryo.Ploidy.summ))
+
+setdiff(Online_v7_StrictlyAlps_mean$SpeciesName, JanTree4_StrictlyAlps_online$tip.label)
+setdiff(JanTree4_StrictlyAlps_online$tip.label, Online_v7_StrictlyAlps_mean$SpeciesName)
+
+write.csv(Online_v7_StrictlyAlps_mean, file = "Online_v7_StrictlyAlps_mean_ApomixisType.csv")
+
 
 
 ##### ~ ##### 
@@ -407,7 +454,7 @@ rm(obj1)
 rm(obj2)
 K_lambda_table_str_online
 
-write.table(K_lambda_table_str_online, file = "K_lambda_table_str_online.txt")
+  write.table(K_lambda_table_str_online, file = "K_lambda_table_str_online.txt")
 
 
 ##### ~ ##### 
@@ -447,6 +494,9 @@ with(Online_v7_StrictlyAlps, table(Reproductive.mode, Embryo.Ploidy.summ)) # per
 max(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
 min(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
 mean(Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection, na.rm = T)
+
+
+
 
 
 ##### ~ ##### 
@@ -692,7 +742,216 @@ ggsave(ggpubr::ggarrange(bargraph_str, boxplot_str, ncol = 2, nrow = 1),
 dev.off() # reset graphics device 
 
 
+##### ~ ##### 
+
+
+##### Plotting tree with Apomixis type ##### 
+library(ape)
+library(ggplot2)
+library(ggtree)
+library(RColorBrewer)
+
+library(geiger)
+library(phytools)
+
+# JanTree4_CC_online_ggtree <- JanTree4_CC_online
+# JanTree4_CC_online_ggtree$tip.label <- gsub('_', ' ', JanTree4_CC_online_ggtree$tip.label)
+
+plotTree(JanTree4_CC_online_ggtree, fsize = .35)
+
+### Make ad-hoc table for Repr_mode to be plotted: 
+all(Online_v7_mean_ApomixisType[match(JanTree4_CC_online$tip.label, Online_v7_mean_ApomixisType$SpeciesName), "SpeciesName"] == JanTree4_CC_online$tip.label)
+Online_v7_ggplot_ApomixisType <- Online_v7_mean_ApomixisType[match(JanTree4_CC_online$tip.label, Online_v7_mean_ApomixisType$SpeciesName), c("SpeciesName", "Apomixis_type")]
+Online_v7_ggplot_ApomixisType$SpeciesName <- gsub('_', ' ', Online_v7_ggplot_ApomixisType$SpeciesName)
+Online_v7_ggplot_ApomixisType$Apomixis_type
+
+setdiff(Online_v7_ggplot_ApomixisType$SpeciesName, JanTree4_CC_online_ggtree$tip.label)
+setdiff(JanTree4_CC_online_ggtree$tip.label, Online_v7_ggplot_ApomixisType$SpeciesName)
+
+# use ggtree(..., branch.length = "none")
+ggJanTree4_CC_online_circular_ApomixisType <- ggtree(JanTree4_CC_online_ggtree, layout = "circular", size = 1) %<+% Online_v7_ggplot_ApomixisType +
+  geom_tiplab2(size = 2, offset = 0.025, fontface = "italic") +
+  geom_hilight(mrca(JanTree4_CC_online)["Achillea_clavennae", "Artemisia_vulgaris"], fill = brewer.pal(10, "Set3")[1]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Doronicum_grandiflorum", "Doronicum_austriacum"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Symphyotrichum_squamatum", "Bellis_perennis"], fill = brewer.pal(10, "Set3")[3]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Calendula_arvensis", "Calendula_tripterocarpa"], fill = brewer.pal(10, "Set3")[4]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Senecio_vulgaris", "Tephroseris_integrifolia"], fill = brewer.pal(10, "Set3")[2]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], fill = brewer.pal(10, "Set3")[5]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Galinsoga_quadriradiata", "Bidens_bipinnatus"], fill = brewer.pal(10, "Set3")[6]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Inula_conyzae", "Buphthalmum_salicifolium"], fill = brewer.pal(10, "Set3")[7]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Crepis_pygmaea", "Catananche_caerulea"], fill = brewer.pal(10, "Set3")[8]) +
+  geom_hilight(mrca(JanTree4_CC_online)["Cirsium_oleraceum", "Echinops_exaltatus"], fill = brewer.pal(10, "Set3")[9]) +
+  geom_tippoint(aes(color = Apomixis_type, x = x + .0125), size = 2) +
+  # scale_colour_manual(name = "Reproductive mode", values = c(brewer.pal(name = "Set1", 5)[2],
+  #                                                            brewer.pal(name = "Set1", 5)[5],
+  #                                                            brewer.pal(name = "Set1", 5)[1]),) +
+  # ### Tribe labels on MRCA nodes
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Achillea_clavennae", "Artemisia_vulgaris"], label = "Anthemidae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Doronicum_grandiflorum", "Doronicum_austriacum"], label = "Senecioneae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Symphyotrichum_squamatum", "Bellis_perennis"], label = "Astereae"), hjust = 1, nudge_x = 1, nudge_y = -0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Calendula_arvensis", "Calendula_tripterocarpa"], label = "Calenduleae"), hjust = 1, nudge_x = 0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Senecio_vulgaris", "Tephroseris_integrifolia"], label = "Senecioneae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Gnaphalium_hoppeanum", "Phagnalon_saxatile"], label = "Gnaphalieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Galinsoga_quadriradiata", "Bidens_bipinnatus"], label = "Heliantheae"), hjust = 1, nudge_x = 0, nudge_y = -0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Inula_conyzae", "Buphthalmum_salicifolium"], label = "Inuleae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Crepis_pygmaea", "Catananche_caerulea"], label = "Cichorieae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+  # geom_text2(aes(subset = node %in% mrca(JanTree4_CC_online)["Cirsium_oleraceum", "Echinops_exaltatus"], label = "Cardueae"), hjust = 1, nudge_x = -0, nudge_y = 0) +
+# geom_treescale(x = .5, y = 0, offset = 0, fontsize = 3) +
+theme(legend.position = c(0.05, 0.1)) +
+  guides(colour = guide_legend(override.aes = list(size = 5))) +  
+  xlim(0, 1.1)
+
+ggJanTree4_CC_online_circular_ApomixisType
+
+ggsave(ggJanTree4_CC_online_circular_ApomixisType, filename = "ggJanTree4_CC_online_circular_ApomixisType.png", 
+       device = "png", dpi = 300, scale = 1, 
+       width = 30, height = 30, units = "cm")
+
+##### Boxplots + ANOVAs for apomixis type #####
+boxplot(as.character(Online_v7_mean$Apomixis_type) ~ Online_v7_mean$Average.elevation)
+boxplot(Online_v7_mean$Average.elevation ~ Online_v7_mean$Flowering.time..initiation.month.)
+
+colnames(Online_v7_mean)
+
+give.n <- function(x){
+  return(c(y = max(x)*1.05, label = length(x))) 
+  # y defines the position of the label; it can be fixed or a function of some plotting parameter ie: median(x)*1.05
+}
+
+library(ggplot2)
+library(ggpubr)
+with(Online_v7_mean, table(Apomixis_type, Embryo.Ploidy.summ))
+
+ggplot(Online_v7_mean, aes(x = Apomixis_type, y = Flowering.time..initiation.month.)) + 
+  geom_boxplot() + ylab("Flowering time (month)") + 
+  stat_summary(fun.data = give.n, geom = "text", 
+               position = position_dodge(width = 0.75)) + 
+  # stat_compare_means(aes(group = Apomixis_type), method = "wilcox.test", label = "p.signif") + 
+  theme(axis.text.x = element_text(size = 15), 
+        axis.text.y = element_text(size = 12), 
+        axis.title.y = element_text(size = 15), 
+        axis.title.x = element_blank(),
+        aspect.ratio = .75,
+        legend.position = "top")
+
+ggplot(Online_v7_mean, aes(x = Apomixis_type, y = Average.elevation)) + 
+  geom_boxplot() + 
+  stat_summary(fun.data = give.n, geom = "text", 
+               position = position_dodge(width = 0.75)) + 
+  # stat_compare_means(aes(group = Apomixis_type), method = "wilcox.test", label = "p.signif")
+  theme(axis.text.x = element_text(size = 15), 
+        axis.title.y = element_text(size = 15), 
+        axis.title.x = element_blank(),
+        aspect.ratio = .75,
+        legend.position = "top")
+
+aov(lm(Average.elevation ~ Apomixis_type, data = Online_v7_mean))
+
+glm(Apomixis_type ~ Average.elevation, data = Online_v7_mean, family = "binomial")
+anova(glm(Apomixis_type ~ Average.elevation, data = Online_v7_mean, family = "binomial"))
+
+TukeyHSD(aov(Average.elevation ~ Apomixis_type, data = Online_v7_mean))
+TukeyHSD(aov(Flowering.time..initiation.month. ~ Apomixis_type, data = Online_v7_mean))
+
+kruskal.test(Average.elevation ~ Apomixis_type, data = Online_v7_mean)
+
+
+###
+library(tidyverse)
+library(rstatix)
+pwn <- Online_v7_mean %>% 
+  wilcox_test(Average.elevation ~ Apomixis_type)
+pwn
+
+pwn <- pwn %>% add_xy_position(x = "Apomixis_type")
+pwn
+
+Boxplot_Apomixis_type_AverageElevation <- 
+  ggplot(Online_v7_mean, aes(x = Apomixis_type, y = Average.elevation)) + 
+  geom_boxplot() + 
+  stat_summary(fun.data = give.n, geom = "text", 
+               position = position_dodge(width = 0.75)) + 
+  # stat_compare_means(aes(group = Apomixis_type), method = "wilcox.test", label = "p.signif") + 
+  stat_pvalue_manual(pwn, hide.ns = T) + 
+  labs(subtitle = get_test_label(kruskal_test(Average.elevation ~ Apomixis_type, data = Online_v7_mean), detailed = T)#, 
+       # caption = get_pwc_label(pwn)
+       ) +
+  theme(axis.text.x = element_text(size = 15), 
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 15), 
+        axis.title.x = element_blank(),
+        aspect.ratio = .75,
+        legend.position = "top")
+Boxplot_Apomixis_type_AverageElevation
+
+ggsave(Boxplot_Apomixis_type_AverageElevation, file = "Boxplot_Apomixis_type_AverageElevation.png", 
+       device = "png", dpi = 300, scale = 1, 
+       width = 20, height = 20, units = "cm")
+
 ###
 
+pwn1 <- Online_v7_StrictlyAlps_mean %>% 
+  wilcox_test(Elevation.in.strict.alpine.arc.from.wild.collection ~ Apomixis_type)
+pwn1
+
+pwn1 <- pwn1 %>% add_xy_position(x = "Apomixis_type")
+pwn1
+
+Boxplot_Apomixis_type_StrictlyAlpsElevation <- 
+  ggplot(Online_v7_StrictlyAlps_mean, aes(x = Apomixis_type, y = Elevation.in.strict.alpine.arc.from.wild.collection)) + 
+  geom_boxplot() + 
+  stat_summary(fun.data = give.n, geom = "text", 
+               position = position_dodge(width = 0.75)) + 
+  # stat_compare_means(aes(group = Apomixis_type), method = "wilcox.test", label = "p.signif") + 
+  stat_pvalue_manual(pwn, hide.ns = T) + 
+  labs(subtitle = get_test_label(kruskal_test(Elevation.in.strict.alpine.arc.from.wild.collection ~ Apomixis_type, data = Online_v7_StrictlyAlps_mean), detailed = T)#, 
+       # caption = get_pwc_label(pwn)
+  ) +
+  theme(axis.text.x = element_text(size = 15), 
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 15), 
+        axis.title.x = element_blank(),
+        aspect.ratio = .75,
+        legend.position = "top")
+Boxplot_Apomixis_type_StrictlyAlpsElevation
+
+ggsave(Boxplot_Apomixis_type_StrictlyAlpsElevation, file = "Boxplot_Apomixis_type_StrictlyAlpsElevation.png", 
+       device = "png", dpi = 300, scale = 1, 
+       width = 20, height = 20, units = "cm")
+
+###
+
+pwn2 <- Online_v7_mean %>% 
+  wilcox_test(Flowering.time..initiation.month. ~ Apomixis_type)
+pwn2
+pwn2 <- pwn2 %>% add_xy_position(x = "Apomixis_type")
+pwn2
+
+Boxplot_Apomixis_type_Phenology <- 
+  ggplot(Online_v7_mean, aes(x = Apomixis_type, y = Flowering.time..initiation.month.)) + 
+  geom_boxplot() + 
+  stat_summary(fun.data = give.n, geom = "text", 
+               position = position_dodge(width = 0.75)) + 
+  # stat_compare_means(aes(group = Apomixis_type), method = "wilcox.test", label = "p.signif") + 
+  stat_pvalue_manual(pwn2, hide.ns = T) + 
+  labs(subtitle = get_test_label(kruskal_test(Flowering.time..initiation.month. ~ Apomixis_type, data = Online_v7_mean), detailed = T)#,
+       # caption = get_pwc_label(pwn2)
+  ) + 
+  ylab("Flowering time (month)") + 
+  theme(axis.text.x = element_text(size = 15), 
+        axis.text.y = element_text(size = 12),
+        axis.title.y = element_text(size = 15), 
+        axis.title.x = element_blank(),
+        aspect.ratio = .75,
+        legend.position = "top")
+Boxplot_Apomixis_type_Phenology
+
+ggsave(Boxplot_Apomixis_type_Phenology, file = "Boxplot_Apomixis_type_Phenology.png", 
+       device = "png", dpi = 300, scale = 1, 
+       width = 20, height = 20, units = "cm")
 
 
+
+
+
+##### END #####
