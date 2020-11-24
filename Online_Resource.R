@@ -1,5 +1,5 @@
 ##### Read in the table ##### 
-Online_v7 <- read.csv(file = "/home/luca/Dropbox/Royal Botanic Gardens of Kew/ApomixisPaper/Apomixis_v7/Pegoraro_et_al_Apomixis-Online_Resource_1-v7 -JP_LP_OH2_LP.csv")
+Online_v7 <- read.csv(file = "Pegoraro_et_al_Apomixis-Online_Resource_1-v7 -JP_LP_OH2_LP.csv")
 str(Online_v7)
 
 Online_v7$SpeciesName <- gsub('\\s$', '', Online_v7$SpeciesName)
