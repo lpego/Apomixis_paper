@@ -318,6 +318,117 @@ wilcox.test(as.numeric(test1$Init.month), as.numeric(test2$Init.month)) # not si
 
 
 
+##### Sample sizes for data #####
+
+### Extended dataset ###
+nrow(Online_v7) # accessions number
+
+### How many accessions (i.e. populations) per species?
+str(Online_v7)
+table(Online_v7$SpeciesName)
+mean(table(Online_v7$SpeciesName)) # subspecies separated
+median(table(Online_v7$SpeciesName)) 
+range(table(Online_v7$SpeciesName)) 
+
+Online_v7$SpeciesName
+vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1)) # lumping all subspecies together
+table(vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1)))
+mean(table(vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
+median(table(vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
+range(table(vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
+
+### Elevation?
+as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection))
+range(as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+median(as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+mean(as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+
+### Non-wild sources?
+NotWild # IDs of non-Alps accessions
+
+setdiff(Online_v7$SpeciesName, JanTree4_CC_online$tip.label)
+setdiff(JanTree4_CC_online$tip.label, Online_v7$SpeciesName)
+
+nrow(Online_v7) - nrow(Online_v7_StrictlyAlps)
+(nrow(Online_v7) - nrow(Online_v7_StrictlyAlps))/nrow(Online_v7)*100
+
+### Strictly Alps dataset ###
+str(Online_v7_StrictlyAlps)
+nrow(Online_v7_StrictlyAlps) # accessions number
+
+setdiff(Online_v7_StrictlyAlps$SpeciesName, JanTree4_StrictlyAlps_online$tip.label)
+setdiff(JanTree4_StrictlyAlps_online$tip.label, Online_v7_StrictlyAlps$SpeciesName)
+
+### How many accessions (i.e. populations) per species?
+str(Online_v7_StrictlyAlps)
+table(Online_v7_StrictlyAlps$SpeciesName)
+mean(table(Online_v7_StrictlyAlps$SpeciesName)) # subspecies separated
+median(table(Online_v7_StrictlyAlps$SpeciesName)) 
+range(table(Online_v7_StrictlyAlps$SpeciesName)) 
+
+Online_v7_StrictlyAlps$SpeciesName
+vapply(strsplit(Online_v7_StrictlyAlps$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1)) # lumping all subspecies together
+table(vapply(strsplit(Online_v7_StrictlyAlps$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1)))
+mean(table(vapply(strsplit(Online_v7_StrictlyAlps$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
+median(table(vapply(strsplit(Online_v7_StrictlyAlps$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
+range(table(vapply(strsplit(Online_v7_StrictlyAlps$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
+
+### Elevation?
+as.numeric(gsub("—", "NA", Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection))
+range(as.numeric(gsub("—", "NA", Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+median(as.numeric(gsub("—", "NA", Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+mean(as.numeric(gsub("—", "NA", Online_v7_StrictlyAlps$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+
+
+
+##### How many taxa have been added to the original tree? ##### 
+
+### Extended dataset
+JanTree4_CC_online
+JanTree4_CC_online$tip.label # taxa in the tree
+# genera in the tree
+strsplit(JanTree4_CC_online$tip.label, split = "_")
+unique(unlist(lapply(strsplit(JanTree4_CC_online$tip.label, split = "_"), `[[`, 1)))
+# species in the tree (no subspecies)
+strsplit(JanTree4_CC_online$tip.label, split = "_subsp._")
+unique(unlist(lapply(strsplit(JanTree4_CC_online$tip.label, split = "_subsp._"), `[[`, 1)))
+
+### Strictly Alps dataset
+JanTree4_StrictlyAlps_online
+JanTree4_StrictlyAlps_online$tip.label # taxa in the tree
+# genera in the tree
+strsplit(JanTree4_StrictlyAlps_online$tip.label, split = "_")
+unique(unlist(lapply(strsplit(JanTree4_StrictlyAlps_online$tip.label, split = "_"), `[[`, 1)))
+# species in the tree (no subspecies)
+strsplit(JanTree4_StrictlyAlps_online$tip.label, split = "_subsp._")
+unique(unlist(lapply(strsplit(JanTree4_StrictlyAlps_online$tip.label, split = "_subsp._"), `[[`, 1)))
+
+
+
+##### How many added/modified tips? ##### 
+
+### Extended dataset
+RenamedTips
+sum(RenamedTips %in% JanTree4_CC_online$tip.label) # number of taxa added by renaming existing tips
+
+AddedTips
+sum(AddedTips %in% JanTree4_CC_online$tip.label) # number of taxa added by inserting new tips
+sum(grep("_subsp._", AddedTips, fixed = T, value = T) %in% JanTree4_CC_online$tip.label) # of which subspecies
+
+### Strictly Alps
+RenamedTips
+sum(RenamedTips %in% JanTree4_StrictlyAlps_online$tip.label) # number of taxa added by renaming existing tips
+
+AddedTips
+sum(AddedTips %in% JanTree4_StrictlyAlps_online$tip.label) # number of taxa added by inserting new tips
+sum(grep("_subsp._", AddedTips, fixed = T, value = T) %in% JanTree4_StrictlyAlps_online$tip.label) # of which subspecies
+
+
+
+##### ~ #####
+
+
+
 ##### VISUALIZATION #####
 
 ### Phytools: plotting reproductive mode onto tree 

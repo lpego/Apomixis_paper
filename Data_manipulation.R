@@ -276,6 +276,58 @@ JanTree2$tip.label
 ##### Checking names and tree tip labels #####
 names_correspondences <- read.csv(file = "Apomixis_asteraceae_cbind.csv")
 
+# make variable containing names of taxa added manually to the tree (not just adjusting for synonyms, actual renaming the tips)
+RenamedTips <- 
+  c("Xerolekia_speciosissima", 
+    "Artemisia_umbelliformis_subsp._umbelliformis", 
+    "Artemisia_umbelliformis_subsp._eriantha", 
+    "Artemisia_genipi", 
+    "Carlina_corymbosa", 
+    "Centaurea_scabiosa_subsp._grinensis", 
+    "Cyanus_triumfettii", 
+    "Leucanthemopsis_alpina", 
+    "Cirsium_alsophilum", 
+    "Cirsium_pannonicum", 
+    "Cirsium_eriophorum", 
+    "Cirsium_tuberosum", 
+    "Cirsium_carniolicum", 
+    "Cirsium_heterophyllum", 
+    "Erigeron_glabratus", 
+    "Crepis_terglouensis", 
+    "Erigeron_alpinus", 
+    "Erigeron_schleicheri", 
+    "Gnaphalium_sylvaticum", 
+    "Hieracium_cydoniifolium", 
+    "Hieracium_ramosissimum_subsp._lactucifolium", 
+    "Hieracium_froelichianum", 
+    "Schlagintweitia_intybacea", 
+    "Hieracium_piliferum", 
+    "Hieracium_glaucopsis", 
+    "Hieracium_valdepilosum", 
+    "Schlagintweitia_huteri_subsp._lantoscana", 
+    "Inula_spiraefolia", 
+    "Inula_helvetica", 
+    "Inula_oculus-christi", 
+    "Klasea_lycopifolia", 
+    "Leontodon_hirtus", 
+    "Leucanthemum_adustum", 
+    "Matricaria_chamomilla", 
+    "Pilosella_peleteriana", 
+    "Pilosella_glacialis", 
+    "Rhaponticum_heleniifolium_subsp._bicknellii", 
+    "Senecio_ovatus", 
+    "Senecio_germanicus", 
+    "Serratula_tinctoria", 
+    "Solidago_virgaurea_subsp._minuta", 
+    "Symphyotrichum_squamatum", 
+    "Tanacetum_corymbosum", 
+    "Tephroseris_integrifolia_subsp._capitata", 
+    "Tephroseris_longifolia_subsp._gaudinii", 
+    "Tolpis_staticifolia", 
+    "Tragopogon_pratensis_subsp._orientalis", 
+    "Tripleurospermum_inodorum", 
+    "Xanthium_orientale_subsp._italicum")
+
 is.nothing <- function(x) {
   if (x==""){
     return (TRUE)
@@ -322,12 +374,23 @@ new <- names_correspondences[order(names_correspondences$Name.on.tree),]
 library(phytools)
 ### make sure that tree is read as ultrametric before modiying tips! Otherwise some functions may toss branch legnths. 
 
+
+
 #### Alternative function that could be used to add tips; it doesn't let you decide specifically where inside the genus it'll put the new tip though. 
 # par(mfrow=c(1,2))
 # plot(JanTree2, cex = .3, no.margin = T)
 # JanTree_add <- add.species.to.genus(JanTree2, "Leucanthemum_platylepis")
 # plot(JanTree_add, cex = .3, no.margin = T)
 # par(mfrow=c(1,1))
+
+# make variable with names of taxa added to the tree by making new tips (not renaming existing tips)
+AddedTips <- 
+  c("Centaurea_uniflora", 
+  "Cirsium_acaulon", 
+  "Hieracium_humile", 
+  "Carduus_defloratus_subsp._carlinifolius", "Carduus_defloratus_subsp._summanus", 
+  "Leucanthemum_platylepis", "Leucanthemum_pallens", "Leucanthemum_atratum", "Leucanthemum_coronopifolium", "Leucanthemum_halleri", 
+  "Senecio_nemorensis_subsp._jacquinianus")
 
 mrca(JanTree2)["Centaurea_rhaetica", "Centaurea_nigra"]
 JanTree2 <- bind.tip(JanTree2, "Centaurea_uniflora", where = 426)
