@@ -338,10 +338,10 @@ median(table(vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VAL
 range(table(vapply(strsplit(Online_v7$SpeciesName, '_subsp._'), `[`, 1, FUN.VALUE = character(1))))
 
 ### Elevation?
-as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection))
-range(as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
-median(as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
-mean(as.numeric(gsub("—", "NA", Online_v7$Elevation.in.strict.alpine.arc.from.wild.collection)), na.rm = T)
+as.numeric(gsub("—", "NA", Online_v7$Average.elevation))
+range(as.numeric(gsub("—", "NA", Online_v7$Average.elevation)), na.rm = T)
+median(as.numeric(gsub("—", "NA", Online_v7$Average.elevation)), na.rm = T)
+mean(as.numeric(gsub("—", "NA", Online_v7$Average.elevation)), na.rm = T)
 
 ### Non-wild sources?
 NotWild # IDs of non-Alps accessions
